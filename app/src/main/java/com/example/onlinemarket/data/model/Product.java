@@ -20,7 +20,7 @@ public class Product implements Serializable {
 
 	@Expose
 	@SerializedName("attributes")
-	private List<com.example.onlinemarket.data.model.Attribute> attributes;
+	private List<Attribute> attributes;
 	@Expose
 	@SerializedName("images")
 	private List<Images> images;
@@ -109,11 +109,11 @@ public class Product implements Serializable {
 	}
 
 
-	public List<com.example.onlinemarket.data.model.Attribute> getAttributes() {
+	public List<Attribute> getAttributes() {
 		return attributes;
 	}
 
-	public void setAttributes(List<com.example.onlinemarket.data.model.Attribute> attributes) {
+	public void setAttributes(List<Attribute> attributes) {
 		this.attributes = attributes;
 	}
 
