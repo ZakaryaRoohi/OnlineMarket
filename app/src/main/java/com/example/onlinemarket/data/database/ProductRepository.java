@@ -4,18 +4,18 @@ import com.example.onlinemarket.data.model.Product;
 
 import java.util.List;
 
-public class productRepository {
+public class ProductRepository {
 
-    private static productRepository sRepository;
+    private static ProductRepository sRepository;
     private List<Product> mAllProducts;
     private List<Product> mAllOfferProducts;
 
-    private productRepository(){
+    private ProductRepository(){
 
     }
-    public static productRepository getInstance(){
+    public static ProductRepository getInstance(){
         if(sRepository==null){
-            sRepository = new productRepository();
+            sRepository = new ProductRepository();
         }
         return sRepository;
     }
