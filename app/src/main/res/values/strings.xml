@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">OnlineMarket</string>
     //English
-<!--    <string name="app_name_en">Digikala</string>-->
+    <!--    <string name="app_name_en">Digikala</string>-->
     <string name="app_name_fa">دیجی کالا</string>
 
 
