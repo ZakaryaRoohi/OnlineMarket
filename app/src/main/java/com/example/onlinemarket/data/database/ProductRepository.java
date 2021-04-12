@@ -28,11 +28,11 @@ public class ProductRepository {
         mAllProducts = allProducts;
     }
 
-    public List<Product> getAllOfferProducts() {
+    public List<Product> getOfferProducts() {
         return mAllOfferProducts;
     }
 
-    public void setAllOfferProducts(List<Product> allOfferProducts) {
+    public void setOfferProducts(List<Product> allOfferProducts) {
         mAllOfferProducts = allOfferProducts;
     }
 }

@@ -65,12 +65,12 @@ public class MainFragment extends Fragment {
     private void initViews(){
         if (mProductRecyclerAdapter== null){
             mProductRecyclerAdapter = new ProductRecyclerAdapter(getContext());
-            mProductRecyclerAdapter.setProducts(mProductRepository.getAllOfferProducts());
+            mProductRecyclerAdapter.setProducts(mProductRepository.getOfferProducts());
             mBinding.recyclerViewOfferedProduct.setAdapter(mProductRecyclerAdapter);
         }
         else {
             mBinding.recyclerViewOfferedProduct.setAdapter(mProductRecyclerAdapter);
-            mProductRecyclerAdapter.setProducts(mProductRepository.getAllOfferProducts());
+            mProductRecyclerAdapter.setProducts(mProductRepository.getOfferProducts());
             mProductRecyclerAdapter.notifyDataSetChanged();
         }
     }
