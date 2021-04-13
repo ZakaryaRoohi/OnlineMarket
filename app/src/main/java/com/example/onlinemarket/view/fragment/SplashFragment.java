@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +19,10 @@ import com.example.onlinemarket.databinding.FragmentSplashBinding;
 import com.example.onlinemarket.network.RetrofitInstance;
 import com.example.onlinemarket.network.WooCommerceApi;
 import com.example.onlinemarket.view.activity.MainActivity;
+import com.example.onlinemarket.viewmodel.SplashFragmentViewModel;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,8 +31,9 @@ import retrofit2.Response;
 
 public class SplashFragment extends Fragment {
 
-    private WooCommerceApi mWooCommerceApi;
-    private ProductRepository mProductRepository;
+//    private WooCommerceApi mWooCommerceApi;
+//    private ProductRepository mProductRepository;
+    private SplashFragmentViewModel mViewModel;
     private FragmentSplashBinding mBinding;
 
     public SplashFragment() {
@@ -48,6 +52,26 @@ public class SplashFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mViewModel = new ViewModelProvider(this).get(SplashFragmentViewModel.class);
+        mViewModel.fetchInitData();
+
+        mViewModel.getIsLoading().observe(this,aBoolean -> {
+            if (!aBoolean){
+                loadInternetError();
+            }
+        });
+
+        mViewModel.getIsError().observe(this , aBoolean -> {
+            if (aBoolean)
+                loadInternetError();
+        });
+
+        mViewModel.getStartMainActivity().observe(this , aBoolean -> {
+            if (aBoolean){
+                Objects.requireNonNull(getActivity())
+                        .startActivity(MainActivity.newIntent(getContext()));
+            }
+        });
 
     }
 
@@ -67,64 +91,26 @@ public class SplashFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mProductRepository = ProductRepository.getInstance();
-        mWooCommerceApi = RetrofitInstance
-                .getInstance()
-                .create(WooCommerceApi.class);
-        requestForInitData();
 
-        mBinding.textViewRetry.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBinding.textViewRetry.setVisibility(View.GONE);
-                mBinding.textViewNoInternet.setVisibility(View.GONE);
-                mBinding.progressBar.setVisibility(View.VISIBLE);
-                mBinding.progressBar.show();
-                requestForInitData();
-            }
+        mBinding.textViewRetry.setOnClickListener(v -> {
+            mViewModel.getIsError().setValue(false);
+            mViewModel.getIsLoading().setValue(true);
+            mViewModel.fetchInitData();
+            showLoadingUi();
         });
     }
 
-    private void requestForInitData() {
-        mWooCommerceApi.getSaleProducts(8, 1).enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                if (response.isSuccessful()) {
-                    mProductRepository.setOfferProducts(response.body());
-                    requestForLatestProducts();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-                loadInternetError();
-            }
-
-
-        });
-    }
+  private void showLoadingUi(){
+        mBinding.textViewRetry.setVisibility(View.GONE);
+        mBinding.textViewNoInternet.setVisibility(View.GONE);
+        mBinding.progressBar.setVisibility(View.VISIBLE);
+        mBinding.progressBar.show();
+  }
 
     private void loadInternetError() {
         mBinding.textViewNoInternet.setVisibility(View.VISIBLE);
         mBinding.textViewRetry.setVisibility(View.VISIBLE);
     }
 
-    private void requestForLatestProducts() {
-        mWooCommerceApi.getProducts(10, 10, "date").enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                if (response.isSuccessful()) {
-                    mProductRepository.setLatestProducts(response.body());
-                    mBinding.progressBar.setVisibility(View.GONE);
-                    mBinding.progressBar.hide();
-                    startActivity(MainActivity.newIntent(getContext()));
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-                loadInternetError();
-            }
-        });
-    }
 }

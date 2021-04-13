@@ -12,7 +12,7 @@ import com.example.onlinemarket.R;
 import com.example.onlinemarket.data.model.Product;
 import com.example.onlinemarket.databinding.RowItemProductBinding;
 import com.example.onlinemarket.util.ImageUtil;
-import com.example.onlinemarket.viewModel.ProductAdapterViewModel;
+import com.example.onlinemarket.viewmodel.ProductAdapterViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

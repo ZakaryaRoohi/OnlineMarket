@@ -10,6 +10,9 @@ public class ProductRepository {
     private List<Product> mAllProducts;
     private List<Product> mOfferProducts;
     private List<Product> mLatestProducts;
+    private List<Product> mTopRatingProducts;
+    private List<Product> mPopularProducts;
+
 
 
     private ProductRepository(){
@@ -43,5 +46,20 @@ public class ProductRepository {
     }
     public void setLatestProducts(List<Product> latestProducts){
         mLatestProducts = latestProducts;
+    }
+    public List<Product> getTopRatingProducts() {
+        return mTopRatingProducts;
+    }
+
+    public void setTopRatingProducts(List<Product> topRatingProducts) {
+        mTopRatingProducts = topRatingProducts;
+    }
+
+    public List<Product> getPopularProducts() {
+        return mPopularProducts;
+    }
+
+    public void setPopularProducts(List<Product> popularProducts) {
+        mPopularProducts = popularProducts;
     }
 }
