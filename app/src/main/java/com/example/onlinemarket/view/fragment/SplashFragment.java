@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.onlinemarket.R;
-import com.example.onlinemarket.data.database.ProductRepository;
+import com.example.onlinemarket.data.repository.ProductRepository;
 import com.example.onlinemarket.data.model.Product;
 import com.example.onlinemarket.databinding.FragmentSplashBinding;
 import com.example.onlinemarket.network.RetrofitInstance;
@@ -71,7 +71,7 @@ public class SplashFragment extends Fragment {
         mWooCommerceApi = RetrofitInstance
                 .getInstance()
                 .create(WooCommerceApi.class);
-        requestForOfferedProducts();
+        requestForInitData();
 
         mBinding.textViewRetry.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,17 +80,41 @@ public class SplashFragment extends Fragment {
                 mBinding.textViewNoInternet.setVisibility(View.GONE);
                 mBinding.progressBar.setVisibility(View.VISIBLE);
                 mBinding.progressBar.show();
-                requestForOfferedProducts();
+                requestForInitData();
             }
         });
     }
 
-    private void requestForOfferedProducts() {
-        mWooCommerceApi.getSaleProduct(8, 1).enqueue(new Callback<List<Product>>() {
+    private void requestForInitData() {
+        mWooCommerceApi.getSaleProducts(8, 1).enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     mProductRepository.setOfferProducts(response.body());
+                    requestForLatestProducts();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                loadInternetError();
+            }
+
+
+        });
+    }
+
+    private void loadInternetError() {
+        mBinding.textViewNoInternet.setVisibility(View.VISIBLE);
+        mBinding.textViewRetry.setVisibility(View.VISIBLE);
+    }
+
+    private void requestForLatestProducts() {
+        mWooCommerceApi.getProducts(10, 10, "date").enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful()) {
+                    mProductRepository.setLatestProducts(response.body());
                     mBinding.progressBar.setVisibility(View.GONE);
                     mBinding.progressBar.hide();
                     startActivity(MainActivity.newIntent(getContext()));
@@ -99,8 +123,7 @@ public class SplashFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-                mBinding.textViewNoInternet.setVisibility(View.VISIBLE);
-                mBinding.textViewRetry.setVisibility(View.VISIBLE);
+                loadInternetError();
             }
         });
     }

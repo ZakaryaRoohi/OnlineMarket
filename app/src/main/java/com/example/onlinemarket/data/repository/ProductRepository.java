@@ -1,4 +1,4 @@
-package com.example.onlinemarket.data.database;
+package com.example.onlinemarket.data.repository;
 
 import com.example.onlinemarket.data.model.Product;
 
@@ -8,7 +8,9 @@ public class ProductRepository {
 
     private static ProductRepository sRepository;
     private List<Product> mAllProducts;
-    private List<Product> mAllOfferProducts;
+    private List<Product> mOfferProducts;
+    private List<Product> mLatestProducts;
+
 
     private ProductRepository(){
 
@@ -29,10 +31,17 @@ public class ProductRepository {
     }
 
     public List<Product> getOfferProducts() {
-        return mAllOfferProducts;
+        return mOfferProducts;
     }
 
     public void setOfferProducts(List<Product> allOfferProducts) {
-        mAllOfferProducts = allOfferProducts;
+        mOfferProducts = allOfferProducts;
+    }
+    public List<Product> getLatestProducts(){
+        return mLatestProducts;
+
+    }
+    public void setLatestProducts(List<Product> latestProducts){
+        mLatestProducts = latestProducts;
     }
 }

@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.adapter.ProductRecyclerAdapter;
-import com.example.onlinemarket.data.database.ProductRepository;
+import com.example.onlinemarket.data.repository.ProductRepository;
 import com.example.onlinemarket.databinding.FragmentMainBinding;
 
 /**
@@ -25,8 +25,9 @@ public class MainFragment extends Fragment {
 
     private ProductRepository mProductRepository;
     private FragmentMainBinding mBinding;
-    private ProductRecyclerAdapter mProductRecyclerAdapter;
-
+    //    private ProductRecyclerAdapter mProductRecyclerAdapter;
+    private ProductRecyclerAdapter mOfferedProductAdapter;
+    private ProductRecyclerAdapter mLatestProductAdapter;
 
     public MainFragment() {
         // Required empty public constructor
@@ -62,16 +63,14 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initViews();
     }
-    private void initViews(){
-        if (mProductRecyclerAdapter== null){
-            mProductRecyclerAdapter = new ProductRecyclerAdapter(getContext());
-            mProductRecyclerAdapter.setProducts(mProductRepository.getOfferProducts());
-            mBinding.recyclerViewOfferedProduct.setAdapter(mProductRecyclerAdapter);
-        }
-        else {
-            mBinding.recyclerViewOfferedProduct.setAdapter(mProductRecyclerAdapter);
-            mProductRecyclerAdapter.setProducts(mProductRepository.getOfferProducts());
-            mProductRecyclerAdapter.notifyDataSetChanged();
-        }
+
+    private void initViews() {
+        mOfferedProductAdapter = new ProductRecyclerAdapter(getContext());
+        mOfferedProductAdapter.setProducts(mProductRepository.getOfferProducts());
+        mBinding.recyclerViewOfferedProduct.setAdapter(mOfferedProductAdapter);
+
+        mLatestProductAdapter= new ProductRecyclerAdapter(getContext());
+        mLatestProductAdapter.setProducts(mProductRepository.getLatestProducts());
+        mBinding.recyclerViewLatestProduct.setAdapter(mLatestProductAdapter);
     }
 }

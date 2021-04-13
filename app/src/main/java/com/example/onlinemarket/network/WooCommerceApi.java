@@ -14,8 +14,12 @@ import static com.example.onlinemarket.network.RetrofitInstance.WOOCOMMERCE_REST
 public interface WooCommerceApi {
 
     @GET(BASE_URL + "products" + WOOCOMMERCE_REST_AUTHENTICATION_KEY + "&on_sale=true")
-    Call<List<Product>> getSaleProduct(@Query("per_page") int perPage, @Query("page") int numberOfPage);
+    Call<List<Product>> getSaleProducts(@Query("per_page") int perPage, @Query("page") int numberOfPage);
 
+    @GET(BASE_URL + "products" + WOOCOMMERCE_REST_AUTHENTICATION_KEY)
+    Call<List<Product>> getProducts(@Query("per_page") int perPage,
+                                    @Query("page") int numberOfPage,
+                                    @Query("orderby") String orderBy);
 
 
 

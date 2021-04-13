@@ -8,9 +8,9 @@ import java.util.List;
 
 public class ImageUtil {
 
-    public static String getFirstImageUrlOfProduct(Product product) throws NullPointerException {
+    public static String getFirstImageUrlOfProduct(Product product) {
         List<Images> images = product.getImages();
-        if (images != null && images.size() != 0)
+        if (images != null && !images.isEmpty())
             return images.get(0).getSrc();
         else
             throw new NullPointerException("this product doesn't have any images");
