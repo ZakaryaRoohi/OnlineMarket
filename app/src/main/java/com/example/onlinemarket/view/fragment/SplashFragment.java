@@ -47,11 +47,7 @@ public class SplashFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mProductRepository = ProductRepository.getInstance();
-        mWooCommerceApi = RetrofitInstance
-                .getInstance()
-                .create(WooCommerceApi.class);
-        requestForOfferedProducts();
+
 
     }
 
@@ -71,6 +67,12 @@ public class SplashFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mProductRepository = ProductRepository.getInstance();
+        mWooCommerceApi = RetrofitInstance
+                .getInstance()
+                .create(WooCommerceApi.class);
+        requestForOfferedProducts();
+
         mBinding.textViewRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
