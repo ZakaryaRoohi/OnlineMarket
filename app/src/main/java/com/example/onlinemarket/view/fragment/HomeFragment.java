@@ -13,26 +13,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.onlinemarket.R;
-import com.example.onlinemarket.adapter.ProductRecyclerAdapter;
-import com.example.onlinemarket.data.repository.ProductRepository;
-import com.example.onlinemarket.databinding.FragmentMainBinding;
-import com.example.onlinemarket.viewmodel.MainFragmentViewModel;
+import com.example.onlinemarket.databinding.FragmentHomeBinding;
+import com.example.onlinemarket.viewmodel.HomeFragmentViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MainFragment#newInstance} factory method to
+ * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainFragment extends Fragment {
+public class HomeFragment extends Fragment {
 
-    private FragmentMainBinding mBinding;
-    private MainFragmentViewModel mViewModel;
-    public MainFragment() {
+    private FragmentHomeBinding mBinding;
+    private HomeFragmentViewModel mViewModel;
+    public HomeFragment() {
         // Required empty public constructor
     }
 
-    public static MainFragment newInstance() {
-        MainFragment fragment = new MainFragment();
+    public static HomeFragment newInstance() {
+        HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -42,7 +40,7 @@ public class MainFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new ViewModelProvider(this).get(MainFragmentViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
         mViewModel.initAdapters();
 
         mViewModel.getOfferedProductsLiveData().observe(this , products -> {
@@ -68,7 +66,7 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         mBinding = DataBindingUtil.inflate(
                 inflater,
-                R.layout.fragment_main,
+                R.layout.fragment_home,
                 container,
                 false);
         return mBinding.getRoot();

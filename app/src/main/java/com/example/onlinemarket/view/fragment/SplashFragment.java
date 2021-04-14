@@ -18,6 +18,7 @@ import com.example.onlinemarket.data.model.Product;
 import com.example.onlinemarket.databinding.FragmentSplashBinding;
 import com.example.onlinemarket.network.RetrofitInstance;
 import com.example.onlinemarket.network.WooCommerceApi;
+import com.example.onlinemarket.view.activity.HomeActivity;
 import com.example.onlinemarket.view.activity.MainActivity;
 import com.example.onlinemarket.viewmodel.SplashFragmentViewModel;
 
@@ -69,7 +70,7 @@ public class SplashFragment extends Fragment {
         mViewModel.getStartMainActivity().observe(this , aBoolean -> {
             if (aBoolean){
                 Objects.requireNonNull(getActivity())
-                        .startActivity(MainActivity.newIntent(getContext()));
+                        .startActivity(HomeActivity.newIntent(getContext()));
             }
         });
 

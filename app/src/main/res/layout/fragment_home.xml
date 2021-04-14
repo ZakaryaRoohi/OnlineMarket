@@ -2,46 +2,49 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
 
         <LinearLayout
+            android:id="@+id/linearLayout11"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/online_market_light_gray"
             android:gravity="center|top"
             android:isScrollContainer="true"
-            android:orientation="vertical">
+            android:orientation="vertical"
+
+            >
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_category_row"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layoutDirection="rtl"
-                android:orientation="horizontal"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:textDirection="rtl"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            <com.smarteist.autoimageslider.SliderView
+                android:id="@+id/sliderView"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="24dp"
-                android:layout_marginRight="16dp"
-                android:orientation="horizontal">
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="16dp">
 
 
                 <ImageView
                     android:layout_width="136dp"
                     android:layout_height="29dp"
                     android:layout_gravity="right"
-                    android:src="@drawable/amazing_offer" />
+                    android:src="@drawable/digikala_offer" />
 
 
             </FrameLayout>
@@ -50,42 +53,47 @@
                 android:id="@+id/recyclerView_offered_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginLeft="8dp" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="24dp"
-                android:layout_marginRight="16dp"
-                android:orientation="horizontal">
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="16dp">
 
                 <TextView
+                    android:id="@+id/textView_whole_latest_products"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:gravity="left"
+                    android:gravity="end"
                     android:padding="4dp"
                     android:text="@string/whole_list"
                     android:textColor="@color/online_market_blue"
-                    android:textSize="12dp"
+                    android:textSize="12sp"
                     app:fontFamily="@font/far_roya_bd" />
 
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:gravity="right"
+                    android:gravity="start"
                     android:text="@string/latest"
                     app:fontFamily="@font/far_trafc_bd" />
 
@@ -95,42 +103,47 @@
                 android:id="@+id/recyclerView_latest_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginLeft="8dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="24dp"
-                android:layout_marginRight="16dp"
-                android:orientation="horizontal">
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="16dp">
 
                 <TextView
+                    android:id="@+id/textView_whole_popular_products"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:gravity="left"
+                    android:gravity="end"
                     android:padding="4dp"
                     android:text="@string/whole_list"
                     android:textColor="@color/online_market_blue"
-                    android:textSize="12dp"
+                    android:textSize="12sp"
                     app:fontFamily="@font/far_roya_bd" />
 
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:gravity="right"
-                    android:text="@string/max_views"
+                    android:gravity="start"
+                    android:text="@string/popular"
                     app:fontFamily="@font/far_trafc_bd" />
 
 
@@ -140,13 +153,15 @@
                 android:id="@+id/recyclerView_popular_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginLeft="8dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -154,32 +169,35 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="24dp"
-                android:layout_marginRight="16dp"
-                android:orientation="horizontal">
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="16dp">
 
 
                 <TextView
+                    android:id="@+id/textView_whole_topRating_products"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:gravity="left"
+                    android:gravity="start"
                     android:padding="4dp"
                     android:text="@string/whole_list"
                     android:textColor="@color/online_market_blue"
-                    android:textSize="12dp"
+                    android:textSize="12sp"
                     app:fontFamily="@font/far_roya_bd" />
 
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:gravity="right"
-                    android:text="@string/popular"
+                    android:gravity="start"
+                    android:text="@string/topRating"
                     app:fontFamily="@font/far_trafc_bd" />
 
 
@@ -189,18 +207,21 @@
                 android:id="@+id/recyclerView_topRating_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layoutDirection="rtl"
                 android:orientation="horizontal"
                 android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginLeft="8dp">
 
             </androidx.recyclerview.widget.RecyclerView>
+
 
         </LinearLayout>
 
     </ScrollView>
+
 
 </layout>
