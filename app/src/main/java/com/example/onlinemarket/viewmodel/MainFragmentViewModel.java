@@ -1,0 +1,99 @@
+package com.example.onlinemarket.viewmodel;
+
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
+
+import com.example.onlinemarket.adapter.ProductRecyclerAdapter;
+import com.example.onlinemarket.data.model.Product;
+import com.example.onlinemarket.data.repository.ProductRepository;
+
+import java.util.List;
+
+public class MainFragmentViewModel extends AndroidViewModel {
+
+    private final MutableLiveData<List<Product>> mOfferedProductsLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Product>> mLatestProductsLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Product>> mTopRatingProductsLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Product>> mPopularProductsLiveData = new MutableLiveData<>();
+
+    private ProductRecyclerAdapter mOfferedProductsAdapter;
+    private ProductRecyclerAdapter mLatestProductsAdapter;
+    private ProductRecyclerAdapter mTopRatingProductsAdapter;
+    private ProductRecyclerAdapter mPopularProductsAdapter;
+
+    private ProductRepository mProductRepository;
+
+    public MainFragmentViewModel(@NonNull Application application) {
+        super(application);
+        mProductRepository = ProductRepository.getInstance();
+        fetchOfferedProductsFromRepository();
+        fetchLatestProductsFromRepository();
+        fetchTopRatingProductsFromRepository();
+        fetchPopularProductsFromRepository();
+    }
+
+    public void initAdapters(){
+        mOfferedProductsAdapter = new ProductRecyclerAdapter(getApplication());
+        mOfferedProductsAdapter.setProducts(mOfferedProductsLiveData.getValue());
+
+        mLatestProductsAdapter = new ProductRecyclerAdapter(getApplication());
+        mLatestProductsAdapter.setProducts(mLatestProductsLiveData.getValue());
+
+        mTopRatingProductsAdapter = new ProductRecyclerAdapter(getApplication());
+        mTopRatingProductsAdapter.setProducts(mTopRatingProductsLiveData.getValue());
+
+        mPopularProductsAdapter = new ProductRecyclerAdapter(getApplication());
+        mPopularProductsAdapter.setProducts(mPopularProductsLiveData.getValue());
+    }
+
+    public void fetchOfferedProductsFromRepository() {
+        mOfferedProductsLiveData.setValue(mProductRepository.getOfferProducts());
+    }
+
+    public void fetchLatestProductsFromRepository(){
+        mOfferedProductsLiveData.setValue(mProductRepository.getLatestProducts());
+    }
+
+    public void fetchTopRatingProductsFromRepository(){
+        mTopRatingProductsLiveData.setValue(mProductRepository.getTopRatingProducts());
+    }
+
+    public void fetchPopularProductsFromRepository(){
+        mPopularProductsLiveData.setValue(mProductRepository.getPopularProducts());
+    }
+
+    public MutableLiveData<List<Product>> getOfferedProductsLiveData() {
+        return mOfferedProductsLiveData;
+    }
+
+    public MutableLiveData<List<Product>> getLatestProductsLiveData() {
+        return mLatestProductsLiveData;
+    }
+
+    public MutableLiveData<List<Product>> getTopRatingProductsLiveData() {
+        return mTopRatingProductsLiveData;
+    }
+
+    public MutableLiveData<List<Product>> getPopularProductsLiveData() {
+        return mPopularProductsLiveData;
+    }
+
+    public ProductRecyclerAdapter getOfferedProductsAdapter() {
+        return mOfferedProductsAdapter;
+    }
+
+    public ProductRecyclerAdapter getLatestProductsAdapter() {
+        return mLatestProductsAdapter;
+    }
+
+    public ProductRecyclerAdapter getTopRatingProductsAdapter() {
+        return mTopRatingProductsAdapter;
+    }
+
+    public ProductRecyclerAdapter getPopularProductsAdapter() {
+        return mPopularProductsAdapter;
+    }
+}

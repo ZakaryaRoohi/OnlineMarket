@@ -10,9 +10,8 @@
     <string name="category">لیست دسته بندی محصولات</string>
     <string name="cart">سبد خرید</string>
     <string name="offers">محصولات پیشنهادی</string>
-    <string name="max_sell_products">پرفروشترین ها</string>
     <string name="max_views">پربازدیدترین ها</string>
-    <string name="newest">جدیدترین ها</string>
+    <string name="latest">جدیدترین ها</string>
     <string name="setting">تنظیمات</string>
     <string name="common_questions">سوالات متداول</string>
     <string name="about_us">درباره ما</string>
@@ -48,4 +47,5 @@
     <string name="size">سایز</string>
     <string name="press_again_for_exit">برای خروج دوباره فشار دهید</string>
     <string name="login_register">ورود و ثبت نام</string>
+    <string name="popular">پر امتیاز ترین ها</string>
 </resources>
