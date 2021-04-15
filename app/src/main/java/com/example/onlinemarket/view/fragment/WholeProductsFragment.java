@@ -18,18 +18,18 @@ import com.example.onlinemarket.viewmodel.WholeProductFragmentViewModel;
 
 public class WholeProductsFragment extends Fragment {
 
-    public static final String ARG_ORDER_BY = "com.example.onlineMarket.orderBy";
+
     private FragmentWholeProductsBinding mBinding;
     private WholeProductFragmentViewModel mViewModel;
+
 
     public WholeProductsFragment() {
         // Required empty public constructor
     }
 
-    public static WholeProductsFragment newInstance(String orderBy) {
+    public static WholeProductsFragment newInstance() {
         WholeProductsFragment fragment = new WholeProductsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_ORDER_BY, orderBy);
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,34 +37,35 @@ public class WholeProductsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        String orderBy = WholeProductsFragmentArgs.fromBundle(getArguments()).getOrderBy();
+
         mViewModel = new ViewModelProvider(this).get(WholeProductFragmentViewModel.class);
 
-        mViewModel.getStringMutableLiveData().observe(this, s -> {
+        mViewModel.getStringOrderByLiveData().observe(this, s -> {
             mViewModel.fetchDataFromRepository();
             mViewModel.getWholeProductsAdapter().notifyDataSetChanged();
         });
 
-        mViewModel.getStringMutableLiveData().setValue(getArguments().getString(ARG_ORDER_BY));
+        mViewModel.getStringOrderByLiveData().setValue(orderBy);
         mViewModel.fetchDataFromRepository();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_whole_products,
-                container,
-                false
-        );
+        mBinding = DataBindingUtil
+                .inflate(inflater, R.layout.fragment_whole_products, container, false);
         return mBinding.getRoot();
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewModel.initAdapter();
+
         mBinding.recyclerViewWholeProducts.setAdapter(mViewModel.getWholeProductsAdapter());
+
+
     }
 }

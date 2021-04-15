@@ -17,16 +17,17 @@ public class WholeProductFragmentViewModel extends AndroidViewModel {
 
     private ProductRepository mProductRepository;
     private List<Product> mProducts = new ArrayList<>();
-    private final MutableLiveData<String> mStringMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> mStringOrderByLiveData = new MutableLiveData<>();
     private WholeProductsAdapter mWholeProductsAdapter;
 
     public WholeProductFragmentViewModel(@NonNull Application application) {
         super(application);
-        mProductRepository =  ProductRepository.getInstance();
+        mProductRepository = ProductRepository.getInstance();
     }
 
-    public void fetchDataFromRepository(){
-        switch (mStringMutableLiveData.getValue()){
+
+    public void fetchDataFromRepository() {
+        switch (mStringOrderByLiveData.getValue()) {
             case "date":
                 mProducts = mProductRepository.getLatestProducts();
                 break;
@@ -40,16 +41,20 @@ public class WholeProductFragmentViewModel extends AndroidViewModel {
                 break;
         }
     }
-    public void initAdapter(){
+
+    public void initAdapter() {
         mWholeProductsAdapter = new WholeProductsAdapter(getApplication());
         mWholeProductsAdapter.setProducts(mProducts);
     }
 
-    public WholeProductsAdapter getWholeProductsAdapter(){
+    public WholeProductsAdapter getWholeProductsAdapter() {
         return mWholeProductsAdapter;
     }
 
-    public MutableLiveData<String> getStringMutableLiveData(){
-        return mStringMutableLiveData;
+
+    public MutableLiveData<String> getStringOrderByLiveData() {
+        return mStringOrderByLiveData;
     }
+
+
 }

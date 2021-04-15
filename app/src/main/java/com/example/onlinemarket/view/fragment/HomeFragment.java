@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,6 @@ import android.view.ViewGroup;
 
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.databinding.FragmentHomeBinding;
-import com.example.onlinemarket.view.activity.WholeProductsActivity;
 import com.example.onlinemarket.viewmodel.HomeFragmentViewModel;
 
 
@@ -22,6 +22,8 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding mBinding;
     private HomeFragmentViewModel mViewModel;
+
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -40,58 +42,72 @@ public class HomeFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
         mViewModel.initAdapters();
 
-        mViewModel.getOfferedProductsLiveData().observe(this , products -> {
+        mViewModel.getOfferedProductsLiveData().observe(this, products -> {
+            mViewModel.getOfferedProductsAdapter().notifyDataSetChanged();
+        });
+
+        mViewModel.getLatestProductsLiveData().observe(this, products -> {
             mViewModel.getLatestProductsAdapter().notifyDataSetChanged();
         });
 
-        mViewModel.getLatestProductsLiveData().observe(this , products -> {
-            mViewModel.getLatestProductsAdapter().notifyDataSetChanged();
-        });
-
-        mViewModel.getTopRatingProductsLiveData().observe(this,products -> {
+        mViewModel.getTopRatingProductsLiveData().observe(this, products -> {
             mViewModel.getTopRatingProductsAdapter().notifyDataSetChanged();
         });
 
-        mViewModel.getPopularProductsLiveData().observe(this,products -> {
-            mViewModel.getPopularProductsAdapter().notifyDataSetChanged();
+        mViewModel.getPopularProductsLiveData().observe(this, products -> {
+            mViewModel.getOfferedProductsAdapter().notifyDataSetChanged();
         });
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        mBinding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_home,
-                container,
-                false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         return mBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mBinding.recyclerViewOfferedProduct.setAdapter(mViewModel.getOfferedProductsAdapter());
         mBinding.recyclerViewLatestProduct.setAdapter(mViewModel.getLatestProductsAdapter());
         mBinding.recyclerViewTopRatingProduct.setAdapter(mViewModel.getTopRatingProductsAdapter());
         mBinding.recyclerViewPopularProduct.setAdapter(mViewModel.getPopularProductsAdapter());
 
         setListeners();
-    }
-    private void setListeners(){
-        mBinding.textViewWholeLatestProducts.setOnClickListener(v -> {
-            startActivity(WholeProductsActivity.newIntent(getContext(),"date"));
-        });
-        mBinding.textViewWholePopularProducts.setOnClickListener(v -> {
-            startActivity(WholeProductsActivity.newIntent(getContext(),"popularity"));
 
+
+    }
+
+    private void setListeners() {
+        mBinding.textViewWholeLatestProducts.setOnClickListener(v -> {
+
+            HomeFragmentDirections.ActionHomeFragmentToWholeProductsFragment action = HomeFragmentDirections
+                    .actionHomeFragmentToWholeProductsFragment("date");
+
+            Navigation.findNavController(v)
+                    .navigate(action);
+
+        });
+
+        mBinding.textViewWholePopularProducts.setOnClickListener(v -> {
+            HomeFragmentDirections.ActionHomeFragmentToWholeProductsFragment action = HomeFragmentDirections
+                    .actionHomeFragmentToWholeProductsFragment("popularity");
+
+            Navigation.findNavController(v)
+                    .navigate(action);
         });
 
         mBinding.textViewWholeTopRatingProducts.setOnClickListener(v -> {
-            startActivity(WholeProductsActivity.newIntent(getContext(),"rating"));
+            HomeFragmentDirections.ActionHomeFragmentToWholeProductsFragment action = HomeFragmentDirections
+                    .actionHomeFragmentToWholeProductsFragment("rating");
+
+            Navigation.findNavController(v)
+                    .navigate(action);
+
         });
     }
-
 
 }

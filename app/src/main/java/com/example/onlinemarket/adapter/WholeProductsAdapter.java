@@ -82,12 +82,13 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
 
         public void bindProduct(Product product) {
             mProduct = product;
-            mBinding.textViewTitleRowItemWholeProducts.setText(mProduct.getName());
-            mBinding.textViewPriceRowItemWholeProducts.setText(mProduct.getPrice());
+            mBinding.rowItemWholeProductsTitle.setText(mProduct.getName());
+            mBinding.rowItemWholeProductsSalesPrice.setText(mProduct.getPrice());
+            mBinding.rowItemWholeProductsRegularPrice.setText(mProduct.getRegular_price());
             Picasso.get()
                     .load(ImageUtil.getFirstImageUrlOfProduct(mProduct))
                     .placeholder(R.drawable.place_holder)
-                    .into(mBinding.imageViewRowItemWholeProducts);
+                    .into(mBinding.rowItemWholeProductsImage);
         }
     }
 

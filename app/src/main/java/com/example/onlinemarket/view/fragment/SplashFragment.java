@@ -13,21 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.onlinemarket.R;
-import com.example.onlinemarket.data.repository.ProductRepository;
-import com.example.onlinemarket.data.model.Product;
 import com.example.onlinemarket.databinding.FragmentSplashBinding;
-import com.example.onlinemarket.network.RetrofitInstance;
-import com.example.onlinemarket.network.WooCommerceApi;
-import com.example.onlinemarket.view.activity.HomeActivity;
 import com.example.onlinemarket.view.activity.MainActivity;
 import com.example.onlinemarket.viewmodel.SplashFragmentViewModel;
 
-import java.util.List;
 import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class SplashFragment extends Fragment {
@@ -69,8 +59,7 @@ public class SplashFragment extends Fragment {
 
         mViewModel.getStartMainActivity().observe(this , aBoolean -> {
             if (aBoolean){
-                Objects.requireNonNull(getActivity())
-                        .startActivity(HomeActivity.newIntent(getContext()));
+                getActivity().startActivity(MainActivity.newIntent(getContext()));
             }
         });
 
