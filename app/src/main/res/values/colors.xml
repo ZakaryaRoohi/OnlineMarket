@@ -11,19 +11,19 @@
     <color name="colorPrimaryDark">#e72f31</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="online_market_red_dark">#B11315</color>
-    <color name="online_market_red">#e72f31</color>
-    <color name="online_market_red_origin">#ef384e</color>
-    <color name="online_market_red_light">#FF6F70</color>
-    <color name="online_market_green">#66bb68</color>
-    <color name="online_market_blue">#2d91e1</color>
-    <color name="online_market_blue_gray">#a2aac1</color>
-    <color name="online_market_dark_blue_gray">#303341</color>
-    <color name="online_market_gray">#757575</color>
-    <color name="online_market_light_gray">#D8D8D8</color>
-    <color name="online_market_dark_white">#eeeeee</color>
-    <color name="online_market_white">#fafafa</color>
-    <color name="online_market_raw_white">#ffffff</color>
+    <color name="digikala_red_dark">#B11315</color>
+    <color name="digikala_red">#e72f31</color>
+    <color name="digikala_red_origin">#ef384e</color>
+    <color name="digikala_red_light">#FF6F70</color>
+    <color name="digikala_green">#66bb68</color>
+    <color name="digikala_blue">#2d91e1</color>
+    <color name="digikala_blue_gray">#a2aac1</color>
+    <color name="digikala_dark_blue_gray">#303341</color>
+    <color name="digikala_gray">#757575</color>
+    <color name="digikala_light_gray">#D8D8D8</color>
+    <color name="digikala_dark_white">#eeeeee</color>
+    <color name="digikala_white">#fafafa</color>
+    <color name="digikala_raw_white">#ffffff</color>
     <color name="nothing">#00FFFFFF</color>
 
 </resources>

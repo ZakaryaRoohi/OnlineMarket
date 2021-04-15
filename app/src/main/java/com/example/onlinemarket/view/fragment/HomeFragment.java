@@ -14,13 +14,10 @@ import android.view.ViewGroup;
 
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.databinding.FragmentHomeBinding;
+import com.example.onlinemarket.view.activity.WholeProductsActivity;
 import com.example.onlinemarket.viewmodel.HomeFragmentViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding mBinding;
@@ -80,6 +77,20 @@ public class HomeFragment extends Fragment {
         mBinding.recyclerViewTopRatingProduct.setAdapter(mViewModel.getTopRatingProductsAdapter());
         mBinding.recyclerViewPopularProduct.setAdapter(mViewModel.getPopularProductsAdapter());
 
+        setListeners();
+    }
+    private void setListeners(){
+        mBinding.textViewWholeLatestProducts.setOnClickListener(v -> {
+            startActivity(WholeProductsActivity.newIntent(getContext(),"date"));
+        });
+        mBinding.textViewWholePopularProducts.setOnClickListener(v -> {
+            startActivity(WholeProductsActivity.newIntent(getContext(),"popularity"));
+
+        });
+
+        mBinding.textViewWholeTopRatingProducts.setOnClickListener(v -> {
+            startActivity(WholeProductsActivity.newIntent(getContext(),"rating"));
+        });
     }
 
 

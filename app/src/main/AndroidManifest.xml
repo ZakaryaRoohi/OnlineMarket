@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineMarket">
-        <activity android:name=".view.activity.HomeActivity"></activity>
+        <activity android:name=".view.activity.WholeProductsActivity"></activity>
+        <activity android:name=".view.activity.HomeActivity" />
         <activity android:name=".view.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.SingleFragmentActivity" />
-        <activity android:name=".view.activity.MainActivity"></activity>
+        <activity android:name=".view.activity.MainActivity" />
     </application>
 
 </manifest>

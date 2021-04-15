@@ -1,5 +1,6 @@
 package com.example.onlinemarket.network;
 
+import com.example.onlinemarket.data.model.Category;
 import com.example.onlinemarket.data.model.Product;
 
 import java.util.List;
@@ -23,6 +24,9 @@ public interface WooCommerceApi {
 
     @GET(BASE_URL + "products" + API_KEY)
     Call<List<Product>> getAllProducts();
+
+    @GET(BASE_URL + "products" + "/categories" + API_KEY)
+    Call<List<Category>> getAllCategories(@Query("per_page") int perPage, @Query("page") int page);
 
 
 }

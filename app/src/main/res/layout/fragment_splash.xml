@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/online_market_red">
+        android:background="@color/digikala_red">
 
         <ImageView
             android:layout_width="250dp"
@@ -16,7 +17,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
 
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_noInternet"
@@ -25,7 +27,7 @@
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/iran_yekan"
             android:text="@string/no_internet"
-            android:textColor="@color/online_market_white"
+            android:textColor="@color/digikala_white"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +40,7 @@
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/iran_yekan"
             android:text="@string/retry"
-            android:textColor="@color/online_market_white"
+            android:textColor="@color/digikala_white"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

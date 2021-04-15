@@ -35,6 +35,7 @@ android:id="@+id/row_layout_cardView"
             android:gravity="end"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
+            android:textColor="@android:color/black"
             android:text="Product Title"
             android:textSize="9sp" />
 
@@ -53,7 +54,7 @@ android:id="@+id/row_layout_cardView"
             android:gravity="end"
             android:layout_marginStart="8dp"
             android:text="Price"
-            android:textColor="@color/online_market_green"
+            android:textColor="@color/digikala_green"
             android:textSize="12sp"
             android:layout_marginLeft="8dp" />
 <!--        android:layout_marginStart="4dp"-->

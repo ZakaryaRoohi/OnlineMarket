@@ -12,7 +12,7 @@
             android:id="@+id/linearLayout11"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/online_market_light_gray"
+            android:background="@color/digikala_light_gray"
             android:gravity="center|top"
             android:isScrollContainer="true"
             android:orientation="vertical"
@@ -84,7 +84,7 @@
                     android:gravity="end"
                     android:padding="4dp"
                     android:text="@string/whole_list"
-                    android:textColor="@color/online_market_blue"
+                    android:textColor="@color/digikala_blue"
                     android:textSize="12sp"
                     app:fontFamily="@font/far_roya_bd" />
 
@@ -95,6 +95,7 @@
                     android:layout_weight="0.5"
                     android:gravity="start"
                     android:text="@string/latest"
+                    android:textColor="@android:color/black"
                     app:fontFamily="@font/far_trafc_bd" />
 
             </LinearLayout>
@@ -133,7 +134,7 @@
                     android:gravity="end"
                     android:padding="4dp"
                     android:text="@string/whole_list"
-                    android:textColor="@color/online_market_blue"
+                    android:textColor="@color/digikala_blue"
                     android:textSize="12sp"
                     app:fontFamily="@font/far_roya_bd" />
 
@@ -144,6 +145,7 @@
                     android:layout_weight="0.5"
                     android:gravity="start"
                     android:text="@string/popular"
+                    android:textColor="@android:color/black"
                     app:fontFamily="@font/far_trafc_bd" />
 
 
@@ -187,7 +189,8 @@
                     android:gravity="start"
                     android:padding="4dp"
                     android:text="@string/whole_list"
-                    android:textColor="@color/online_market_blue"
+
+                    android:textColor="@color/digikala_blue"
                     android:textSize="12sp"
                     app:fontFamily="@font/far_roya_bd" />
 
@@ -198,6 +201,7 @@
                     android:layout_weight="0.5"
                     android:gravity="start"
                     android:text="@string/topRating"
+                    android:textColor="@android:color/black"
                     app:fontFamily="@font/far_trafc_bd" />
 
 
