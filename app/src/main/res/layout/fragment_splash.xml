@@ -3,7 +3,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -11,12 +10,11 @@
 
         <ImageView
             android:layout_width="250dp"
-            android:layout_height="80dp"
+            android:layout_height="100dp"
             android:layout_marginBottom="48dp"
-            android:src="@drawable/logo"
+            android:src="@drawable/loading_logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,34 +22,40 @@
             android:id="@+id/textView_noInternet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:fontFamily="@font/iran_yekan"
             android:text="@string/no_internet"
             android:textColor="@color/digikala_white"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/button_retry"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/textView_retry"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_retry"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/nothing"
             android:fontFamily="@font/iran_yekan"
+            android:layoutDirection="rtl"
             android:text="@string/retry"
             android:textColor="@color/digikala_white"
             android:visibility="gone"
+            app:icon="@drawable/ic_retry_black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:rippleColor="@color/digikala_light_gray" />
 
         <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/progressBar"
-            style="@style/AVLoadingIndicatorView"
+            style="@style/AVLoadingIndicatorView.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:visibility="visible"
             app:indicatorName="BallPulseIndicator"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
