@@ -14,9 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.onlinemarket.R;
+import com.example.onlinemarket.adapter.ImageSliderAdapter;
 import com.example.onlinemarket.adapter.ProductRecyclerAdapter;
 import com.example.onlinemarket.databinding.FragmentHomeBinding;
+import com.example.onlinemarket.util.ImageUtil;
 import com.example.onlinemarket.viewmodel.HomeFragmentViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class HomeFragment extends Fragment {
@@ -28,7 +33,7 @@ public class HomeFragment extends Fragment {
     private ProductRecyclerAdapter mLatestProductsAdapter;
     private ProductRecyclerAdapter mTopRatingProductsAdapter;
     private ProductRecyclerAdapter mPopularProductsAdapter;
-
+    private ImageSliderAdapter mImageSliderAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -46,28 +51,22 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
-//        mViewModel.initAdapters();
-
         mViewModel.fetchDataFromRepository();
         initAdapters();
 
         mViewModel.getOfferedProductsLiveData().observe(this, products -> {
-//            mViewModel.getOfferedProductsAdapter().notifyDataSetChanged();
             mOfferedProductsAdapter.notifyDataSetChanged();
         });
 
         mViewModel.getLatestProductsLiveData().observe(this, products -> {
-//            mViewModel.getLatestProductsAdapter().notifyDataSetChanged();
             mLatestProductsAdapter.notifyDataSetChanged();
         });
 
         mViewModel.getTopRatingProductsLiveData().observe(this, products -> {
-//            mViewModel.getTopRatingProductsAdapter().notifyDataSetChanged();
             mTopRatingProductsAdapter.notifyDataSetChanged();
         });
 
         mViewModel.getPopularProductsLiveData().observe(this, products -> {
-//            mViewModel.getOfferedProductsAdapter().notifyDataSetChanged();
             mPopularProductsAdapter.notifyDataSetChanged();
         });
 
@@ -83,6 +82,15 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mImageSliderAdapter = new ImageSliderAdapter(getContext());
+        List<String> stringResource = new ArrayList<>();
+        stringResource.add(ImageUtil.convertResourceIdToUrl(R.drawable.main_slider_image01));
+        stringResource.add(ImageUtil.convertResourceIdToUrl(R.drawable.main_slider_image02));
+        stringResource.add(ImageUtil.convertResourceIdToUrl(R.drawable.main_slider_image03));
+        stringResource.add(ImageUtil.convertResourceIdToUrl(R.drawable.main_slider_image04));
+        mImageSliderAdapter.setStringImageUrl(stringResource);
+        mBinding.imageSlider.setSliderAdapter(mImageSliderAdapter);
 
         mBinding.recyclerViewOfferedProduct.setAdapter(mOfferedProductsAdapter);
         mBinding.recyclerViewOfferedProduct.setAdapter(mLatestProductsAdapter);
@@ -123,7 +131,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    public void initAdapters(){
+    public void initAdapters() {
         mOfferedProductsAdapter = new ProductRecyclerAdapter(getContext());
         mOfferedProductsAdapter.setProducts(mViewModel.getOfferedProductsLiveData().getValue());
 
