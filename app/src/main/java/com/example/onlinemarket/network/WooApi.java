@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 import static com.example.onlinemarket.network.RetrofitInstance.API_KEY;
 import static com.example.onlinemarket.network.RetrofitInstance.BASE_URL;
 
-public interface WooCommerceApi {
+public interface WooApi {
 
     @GET(BASE_URL + "products" + API_KEY + "&on_sale=true")
     Call<List<Product>> getSaleProducts(@Query("per_page") int perPage, @Query("page") int numberOfPage);
@@ -29,4 +29,6 @@ public interface WooCommerceApi {
     Call<List<Category>> getAllCategories(@Query("per_page") int perPage, @Query("page") int page);
 
 
+
 }
+

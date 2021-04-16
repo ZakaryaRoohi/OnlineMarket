@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.onlinemarket.adapter.ProductRecyclerAdapter;
@@ -24,7 +25,9 @@ public class HomeFragmentViewModel extends AndroidViewModel {
     private ProductRecyclerAdapter mTopRatingProductsAdapter;
     private ProductRecyclerAdapter mPopularProductsAdapter;
 
+
     private ProductRepository mProductRepository;
+
 
     public HomeFragmentViewModel(@NonNull Application application) {
         super(application);
@@ -35,7 +38,7 @@ public class HomeFragmentViewModel extends AndroidViewModel {
         fetchPopularProductsFromRepository();
     }
 
-    public void initAdapters(){
+    public void initAdapters() {
         mOfferedProductsAdapter = new ProductRecyclerAdapter(getApplication());
         mOfferedProductsAdapter.setProducts(mOfferedProductsLiveData.getValue());
 
@@ -50,34 +53,35 @@ public class HomeFragmentViewModel extends AndroidViewModel {
     }
 
     public void fetchOfferedProductsFromRepository() {
-        mOfferedProductsLiveData.setValue(mProductRepository.getOfferProducts());
+        mOfferedProductsLiveData.setValue(mProductRepository.getOfferedProducts());
     }
 
-    public void fetchLatestProductsFromRepository(){
-        mOfferedProductsLiveData.setValue(mProductRepository.getLatestProducts());
+    public void fetchLatestProductsFromRepository() {
+        mLatestProductsLiveData.setValue(mProductRepository.getLatestProducts());
     }
 
-    public void fetchTopRatingProductsFromRepository(){
+    public void fetchTopRatingProductsFromRepository() {
         mTopRatingProductsLiveData.setValue(mProductRepository.getTopRatingProducts());
     }
 
-    public void fetchPopularProductsFromRepository(){
+    public void fetchPopularProductsFromRepository() {
         mPopularProductsLiveData.setValue(mProductRepository.getPopularProducts());
     }
 
-    public MutableLiveData<List<Product>> getOfferedProductsLiveData() {
+
+    public LiveData<List<Product>> getOfferedProductsLiveData() {
         return mOfferedProductsLiveData;
     }
 
-    public MutableLiveData<List<Product>> getLatestProductsLiveData() {
+    public LiveData<List<Product>> getLatestProductsLiveData() {
         return mLatestProductsLiveData;
     }
 
-    public MutableLiveData<List<Product>> getTopRatingProductsLiveData() {
+    public LiveData<List<Product>> getTopRatingProductsLiveData() {
         return mTopRatingProductsLiveData;
     }
 
-    public MutableLiveData<List<Product>> getPopularProductsLiveData() {
+    public LiveData<List<Product>> getPopularProductsLiveData() {
         return mPopularProductsLiveData;
     }
 

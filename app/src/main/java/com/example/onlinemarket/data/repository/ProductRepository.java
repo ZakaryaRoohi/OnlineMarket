@@ -4,26 +4,29 @@ import com.example.onlinemarket.data.model.Product;
 
 import java.util.List;
 
+
 public class ProductRepository {
+
+    //singleton
 
     private static ProductRepository sRepository;
     private List<Product> mAllProducts;
-    private List<Product> mOfferProducts;
+    private List<Product> mOfferedProducts;
     private List<Product> mLatestProducts;
     private List<Product> mTopRatingProducts;
     private List<Product> mPopularProducts;
 
 
-
-    private ProductRepository(){
-
+    private ProductRepository() {
     }
-    public static ProductRepository getInstance(){
-        if(sRepository==null){
+
+    public static ProductRepository getInstance() {
+        if (sRepository == null) {
             sRepository = new ProductRepository();
         }
         return sRepository;
     }
+
 
     public List<Product> getAllProducts() {
         return mAllProducts;
@@ -33,26 +36,28 @@ public class ProductRepository {
         mAllProducts = allProducts;
     }
 
-    public List<Product> getOfferProducts() {
-        return mOfferProducts;
+    public List<Product> getOfferedProducts() {
+        return mOfferedProducts;
     }
 
-    public void setOfferProducts(List<Product> allOfferProducts) {
-        mOfferProducts = allOfferProducts;
+    public void setOfferedProducts(List<Product> offeredProducts) {
+        mOfferedProducts = offeredProducts;
     }
-    public List<Product> getLatestProducts(){
+
+    public List<Product> getLatestProducts() {
         return mLatestProducts;
-
     }
-    public void setLatestProducts(List<Product> latestProducts){
+
+    public void setLatestProducts(List<Product> latestProducts) {
         mLatestProducts = latestProducts;
     }
+
     public List<Product> getTopRatingProducts() {
         return mTopRatingProducts;
     }
 
-    public void setTopRatingProducts(List<Product> topRatingProducts) {
-        mTopRatingProducts = topRatingProducts;
+    public void setTopRatingProducts(List<Product> bestProducts) {
+        mTopRatingProducts = bestProducts;
     }
 
     public List<Product> getPopularProducts() {

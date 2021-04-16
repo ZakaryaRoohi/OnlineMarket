@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.onlinemarket.data.model.Product;
 import com.example.onlinemarket.data.repository.ProductRepository;
 import com.example.onlinemarket.network.RetrofitInstance;
-import com.example.onlinemarket.network.WooCommerceApi;
+import com.example.onlinemarket.network.WooApi;
 
 import java.util.List;
 
@@ -20,8 +20,9 @@ import retrofit2.Response;
 
 public class SplashFragmentViewModel extends AndroidViewModel {
 
+
     private final ProductRepository mProductRepository;
-    private final WooCommerceApi mWooCommerceApi;
+    private final WooApi mWooApi;
 
     private final MutableLiveData<Boolean> mIsLoading = new MutableLiveData<>();
     private final MutableLiveData<Boolean> mIsError = new MutableLiveData<>();
@@ -30,8 +31,9 @@ public class SplashFragmentViewModel extends AndroidViewModel {
     public SplashFragmentViewModel(@NonNull Application application) {
         super(application);
         mProductRepository = ProductRepository.getInstance();
-        mWooCommerceApi = RetrofitInstance.getInstance().create(WooCommerceApi.class);
+        mWooApi = RetrofitInstance.getInstance().create(WooApi.class);
     }
+
 
     private void initInternetError() {
         mIsLoading.setValue(false);
@@ -42,12 +44,12 @@ public class SplashFragmentViewModel extends AndroidViewModel {
         mIsLoading.setValue(true);
         mIsError.setValue(false);
         mStartMainActivity.setValue(false);
-        //offered product
-        mWooCommerceApi.getSaleProducts(10, 1).enqueue(new Callback<List<Product>>() {
+        //offered products
+        mWooApi.getSaleProducts(10, 1).enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
-                    mProductRepository.setOfferProducts(response.body());
+                    mProductRepository.setOfferedProducts(response.body());
                     fetchLatestProducts();
                 }
             }
@@ -59,12 +61,14 @@ public class SplashFragmentViewModel extends AndroidViewModel {
         });
     }
 
+
     private void fetchLatestProducts() {
-        mWooCommerceApi.getProducts(10, 1, "date").enqueue(new Callback<List<Product>>() {
+        mWooApi.getProducts(10, 1, "date").enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
                     mProductRepository.setLatestProducts(response.body());
+                    //top rating products
                     fetchBestProducts();
                 }
             }
@@ -77,7 +81,7 @@ public class SplashFragmentViewModel extends AndroidViewModel {
     }
 
     private void fetchBestProducts() {
-        mWooCommerceApi.getProducts(10, 1, "rating").enqueue(new Callback<List<Product>>() {
+        mWooApi.getProducts(10, 1, "rating").enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
@@ -95,7 +99,7 @@ public class SplashFragmentViewModel extends AndroidViewModel {
     }
 
     private void fetchPopularProducts() {
-        mWooCommerceApi.getProducts(10, 1, "popularity").enqueue(new Callback<List<Product>>() {
+        mWooApi.getProducts(10, 1, "popularity").enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
@@ -123,5 +127,4 @@ public class SplashFragmentViewModel extends AndroidViewModel {
     public LiveData<Boolean> getStartMainActivity() {
         return mStartMainActivity;
     }
-
 }

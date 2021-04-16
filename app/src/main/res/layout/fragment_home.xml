@@ -98,6 +98,7 @@
                     android:textColor="@android:color/black"
                     app:fontFamily="@font/far_trafc_bd" />
 
+
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -189,7 +190,6 @@
                     android:gravity="start"
                     android:padding="4dp"
                     android:text="@string/whole_list"
-
                     android:textColor="@color/digikala_blue"
                     android:textSize="12sp"
                     app:fontFamily="@font/far_roya_bd" />

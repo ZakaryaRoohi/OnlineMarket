@@ -20,8 +20,10 @@ import java.util.List;
 
 public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecyclerAdapter.ProductRecyclerViewHolder> {
 
+    //TODO later
     private ProductAdapterViewModel mViewModel;
-    private List<Product> mProducts;
+
+    private List <Product> mProducts;
     private Context mContext;
 
     public ProductRecyclerAdapter(Context context) {
@@ -35,7 +37,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
 
     @NonNull
     @Override
-    public ProductRecyclerAdapter.ProductRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ProductRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         RowItemProductBinding binding =
                 DataBindingUtil.inflate(
@@ -43,21 +45,19 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
                         R.layout.row_item_product,
                         parent,
                         false);
-
-//        inflater.inflate(R.id .)
         return new ProductRecyclerViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductRecyclerAdapter.ProductRecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ProductRecyclerViewHolder holder, int position) {
         holder.bindProduct(mProducts.get(position));
+
     }
 
     @Override
     public int getItemCount() {
-        return 0;//mProducts.size();
+        return mProducts.size();
     }
-
 
     public class ProductRecyclerViewHolder extends RecyclerView.ViewHolder {
 
@@ -71,12 +71,14 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
 
         public void bindProduct(Product product) {
             mProduct = product;
-            mBinding.productLayoutTitle.setText(mProduct.getName());
-            mBinding.productLayoutPrice.setText(mProduct.getPrice());
+            mBinding.textViewProductTitle.setText(mProduct.getName());
+            mBinding.textViewProductPrice.setText(mProduct.getPrice());
+
             Picasso.get()
                     .load(ImageUtil.getFirstImageUrlOfProduct(mProduct))
                     .placeholder(R.drawable.place_holder)
-                    .into(mBinding.productLayoutCover);
+                    .into(mBinding.imageViewProductCover);
+
         }
 
     }
