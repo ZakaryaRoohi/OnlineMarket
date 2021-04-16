@@ -41,12 +41,13 @@ dependencies {
     def lifecycle_version = "2.2.0"
     def room_version = "2.2.5"
     def nav_version = "2.3.5"
+    def paging_version = "3.0.0-alpha08"
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
     //RecyclerView
@@ -60,6 +61,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     //lifecycle
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     //room
@@ -74,11 +76,10 @@ dependencies {
     implementation "androidx.navigation:navigation-ui:$nav_version"
 
     implementation 'com.pollux:dualprogressview:0.0.1'
-//apply safe arg plugin from top lvl gradle project
 //    apply plugin: "androidx.navigation.safeargs"
-//
-//    testImplementation 'junit:junit:4.13.1'
-//    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+//paging 3
+    implementation "androidx.paging:paging-runtime:$paging_version"
+
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
 }

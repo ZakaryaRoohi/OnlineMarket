@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.onlinemarket.R;
+import com.example.onlinemarket.adapter.WholeProductsAdapter;
 import com.example.onlinemarket.databinding.FragmentWholeProductsBinding;
 import com.example.onlinemarket.viewmodel.WholeProductFragmentViewModel;
 
@@ -21,7 +22,7 @@ public class WholeProductsFragment extends Fragment {
 
     private FragmentWholeProductsBinding mBinding;
     private WholeProductFragmentViewModel mViewModel;
-
+    private WholeProductsAdapter mWholeProductsAdapter;
 
     public WholeProductsFragment() {
         // Required empty public constructor
@@ -41,14 +42,18 @@ public class WholeProductsFragment extends Fragment {
         String orderBy = WholeProductsFragmentArgs.fromBundle(getArguments()).getOrderBy();
 
         mViewModel = new ViewModelProvider(this).get(WholeProductFragmentViewModel.class);
-
-        mViewModel.getStringOrderByLiveData().observe(this, s -> {
-            mViewModel.fetchDataFromRepository();
-            mViewModel.getWholeProductsAdapter().notifyDataSetChanged();
-        });
-
         mViewModel.getStringOrderByLiveData().setValue(orderBy);
         mViewModel.fetchDataFromRepository();
+        initAdapter();
+
+        mViewModel.getProducts().observe(this, products -> {
+            mWholeProductsAdapter.notifyDataSetChanged();
+        });
+
+        mViewModel.getStringOrderByLiveData().observe(this, s -> {
+            mWholeProductsAdapter.notifyDataSetChanged();
+        });
+
     }
 
     @Override
@@ -62,10 +67,11 @@ public class WholeProductsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewModel.initAdapter();
+        mBinding.recyclerViewWholeProducts.setAdapter(mWholeProductsAdapter);
+    }
 
-        mBinding.recyclerViewWholeProducts.setAdapter(mViewModel.getWholeProductsAdapter());
-
-
+    public void initAdapter() {
+        mWholeProductsAdapter = new WholeProductsAdapter(getContext());
+        mWholeProductsAdapter.setProducts(mViewModel.getProducts().getValue());
     }
 }
