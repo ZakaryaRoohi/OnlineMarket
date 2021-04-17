@@ -6,12 +6,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.data.model.Product;
 import com.example.onlinemarket.databinding.RowItemProductBinding;
 import com.example.onlinemarket.util.ImageUtil;
+import com.example.onlinemarket.view.fragment.HomeFragmentDirections;
 import com.example.onlinemarket.viewmodel.ProductAdapterViewModel;
 import com.squareup.picasso.Picasso;
 
@@ -23,7 +25,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
     //TODO later
     private ProductAdapterViewModel mViewModel;
 
-    private List <Product> mProducts;
+    private List<Product> mProducts;
     private Context mContext;
 
     public ProductRecyclerAdapter(Context context) {
@@ -71,6 +73,11 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
 
         public void bindProduct(Product product) {
             mProduct = product;
+            mBinding.rowLayoutCardView.setOnClickListener(v -> {
+                HomeFragmentDirections.ActionNavFragHomeToProductDetailFragment action =
+                HomeFragmentDirections.actionNavFragHomeToDetailFragment(mProduct.getId());
+                Navigation.findNavController(v).navigate(action);
+            });
             mBinding.textViewProductTitle.setText(mProduct.getName());
             mBinding.textViewProductPrice.setText(mProduct.getPrice());
 

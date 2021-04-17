@@ -105,8 +105,8 @@ public class HomeFragment extends Fragment {
     private void setListeners() {
         mBinding.textViewWholeLatestProducts.setOnClickListener(v -> {
 
-            HomeFragmentDirections.ActionHomeFragmentToWholeProductsFragment action = HomeFragmentDirections
-                    .actionHomeFragmentToWholeProductsFragment("date");
+            HomeFragmentDirections.ActionNavFragHomeToProductDetailFragment action = HomeFragmentDirections
+                    .actionNavFragHomeToDetailFragment("date");
 
             Navigation.findNavController(v)
                     .navigate(action);
@@ -114,16 +114,16 @@ public class HomeFragment extends Fragment {
         });
 
         mBinding.textViewWholePopularProducts.setOnClickListener(v -> {
-            HomeFragmentDirections.ActionHomeFragmentToWholeProductsFragment action = HomeFragmentDirections
-                    .actionHomeFragmentToWholeProductsFragment("popularity");
+            HomeFragmentDirections.ActionNavFragHomeToProductDetailFragment action = HomeFragmentDirections
+                    .actionNavFragHomeToDetailFragment("popularity");
 
             Navigation.findNavController(v)
                     .navigate(action);
         });
 
         mBinding.textViewWholeTopRatingProducts.setOnClickListener(v -> {
-            HomeFragmentDirections.ActionHomeFragmentToWholeProductsFragment action = HomeFragmentDirections
-                    .actionHomeFragmentToWholeProductsFragment("rating");
+            HomeFragmentDirections.ActionNavFragHomeToProductDetailFragment action = HomeFragmentDirections
+                    .actionNavFragHomeToDetailFragment("rating");
 
             Navigation.findNavController(v)
                     .navigate(action);

@@ -8,7 +8,6 @@ import androidx.navigation.NavDirections;
 import com.example.onlinemarket.R;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 public class HomeFragmentDirections {
 
@@ -16,17 +15,17 @@ public class HomeFragmentDirections {
     }
 
     @NonNull
-    public static ActionHomeFragmentToWholeProductsFragment actionHomeFragmentToWholeProductsFragment(
+    public static ActionNavFragHomeToProductDetailFragment actionNavFragHomeToDetailFragment(
             @NonNull String orderBy) {
-        return new ActionHomeFragmentToWholeProductsFragment(orderBy);
+        return new ActionNavFragHomeToProductDetailFragment(orderBy);
     }
 
 
-    public static class ActionHomeFragmentToWholeProductsFragment implements NavDirections {
+    public static class ActionNavFragHomeToProductDetailFragment implements NavDirections {
 
         private final HashMap arguments = new HashMap();
 
-        private ActionHomeFragmentToWholeProductsFragment(@NonNull String orderBy) {
+        private ActionNavFragHomeToProductDetailFragment(@NonNull String orderBy) {
             if (orderBy == null) {
                 throw new IllegalArgumentException("Argument \"orderBy\" is marked as non-null but was passed a null value.");
             }
@@ -35,7 +34,7 @@ public class HomeFragmentDirections {
         }
 
         @NonNull
-        public ActionHomeFragmentToWholeProductsFragment setOrderBy(@NonNull String orderBy) {
+        public ActionNavFragHomeToProductDetailFragment setOrderBy(@NonNull String orderBy) {
             if (orderBy == null) {
                 throw new IllegalArgumentException("Argument \"orderBy\" is marked as non-null but was passed a null value.");
             }
@@ -70,7 +69,7 @@ public class HomeFragmentDirections {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            ActionHomeFragmentToWholeProductsFragment that = (ActionHomeFragmentToWholeProductsFragment) o;
+            ActionNavFragHomeToProductDetailFragment that = (ActionNavFragHomeToProductDetailFragment) o;
             if (arguments.containsKey("orderBy") != that.arguments.containsKey("orderBy")) {
                 return false;
             }
