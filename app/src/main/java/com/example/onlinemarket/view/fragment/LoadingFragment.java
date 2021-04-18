@@ -39,6 +39,8 @@ public class LoadingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        assert getArguments() != null;
+
         mProductId = LoadingFragmentArgs.fromBundle(getArguments()).getProductId();
         mViewModel = new ViewModelProvider(this).get(ProductDetailViewModel.class);
 

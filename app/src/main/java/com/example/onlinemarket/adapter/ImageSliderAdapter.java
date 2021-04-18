@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ImageSliderAdapter extends SliderViewAdapter<ImageSliderAdapter.SliderAdapterViewHolder> {
-    private Context mContext;
     private List<String> mStringImageUrl = new ArrayList<>();
 
     public void setStringImageUrl(List<String> stringImageUrl) {
@@ -24,13 +23,13 @@ public class ImageSliderAdapter extends SliderViewAdapter<ImageSliderAdapter.Sli
     }
 
     public ImageSliderAdapter(Context context) {
-        mContext = context;
+
     }
 
     @Override
     public SliderAdapterViewHolder onCreateViewHolder(ViewGroup parent) {
         ImageSliderCustomLayoutBinding binding = DataBindingUtil
-                .inflate(LayoutInflater.from(mContext),
+                .inflate(LayoutInflater.from(parent.getContext()),
                         R.layout.image_slider_custom_layout,
                         parent,
                         false);

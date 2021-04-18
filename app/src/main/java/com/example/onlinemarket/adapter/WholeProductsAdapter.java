@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinemarket.R;
@@ -13,6 +14,7 @@ import com.example.onlinemarket.data.model.Category;
 import com.example.onlinemarket.data.model.Product;
 import com.example.onlinemarket.databinding.RowItemWholeProductsBinding;
 import com.example.onlinemarket.util.ImageUtil;
+import com.example.onlinemarket.view.fragment.WholeProductsFragmentDirections;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -22,7 +24,6 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
     private List<Product> mProducts;
     private String mOrderBy;
     private Category mCategory;
-    private Context mContext;
 
     public void setProducts(List<Product> products) {
         mProducts = products;
@@ -36,20 +37,21 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
         mCategory = category;
     }
 
-    public WholeProductsAdapter(Context context) {
-        mContext = context;
+    public WholeProductsAdapter() {
     }
 
-    public WholeProductsAdapter(Context context, String orderBy) {
+    public WholeProductsAdapter( String orderBy) {
         mOrderBy = orderBy;
-        mContext = context;
+    }
+    public WholeProductsAdapter(Category category) {
+        mCategory = category;
     }
 
     @NonNull
     @Override
     public WholeProductsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RowItemWholeProductsBinding binding = DataBindingUtil
-                .inflate(LayoutInflater.from(mContext),
+                .inflate(LayoutInflater.from(parent.getContext()),
                         R.layout.row_item_whole_products,
                         parent,
                         false);
@@ -66,18 +68,16 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
         return mProducts.size();
     }
 
-    public class WholeProductsViewHolder extends RecyclerView.ViewHolder {
+    public static class WholeProductsViewHolder extends RecyclerView.ViewHolder {
 
-        private RowItemWholeProductsBinding mBinding;
+        private final RowItemWholeProductsBinding mBinding;
         private Product mProduct;
 
         public WholeProductsViewHolder(@NonNull RowItemWholeProductsBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
 
-            mBinding.cardViewRowItemWholeProducts.setOnClickListener(v -> {
-                //TODO : startActivity to product detail fragment
-            });
+
         }
 
         public void bindProduct(Product product) {
@@ -89,6 +89,14 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
                     .load(ImageUtil.getFirstImageUrlOfProduct(mProduct))
                     .placeholder(R.drawable.place_holder)
                     .into(mBinding.rowItemWholeProductsImage);
+
+            mBinding.cardViewRowItemWholeProducts.setOnClickListener(v -> {
+                WholeProductsFragmentDirections.ActionWholeProductsFragmentToLoadingFragment action =
+                        WholeProductsFragmentDirections.actionWholeProductsFragmentToLoadingFragment(mProduct.getId());
+                Navigation.findNavController(v).navigate(action);
+
+            });
+
         }
     }
 

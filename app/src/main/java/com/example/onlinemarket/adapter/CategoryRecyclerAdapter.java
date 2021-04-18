@@ -19,7 +19,6 @@ import java.util.List;
 
 public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.CategoryViewHolder> {
     private List<Category> mCategories;
-    private Context mContext;
 
     public List<Category> getCategories() {
         return mCategories;
@@ -28,15 +27,13 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     public void setCategories(List<Category> categories) {
         mCategories = categories;
     }
-    public CategoryRecyclerAdapter(Context context) {
-        mContext = context;
+    public CategoryRecyclerAdapter() {
     }
-
     @NonNull
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         RowItemCategoryBinding binding = DataBindingUtil.inflate(
-                LayoutInflater.from(mContext),
+                LayoutInflater.from(parent.getContext()),
                 R.layout.row_item_category,
                 parent,
                 false);
@@ -54,7 +51,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         return mCategories.size();
     }
 
-    public class CategoryViewHolder extends RecyclerView.ViewHolder {
+    public static class CategoryViewHolder extends RecyclerView.ViewHolder {
         private final RowItemCategoryBinding mBinding;
         private Category mCategory;
 

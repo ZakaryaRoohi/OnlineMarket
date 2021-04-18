@@ -1,6 +1,5 @@
 package com.example.onlinemarket.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -10,12 +9,10 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinemarket.R;
-import com.example.onlinemarket.data.model.Category;
 import com.example.onlinemarket.data.model.Product;
 import com.example.onlinemarket.databinding.RowItemProductBinding;
 import com.example.onlinemarket.util.ImageUtil;
 import com.example.onlinemarket.view.fragment.HomeFragmentDirections;
-import com.example.onlinemarket.viewmodel.ProductAdapterViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -23,14 +20,10 @@ import java.util.List;
 
 public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecyclerAdapter.ProductRecyclerViewHolder> {
 
-    //TODO later
-    private ProductAdapterViewModel mViewModel;
 
     private List<Product> mProducts;
-    private Context mContext;
 
-    public ProductRecyclerAdapter(Context context) {
-        mContext = context;
+    public ProductRecyclerAdapter() {
         mProducts = new ArrayList<>();
     }
 
@@ -41,7 +34,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
     @NonNull
     @Override
     public ProductRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(mContext);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         RowItemProductBinding binding =
                 DataBindingUtil.inflate(
                         inflater,
@@ -62,10 +55,10 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         return mProducts.size();
     }
 
-    public class ProductRecyclerViewHolder extends RecyclerView.ViewHolder {
+    public static class ProductRecyclerViewHolder extends RecyclerView.ViewHolder {
 
 
-        private RowItemProductBinding mBinding;
+        private final RowItemProductBinding mBinding;
         private Product mProduct;
 
         public ProductRecyclerViewHolder(@NonNull RowItemProductBinding binding) {

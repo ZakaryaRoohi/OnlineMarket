@@ -17,20 +17,18 @@ public class RetrofitInstance {
 
     // Singleton
 
-    private static Retrofit retrofitInstance;
+    private RetrofitInstance() {
+    }
+
+    private static Retrofit sRetrofit = null;
 
     public static Retrofit getInstance() {
-
-        if (retrofitInstance == null) {
-
-            retrofitInstance = new Retrofit.Builder()
+        if (sRetrofit == null) {
+            sRetrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-
         }
-
-
-        return retrofitInstance;
+        return sRetrofit;
     }
 }
