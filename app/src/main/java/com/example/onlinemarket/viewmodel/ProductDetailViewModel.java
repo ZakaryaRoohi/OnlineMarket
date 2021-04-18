@@ -12,12 +12,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProductDetailFragmentViewModel extends ViewModel {
+public class ProductDetailViewModel extends ViewModel {
 
     private MutableLiveData<Product> mProductMutableLiveData;
     private WooApi mWooApi;
 
-    public ProductDetailFragmentViewModel(){
+    public ProductDetailViewModel(){
         mProductMutableLiveData = new MutableLiveData<>();
         mWooApi = RetrofitInstance.getInstance().create(WooApi.class);
 

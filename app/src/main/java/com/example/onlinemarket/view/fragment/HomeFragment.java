@@ -35,6 +35,7 @@ public class HomeFragment extends Fragment {
     private ProductRecyclerAdapter mPopularProductsAdapter;
     private ImageSliderAdapter mImageSliderAdapter;
 
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -52,6 +53,7 @@ public class HomeFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
         mViewModel.fetchDataFromRepository();
+
         initAdapters();
 
         mViewModel.getOfferedProductsLiveData().observe(this, products -> {
@@ -82,20 +84,23 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         mImageSliderAdapter = new ImageSliderAdapter(getContext());
-        List<String> stringResource = new ArrayList<>();
-        stringResource.add(ImageUtil.convertResourceIdToUrl(R.drawable.main_slider_image01));
-        stringResource.add(ImageUtil.convertResourceIdToUrl(R.drawable.main_slider_image02));
-        stringResource.add(ImageUtil.convertResourceIdToUrl(R.drawable.main_slider_image03));
-        stringResource.add(ImageUtil.convertResourceIdToUrl(R.drawable.main_slider_image04));
-        mImageSliderAdapter.setStringImageUrl(stringResource);
+        List<String> stringsResource = new ArrayList<>();
+
+        stringsResource.add(ImageUtil.convertResourceIdToUrl(R.drawable.main_slider_image01));
+        stringsResource.add(ImageUtil.convertResourceIdToUrl(R.drawable.main_slider_image02));
+        stringsResource.add(ImageUtil.convertResourceIdToUrl(R.drawable.main_slider_image03));
+        stringsResource.add(ImageUtil.convertResourceIdToUrl(R.drawable.main_slider_image02));
+
+        mImageSliderAdapter.setStringImageUrl(stringsResource);
+
         mBinding.imageSlider.setSliderAdapter(mImageSliderAdapter);
 
+
         mBinding.recyclerViewOfferedProduct.setAdapter(mOfferedProductsAdapter);
-        mBinding.recyclerViewOfferedProduct.setAdapter(mLatestProductsAdapter);
-        mBinding.recyclerViewOfferedProduct.setAdapter(mTopRatingProductsAdapter);
-        mBinding.recyclerViewOfferedProduct.setAdapter(mPopularProductsAdapter);
+        mBinding.recyclerViewLatestProduct.setAdapter(mLatestProductsAdapter);
+        mBinding.recyclerViewTopRatingProduct.setAdapter(mTopRatingProductsAdapter);
+        mBinding.recyclerViewPopularProduct.setAdapter(mPopularProductsAdapter);
 
         setListeners();
 
@@ -105,8 +110,8 @@ public class HomeFragment extends Fragment {
     private void setListeners() {
         mBinding.textViewWholeLatestProducts.setOnClickListener(v -> {
 
-            HomeFragmentDirections.ActionNavFragHomeToProductDetailFragment action = HomeFragmentDirections
-                    .actionNavFragHomeToDetailFragment("date");
+            HomeFragmentDirections.ActionHomeFragmentToWholeProductsFragment action = HomeFragmentDirections
+                    .actionHomeFragmentToWholeProductsFragment("date");
 
             Navigation.findNavController(v)
                     .navigate(action);
@@ -114,16 +119,16 @@ public class HomeFragment extends Fragment {
         });
 
         mBinding.textViewWholePopularProducts.setOnClickListener(v -> {
-            HomeFragmentDirections.ActionNavFragHomeToProductDetailFragment action = HomeFragmentDirections
-                    .actionNavFragHomeToDetailFragment("popularity");
+            HomeFragmentDirections.ActionHomeFragmentToWholeProductsFragment action = HomeFragmentDirections
+                    .actionHomeFragmentToWholeProductsFragment("popularity");
 
             Navigation.findNavController(v)
                     .navigate(action);
         });
 
         mBinding.textViewWholeTopRatingProducts.setOnClickListener(v -> {
-            HomeFragmentDirections.ActionNavFragHomeToProductDetailFragment action = HomeFragmentDirections
-                    .actionNavFragHomeToDetailFragment("rating");
+            HomeFragmentDirections.ActionHomeFragmentToWholeProductsFragment action = HomeFragmentDirections
+                    .actionHomeFragmentToWholeProductsFragment("rating");
 
             Navigation.findNavController(v)
                     .navigate(action);
@@ -144,6 +149,5 @@ public class HomeFragment extends Fragment {
         mPopularProductsAdapter = new ProductRecyclerAdapter(getContext());
         mPopularProductsAdapter.setProducts(mViewModel.getPopularProductsLiveData().getValue());
     }
-
 
 }

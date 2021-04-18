@@ -1,7 +1,6 @@
 package com.example.onlinemarket.view.fragment;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -15,13 +14,13 @@ import android.view.ViewGroup;
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.adapter.ImageSliderAdapter;
 import com.example.onlinemarket.databinding.FragmentProductDetailBinding;
-import com.example.onlinemarket.viewmodel.ProductDetailFragmentViewModel;
+import com.example.onlinemarket.viewmodel.ProductDetailViewModel;
 
 public class ProductDetailFragment extends Fragment {
 
-    private Integer mProductId;
+
     private ImageSliderAdapter mImageSliderAdapter;
-    private ProductDetailFragmentViewModel mViewModel;
+    private ProductDetailViewModel mViewModel;
     private FragmentProductDetailBinding mBinding;
 
     public ProductDetailFragment() {
@@ -29,36 +28,33 @@ public class ProductDetailFragment extends Fragment {
     }
 
     public static ProductDetailFragment newInstance() {
-        ProductDetailFragment fragment = new ProductDetailFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new ProductDetailFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mProductId = ProductDetailFragmentArgs.fromBundle(getArguments().getProductId);
-        mViewModel = new ViewModelProvider(this).get(ProductDetailFragmentViewModel.class);
-        mViewModel.fetchProductFromServer(mProductId);
 
+        mViewModel = new ViewModelProvider(this).get(ProductDetailViewModel.class);
+        mViewModel.setProductMutableLiveData
+                (ProductDetailFragmentArgs.fromBundle(getArguments()).getProduct());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_product_detail,
-                container,
-                false);
+        mBinding = DataBindingUtil
+                .inflate(inflater,
+                        R.layout.fragment_product_detail,
+                        container,
+                        false);
 
+        mBinding.setViewModel(mViewModel);
         return mBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mBinding.setViewModel(mViewModel);
-        mBinding.executePendingBindings();
     }
 }

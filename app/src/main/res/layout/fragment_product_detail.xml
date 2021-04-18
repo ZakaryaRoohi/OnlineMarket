@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.onlinemarket.viewmodel.ProductDetailFragmentViewModel" />
+            type="com.example.onlinemarket.viewmodel.ProductDetailViewModel" />
     </data>
 
     <ScrollView
