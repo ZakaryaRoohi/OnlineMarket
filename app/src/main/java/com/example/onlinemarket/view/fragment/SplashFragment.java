@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.databinding.FragmentSplashBinding;
+import com.example.onlinemarket.util.enums.ConnectionState;
 import com.example.onlinemarket.view.activity.MainActivity;
 import com.example.onlinemarket.viewmodel.SplashFragmentViewModel;
 
@@ -44,22 +45,39 @@ public class SplashFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(SplashFragmentViewModel.class);
         mViewModel.fetchInitData();
 
-        mViewModel.getIsLoading().observe(this, aBoolean -> {
-            if (!aBoolean) {
-                loadInternetError();
+//        mViewModel.getIsLoading().observe(this, aBoolean -> {
+//            if (!aBoolean) {
+//                loadInternetError();
+//            }
+//        });
+//
+//        mViewModel.getIsError().observe(this, aBoolean -> {
+//            if (aBoolean) {
+//                loadInternetError();
+//            }
+//        });
+//        mViewModel.getStartMainActivity().observe(this, aBoolean -> {
+//            if (aBoolean) {
+//                getActivity().startActivity(MainActivity.newIntent(getContext()));
+//            }
+//        });
+        mViewModel.getConnectionStateLiveData().observe(this, connectionState -> {
+            switch (connectionState) {
+                case ERROR:
+                    loadInternetError();
+                    break;
+                case LOADING:
+                    showLoadingUi();
+                    break;
+                case START_ACTIVITY:
+                    getActivity().startActivity(MainActivity.newIntent(getContext()));
+                    break;
+                default:
+                    break;
             }
         });
 
-        mViewModel.getIsError().observe(this, aBoolean -> {
-            if (aBoolean) {
-                loadInternetError();
-            }
-        });
-        mViewModel.getStartMainActivity().observe(this, aBoolean -> {
-            if (aBoolean) {
-                getActivity().startActivity(MainActivity.newIntent(getContext()));
-            }
-        });
+
 
     }
 
@@ -80,8 +98,7 @@ public class SplashFragment extends Fragment {
         mBinding.buttonRetry.setOnClickListener(v -> {
             mViewModel.fetchInitData();
             showLoadingUi();
-            mViewModel.getIsError().setValue(false);
-            mViewModel.getIsLoading().setValue(true);
+            mViewModel.getConnectionStateLiveData().setValue(ConnectionState.LOADING);
         });
     }
 
