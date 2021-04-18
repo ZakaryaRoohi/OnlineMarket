@@ -84,7 +84,7 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
             mProduct = product;
             mBinding.rowItemWholeProductsTitle.setText(mProduct.getName());
             mBinding.rowItemWholeProductsSalesPrice.setText(mProduct.getPrice());
-            mBinding.rowItemWholeProductsRegularPrice.setText(mProduct.getRegular_price());
+            mBinding.rowItemWholeProductsRegularPrice.setText(mProduct.getRegularPrice());
             Picasso.get()
                     .load(ImageUtil.getFirstImageUrlOfProduct(mProduct))
                     .placeholder(R.drawable.place_holder)

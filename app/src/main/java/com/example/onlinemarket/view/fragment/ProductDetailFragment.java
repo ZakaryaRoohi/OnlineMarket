@@ -1,6 +1,7 @@
 package com.example.onlinemarket.view.fragment;
 
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.adapter.ImageSliderAdapter;
 import com.example.onlinemarket.databinding.FragmentProductDetailBinding;
+import com.example.onlinemarket.util.ImageUtil;
 import com.example.onlinemarket.viewmodel.ProductDetailViewModel;
 
 public class ProductDetailFragment extends Fragment {
@@ -56,5 +58,10 @@ public class ProductDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mImageSliderAdapter = new ImageSliderAdapter(getContext());
+        mImageSliderAdapter.setStringImageUrl(
+                ImageUtil.getAllImageUrlOfProduct(mViewModel.getProductMutableLiveData().getValue())
+        );
+        mBinding.imageSliderProductDetailImages.setSliderAdapter(mImageSliderAdapter);
     }
 }

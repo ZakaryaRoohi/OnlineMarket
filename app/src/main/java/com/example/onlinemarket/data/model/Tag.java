@@ -1,12 +1,13 @@
+
 package com.example.onlinemarket.data.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.List;
 
-public class Category implements Serializable {
+public class Tag implements Serializable
+{
 
     @SerializedName("id")
     @Expose
@@ -17,7 +18,7 @@ public class Category implements Serializable {
     @SerializedName("slug")
     @Expose
     private String slug;
-    private final static long serialVersionUID = 1780564682057275091L;
+    private final static long serialVersionUID = 1322706309262165619L;
 
     public Integer getId() {
         return id;
