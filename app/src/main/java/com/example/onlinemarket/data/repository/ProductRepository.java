@@ -1,5 +1,6 @@
 package com.example.onlinemarket.data.repository;
 
+import com.example.onlinemarket.data.model.Category;
 import com.example.onlinemarket.data.model.Product;
 
 import java.util.List;
@@ -15,7 +16,15 @@ public class ProductRepository {
     private List<Product> mLatestProducts;
     private List<Product> mTopRatingProducts;
     private List<Product> mPopularProducts;
+    private List<Category> mAllCategories;
 
+    public List<Category> getAllCategories() {
+        return mAllCategories;
+    }
+
+    public void setAllCategories(List<Category> allCategories) {
+        mAllCategories = allCategories;
+    }
 
     private ProductRepository() {
     }

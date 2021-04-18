@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.onlinemarket.data.model.Category;
 import com.example.onlinemarket.data.model.Product;
 import com.example.onlinemarket.data.repository.ProductRepository;
 import com.example.onlinemarket.network.RetrofitInstance;
@@ -104,14 +105,30 @@ public class SplashFragmentViewModel extends AndroidViewModel {
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
                     mProductRepository.setPopularProducts(response.body());
-                    //live data flag to start activity in Ui (SplashFragment) with observe this field
-                    mStartMainActivity.setValue(true);
+                    fetchAllCategories();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
                 initInternetError();
+            }
+        });
+    }
+    private void fetchAllCategories(){
+        mWooApi.getAllCategories(18,1).enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                if (response.isSuccessful()){
+                    mProductRepository.setAllCategories(response.body());
+                    //live data flag to start activity in Ui (SplashFragment) with observe this field
+                    mStartMainActivity.setValue(true);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+
             }
         });
     }
