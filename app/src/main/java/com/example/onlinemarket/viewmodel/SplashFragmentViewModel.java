@@ -9,9 +9,11 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.onlinemarket.data.model.Category;
 import com.example.onlinemarket.data.model.Product;
+import com.example.onlinemarket.data.repository.CategoryRepository;
 import com.example.onlinemarket.data.repository.ProductRepository;
 import com.example.onlinemarket.network.RetrofitInstance;
 import com.example.onlinemarket.network.WooApi;
+import com.example.onlinemarket.util.CategoryUtil;
 
 import java.util.List;
 
@@ -120,7 +122,10 @@ public class SplashFragmentViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                 if (response.isSuccessful()){
-                    mProductRepository.setAllCategories(response.body());
+
+                    CategoryRepository categoryRepository = CategoryRepository.getInstance();
+                    categoryRepository.setAllCategories(response.body());
+                    categoryRepository.setParentCategories(CategoryUtil.parentsCategory(response.body()));
                     //live data flag to start activity in Ui (SplashFragment) with observe this field
                     mStartMainActivity.setValue(true);
                 }
@@ -128,7 +133,7 @@ public class SplashFragmentViewModel extends AndroidViewModel {
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-
+            initInternetError();
             }
         });
     }

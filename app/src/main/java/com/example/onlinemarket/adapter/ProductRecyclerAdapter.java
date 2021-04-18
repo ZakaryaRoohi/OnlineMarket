@@ -10,6 +10,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinemarket.R;
+import com.example.onlinemarket.data.model.Category;
 import com.example.onlinemarket.data.model.Product;
 import com.example.onlinemarket.databinding.RowItemProductBinding;
 import com.example.onlinemarket.util.ImageUtil;
@@ -62,6 +63,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
     }
 
     public class ProductRecyclerViewHolder extends RecyclerView.ViewHolder {
+
 
         private RowItemProductBinding mBinding;
         private Product mProduct;

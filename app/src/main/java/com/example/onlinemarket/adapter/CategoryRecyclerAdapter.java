@@ -1,33 +1,81 @@
 package com.example.onlinemarket.adapter;
 
+import android.content.Context;
+import android.renderscript.ScriptGroup;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.CategoryViewHolder> {
+import com.example.onlinemarket.R;
+import com.example.onlinemarket.data.model.Category;
+import com.example.onlinemarket.databinding.RowItemCategoryBinding;
+import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
+public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.CategoryViewHolder> {
+    private List<Category> mCategories;
+    private Context mContext;
+
+    public List<Category> getCategories() {
+        return mCategories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        mCategories = categories;
+    }
+    public CategoryRecyclerAdapter(Context context) {
+        mContext = context;
+    }
 
     @NonNull
     @Override
-    public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return null;
+    public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        RowItemCategoryBinding binding = DataBindingUtil.inflate(
+                LayoutInflater.from(mContext),
+                R.layout.row_item_category,
+                parent,
+                false);
+
+        return new CategoryViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoryViewHolder categoryViewHolder, int i) {
-
+    public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
+        holder.bindCategory(mCategories.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mCategories.size();
     }
 
-    public class CategoryViewHolder extends RecyclerView.ViewHolder{
-        public CategoryViewHolder(@NonNull View itemView) {
-            super(itemView);
+    public class CategoryViewHolder extends RecyclerView.ViewHolder {
+        private final RowItemCategoryBinding mBinding;
+        private Category mCategory;
+
+        public CategoryViewHolder(@NonNull RowItemCategoryBinding binding) {
+            super(binding.getRoot());
+            mBinding = binding;
+        }
+
+        public void bindCategory(Category category) {
+            mCategory = category;
+            mBinding.textViewCategoryTitle.setText(mCategory.getName());
+            Picasso.get()
+                    .load(mCategory.getImage().getSrc())
+                    .placeholder(R.drawable.place_holder)
+                    .into(mBinding.imageViewProductCover);
+            mBinding.rowLayoutCardView.setOnClickListener(v -> {
+                //TODO : later
+            });
+
         }
     }
+
+
 }
