@@ -52,7 +52,6 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
-        mViewModel.fetchDataFromRepository();
 
         initAdapters();
 

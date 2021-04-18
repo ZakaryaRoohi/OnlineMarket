@@ -45,22 +45,6 @@ public class SplashFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(SplashFragmentViewModel.class);
         mViewModel.fetchInitData();
 
-//        mViewModel.getIsLoading().observe(this, aBoolean -> {
-//            if (!aBoolean) {
-//                loadInternetError();
-//            }
-//        });
-//
-//        mViewModel.getIsError().observe(this, aBoolean -> {
-//            if (aBoolean) {
-//                loadInternetError();
-//            }
-//        });
-//        mViewModel.getStartMainActivity().observe(this, aBoolean -> {
-//            if (aBoolean) {
-//                getActivity().startActivity(MainActivity.newIntent(getContext()));
-//            }
-//        });
         mViewModel.getConnectionStateLiveData().observe(this, connectionState -> {
             switch (connectionState) {
                 case ERROR:

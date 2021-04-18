@@ -1,5 +1,6 @@
 package com.example.onlinemarket.data.repository;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.onlinemarket.data.model.Category;
@@ -21,18 +22,26 @@ public class ProductRepository {
     //singleton
 
     private static ProductRepository sRepository;
-    private List<Product> mAllProducts;
-    private List<Product> mOfferedProducts;
-    private List<Product> mLatestProducts;
-    private List<Product> mTopRatingProducts;
-    private List<Product> mPopularProducts;
+    private final MutableLiveData<List<Product>> mAllProductsLiveData;
+    private final MutableLiveData<List<Product>> mOfferedProductsLiveData;
+    private final MutableLiveData<List<Product>> mLatestProductsLiveData;
+    private final MutableLiveData<List<Product>> mTopRatingProductsLiveData;
+    private final MutableLiveData<List<Product>> mPopularProductsLiveData;
+
+    private final MutableLiveData<ConnectionState> mConnectionStateMutableLiveData;
+    private final MutableLiveData<Product> mProductByIdMutableLiveData;
 
     private final WooApi mWooApi;
-    private final MutableLiveData<ConnectionState> mConnectionStateMutableLiveData;
 
 
     private ProductRepository() {
         mWooApi = RetrofitInstance.getInstance().create(WooApi.class);
+        mAllProductsLiveData = new MutableLiveData<>();
+        mOfferedProductsLiveData = new MutableLiveData<>();
+        mLatestProductsLiveData = new MutableLiveData<>();
+        mTopRatingProductsLiveData = new MutableLiveData<>();
+        mPopularProductsLiveData = new MutableLiveData<>();
+        mProductByIdMutableLiveData = new MutableLiveData<>();
         mConnectionStateMutableLiveData = new MutableLiveData<>();
     }
 
@@ -47,46 +56,46 @@ public class ProductRepository {
     }
 
 
-    public List<Product> getAllProducts() {
-        return mAllProducts;
+    public MutableLiveData<Product> getProductByIdMutableLiveData() {
+        return mProductByIdMutableLiveData;
+    }
+    public LiveData<List<Product>> getAllProductsLiveData() {
+        return mAllProductsLiveData;
+    }
+    public LiveData<List<Product>> getOfferedProductsLiveData() {
+        return mOfferedProductsLiveData;
     }
 
-    public void setAllProducts(List<Product> allProducts) {
-        mAllProducts = allProducts;
+    public LiveData<List<Product>> getLatestProductsLiveData() {
+        return mLatestProductsLiveData;
+    }
+    public LiveData<List<Product>> getTopRatingProductsLiveData(){
+        return mTopRatingProductsLiveData;
     }
 
-    public List<Product> getOfferedProducts() {
-        return mOfferedProducts;
+    public LiveData<List<Product>> getPopularProductsLiveData() {
+        return mPopularProductsLiveData;
     }
 
-    public void setOfferedProducts(List<Product> offeredProducts) {
-        mOfferedProducts = offeredProducts;
-    }
+    public void fetchProductById(Integer productId) {
+        //TODO : later handle error when internet state enable and disable
+        mConnectionStateMutableLiveData.setValue(ConnectionState.LOADING);
 
-    public List<Product> getLatestProducts() {
-        return mLatestProducts;
-    }
+        mWooApi.getProductById(productId).enqueue(new Callback<Product>() {
+            @Override
+            public void onResponse(Call<Product> call, Response<Product> response) {
+                if (response.isSuccessful()) {
+                    mProductByIdMutableLiveData.setValue(response.body());
+                    mConnectionStateMutableLiveData.setValue(ConnectionState.START_ACTIVITY);
+                }
+            }
 
-    public void setLatestProducts(List<Product> latestProducts) {
-        mLatestProducts = latestProducts;
+            @Override
+            public void onFailure(Call<Product> call, Throwable t) {
+                mConnectionStateMutableLiveData.setValue(ConnectionState.ERROR);
+            }
+        });
     }
-
-    public List<Product> getTopRatingProducts() {
-        return mTopRatingProducts;
-    }
-
-    public void setTopRatingProducts(List<Product> bestProducts) {
-        mTopRatingProducts = bestProducts;
-    }
-
-    public List<Product> getPopularProducts() {
-        return mPopularProducts;
-    }
-
-    public void setPopularProducts(List<Product> popularProducts) {
-        mPopularProducts = popularProducts;
-    }
-
     public void fetchInitData() {
         mConnectionStateMutableLiveData.setValue(ConnectionState.LOADING);
         //offered products
@@ -94,7 +103,7 @@ public class ProductRepository {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
-                    mOfferedProducts = response.body();
+                    mOfferedProductsLiveData.setValue(response.body());
                     fetchLatestProducts();
                 }
             }
@@ -111,7 +120,7 @@ public class ProductRepository {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
-                    mLatestProducts = response.body();
+                    mLatestProductsLiveData.setValue(response.body());
                     //top rating products
                     fetchBestProducts();
                 }
@@ -128,7 +137,7 @@ public class ProductRepository {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
-                    mTopRatingProducts = response.body();
+                    mTopRatingProductsLiveData.setValue(response.body());
                     //last step of fetch from api
                     fetchPopularProducts();
                 }
@@ -145,7 +154,7 @@ public class ProductRepository {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
-                    mPopularProducts = response.body();
+                    mPopularProductsLiveData.setValue(response.body());
                     fetchAllCategories();
 
                 }

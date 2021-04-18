@@ -17,48 +17,27 @@ import java.util.List;
 public class HomeFragmentViewModel extends ViewModel {
 
     private final ProductRepository mProductRepository;
-    private final MutableLiveData<List<Product>> mOfferedProductsLiveData = new MutableLiveData<>();
-    private final MutableLiveData<List<Product>> mLatestProductsLiveData = new MutableLiveData<>();
-    private final MutableLiveData<List<Product>> mTopRatingProductsLiveData = new MutableLiveData<>();
-    private final MutableLiveData<List<Product>> mPopularProductsLiveData = new MutableLiveData<>();
 
    public HomeFragmentViewModel(){
        mProductRepository = ProductRepository.getInstance();
    }
 
-   public void fetchDataFromRepository(){
-       fetchOfferedProductsFromRepository();
-       fetchLatestProductsFromRepository();
-       fetchPopularProductsFromRepository();
-       fetchTopRatingProductsFromRepository();
-   }
-    public void fetchOfferedProductsFromRepository() {
-        mOfferedProductsLiveData.setValue(mProductRepository.getOfferedProducts());
-    }
-    public void fetchLatestProductsFromRepository() {
-        mLatestProductsLiveData.setValue(mProductRepository.getLatestProducts());
-    }
-    public void fetchTopRatingProductsFromRepository() {
-        mTopRatingProductsLiveData.setValue(mProductRepository.getTopRatingProducts());
-    }
-    public void fetchPopularProductsFromRepository() {
-        mPopularProductsLiveData.setValue(mProductRepository.getPopularProducts());
-    }
+
 
     public LiveData<List<Product>> getOfferedProductsLiveData() {
-        return mOfferedProductsLiveData;
+        return mProductRepository.getOfferedProductsLiveData();
     }
 
     public LiveData<List<Product>> getLatestProductsLiveData() {
-        return mLatestProductsLiveData;
+        return mProductRepository.getLatestProductsLiveData();
     }
 
     public LiveData<List<Product>> getTopRatingProductsLiveData() {
-        return mTopRatingProductsLiveData;
+        return mProductRepository.getTopRatingProductsLiveData();
     }
 
     public LiveData<List<Product>> getPopularProductsLiveData() {
-        return mPopularProductsLiveData;
+        return mProductRepository.getPopularProductsLiveData();
     }
 
 }

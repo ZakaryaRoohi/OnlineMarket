@@ -16,12 +16,12 @@ import android.view.ViewGroup;
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.adapter.ImageSliderAdapter;
 import com.example.onlinemarket.databinding.FragmentLoadingBinding;
+import com.example.onlinemarket.util.enums.ConnectionState;
 import com.example.onlinemarket.viewmodel.ProductDetailViewModel;
 public class LoadingFragment extends Fragment {
 
     private FragmentLoadingBinding mBinding;
     private Integer mProductId;
-    private ImageSliderAdapter mImageSliderAdapter;
     private ProductDetailViewModel mViewModel;
 
 
@@ -42,26 +42,27 @@ public class LoadingFragment extends Fragment {
         mProductId = LoadingFragmentArgs.fromBundle(getArguments()).getProductId();
         mViewModel = new ViewModelProvider(this).get(ProductDetailViewModel.class);
 
-        mViewModel.fetchProductFromServer(mProductId);
-        mViewModel.getStartNavigationLiveData().observe(this, aBoolean -> {
+        mViewModel.fetchProductById(mProductId);
+        mViewModel.getConnectionStateLiveData().observe(this, connectionState -> {
+            switch (connectionState) {
+                case LOADING:
+                    showLoadingUi();
+                    break;
+                case ERROR:
+                    loadInternetError();
+                    break;
+                case START_ACTIVITY:
+                    LoadingFragmentDirections.ActionLoadingFragmentToProductDetailFragment action =
+                            LoadingFragmentDirections
+                                    .actionLoadingFragmentToProductDetailFragment
+                                            (mViewModel.getProductMutableLiveData().getValue());
+                    Navigation.findNavController(getView()).navigate(action);
+                    break;
+                default:
+                    break;
 
-            if (aBoolean) {
-                LoadingFragmentDirections.ActionLoadingFragmentToProductDetailFragment action =
-                        LoadingFragmentDirections
-                                .actionLoadingFragmentToProductDetailFragment
-                                        (mViewModel.getProductMutableLiveData().getValue());
-                Navigation.findNavController(getView()).navigate(action);
             }
-        });
-        mViewModel.getIsError().observe(this, aBoolean -> {
-            if (aBoolean)
-                loadInternetError();
-        });
-        mViewModel.getIsLoading().observe(this, aBoolean -> {
-            if (!aBoolean)
-                loadInternetError();
-        });
-
+    });
     }
 
     @Override
@@ -78,9 +79,8 @@ public class LoadingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mBinding.buttonRetry.setOnClickListener(v -> {
-            mViewModel.fetchProductFromServer(mProductId);
-            mViewModel.getIsError().setValue(false);
-            mViewModel.getIsLoading().setValue(true);
+            mViewModel.fetchProductById(mProductId);
+            mViewModel.getConnectionStateLiveData().setValue(ConnectionState.LOADING);
             showLoadingUi();
         });
     }
