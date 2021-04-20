@@ -8,11 +8,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.data.model.Category;
 import com.example.onlinemarket.databinding.RowItemCategoryBinding;
+import com.example.onlinemarket.view.fragment.CategoryFragment;
+import com.example.onlinemarket.view.fragment.CategoryFragmentDirections;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -68,7 +71,11 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                     .placeholder(R.drawable.place_holder)
                     .into(mBinding.imageViewProductCover);
             mBinding.rowLayoutCardView.setOnClickListener(v -> {
-                //TODO : later
+                CategoryFragmentDirections
+                        .ActionNavFragCategoryToCategoryProductsLoadingFragment action =
+                        CategoryFragmentDirections
+                        .actionNavFragCategoryToCategoryProductsLoadingFragment(mCategory.getId());
+                Navigation.findNavController(v).navigate(action);
             });
 
         }

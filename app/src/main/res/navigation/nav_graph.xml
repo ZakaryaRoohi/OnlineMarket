@@ -25,7 +25,8 @@
         tools:layout="@layout/fragment_whole_products">
         <argument
             android:name="orderBy"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true"/>
         <action
             android:id="@+id/action_wholeProductsFragment_to_loadingFragment"
             app:destination="@id/loadingFragment" />
@@ -36,7 +37,11 @@
         android:id="@+id/nav_fragCategory"
         android:name="com.example.onlinemarket.view.fragment.CategoryFragment"
         android:label="fragment_category"
-        tools:layout="fragment_category" />
+        tools:layout="@layout/fragment_category">
+        <action
+            android:id="@+id/action_nav_fragCategory_to_categoryProductsLoadingFragment"
+            app:destination="@id/categoryProductsLoadingFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navFragCart"
@@ -66,6 +71,23 @@
         <argument
             android:name="productId"
             app:argType="integer" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/categoryProductsLoadingFragment"
+        android:name="com.example.onlinemarket.view.fragment.CategoryProductsLoadingFragment"
+        android:label="fragment_category_products_loading"
+        tools:layout="@layout/fragment_loading">
+        <action
+            android:id="@+id/action_categoryProductsLoadingFragment_to_wholeProductsFragment"
+            app:destination="@id/wholeProductsFragment"
+            app:popUpTo="@id/categoryProductsLoadingFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="categoryId"
+            app:argType="integer" />
+
+
 
     </fragment>
 
