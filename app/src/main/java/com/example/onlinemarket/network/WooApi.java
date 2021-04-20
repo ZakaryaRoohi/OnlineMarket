@@ -16,7 +16,7 @@ import static com.example.onlinemarket.network.RetrofitInstance.BASE_URL;
 public interface WooApi {
 
     @GET(BASE_URL + "products" + API_KEY + "&on_sale=true")
-    Call<List<Product>> getSaleProducts(@Query("per_page") int perPage, @Query("page") int numberOfPage);
+    Call<List<Product>> getOnSaleProducts(@Query("per_page") int perPage, @Query("page") int numberOfPage);
 
     @GET(BASE_URL + "products" + API_KEY)
     Call<List<Product>> getProducts(@Query("per_page") int perPage,

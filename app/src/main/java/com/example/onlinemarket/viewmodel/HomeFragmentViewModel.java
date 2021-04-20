@@ -25,7 +25,7 @@ public class HomeFragmentViewModel extends ViewModel {
 
 
     public LiveData<List<Product>> getOfferedProductsLiveData() {
-        return mProductRepository.getOfferedProductsLiveData();
+        return mProductRepository.getOnSaleProductsLiveData();
     }
 
     public LiveData<List<Product>> getLatestProductsLiveData() {

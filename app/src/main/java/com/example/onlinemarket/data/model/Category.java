@@ -12,33 +12,41 @@ public class Category implements Serializable {
     @SerializedName("id")
     @Expose
     private Integer id;
+
     @SerializedName("name")
     @Expose
     private String name;
+
     @SerializedName("slug")
     @Expose
     private String slug;
+
     @SerializedName("parent")
     @Expose
     private Integer parent;
+
     @SerializedName("description")
     @Expose
     private String description;
+
     @SerializedName("display")
     @Expose
     private String display;
+
     @SerializedName("image")
     @Expose
     private Image image;
+
     @SerializedName("menu_order")
     @Expose
     private Integer menuOrder;
+
     @SerializedName("count")
     @Expose
     private Integer count;
-    @SerializedName("_links")
-    @Expose
-    private Links links;
+
+
+
     private final static long serialVersionUID = 428469175334491834L;
 
     public Integer getId() {
@@ -113,12 +121,5 @@ public class Category implements Serializable {
         this.count = count;
     }
 
-    public Links getLinks() {
-        return links;
-    }
-
-    public void setLinks(Links links) {
-        this.links = links;
-    }
 
 }

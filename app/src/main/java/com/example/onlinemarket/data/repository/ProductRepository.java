@@ -23,7 +23,7 @@ public class ProductRepository {
     //for special products
     private static ProductRepository sRepository;
     private final MutableLiveData<List<Product>> mAllProductsLiveData;
-    private final MutableLiveData<List<Product>> mOfferedProductsLiveData;
+    private final MutableLiveData<List<Product>> mOnSaleProductsLiveData;
     private final MutableLiveData<List<Product>> mLatestProductsLiveData;
     private final MutableLiveData<List<Product>> mTopRatingProductsLiveData;
     private final MutableLiveData<List<Product>> mPopularProductsLiveData;
@@ -40,7 +40,7 @@ public class ProductRepository {
     private ProductRepository() {
         mWooApi = RetrofitInstance.getInstance().create(WooApi.class);
         mAllProductsLiveData = new MutableLiveData<>();
-        mOfferedProductsLiveData = new MutableLiveData<>();
+        mOnSaleProductsLiveData = new MutableLiveData<>();
         mLatestProductsLiveData = new MutableLiveData<>();
         mTopRatingProductsLiveData = new MutableLiveData<>();
         mPopularProductsLiveData = new MutableLiveData<>();
@@ -70,8 +70,8 @@ public class ProductRepository {
     public LiveData<List<Product>> getAllProductsLiveData() {
         return mAllProductsLiveData;
     }
-    public LiveData<List<Product>> getOfferedProductsLiveData() {
-        return mOfferedProductsLiveData;
+    public LiveData<List<Product>> getOnSaleProductsLiveData() {
+        return mOnSaleProductsLiveData;
     }
 
     public LiveData<List<Product>> getLatestProductsLiveData() {
@@ -107,11 +107,11 @@ public class ProductRepository {
     public void fetchInitData() {
         mConnectionStateMutableLiveData.setValue(ConnectionState.LOADING);
         //offered products
-        mWooApi.getSaleProducts(10, 1).enqueue(new Callback<List<Product>>() {
+        mWooApi.getOnSaleProducts(10, 1).enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
-                    mOfferedProductsLiveData.setValue(response.body());
+                    mOnSaleProductsLiveData.setValue(response.body());
                     fetchLatestProducts();
                 }
             }
