@@ -1,5 +1,6 @@
 package com.example.onlinemarket.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,11 +32,8 @@ public class SplashFragment extends Fragment {
     }
 
     public static SplashFragment newInstance() {
-        SplashFragment fragment = new SplashFragment();
-        Bundle args = new Bundle();
 
-        fragment.setArguments(args);
-        return fragment;
+        return  new SplashFragment();
     }
 
     @Override
@@ -55,14 +53,18 @@ public class SplashFragment extends Fragment {
                     break;
                 case START_ACTIVITY:
                     getActivity().startActivity(MainActivity.newIntent(getContext()));
+                    getActivity().finish();
                     break;
                 default:
                     break;
             }
         });
+    }
 
-
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getActivity().finish();
     }
 
     @Override
