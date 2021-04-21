@@ -6,24 +6,23 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.room.Room;
 
-import com.example.onlinemarket.data.database.carddatabase.CardDatabase;
-import com.example.onlinemarket.data.database.entity.CardProduct;
+import com.example.onlinemarket.data.database.cartdatabase.CartDatabase;
 import com.example.onlinemarket.data.model.Product;
 
 import java.util.List;
 
 public class CartRepository {
 
-    public static final String CARD_DATABASE_NAME = "cardDatabase.db";
+    public static final String CART_DATABASE_NAME = "cardDatabase.db";
     private static CartRepository sCartRepository;
 
-    private MutableLiveData<Product> mProductsLiveData;
-    private final CardDatabase mDatabase;
+    private MutableLiveData<com.example.onlinemarket.data.model.Product> mProductsLiveData;
+    private final CartDatabase mDatabase;
 
     private CartRepository(Context context){
         mProductsLiveData = new MutableLiveData<>();
         mDatabase = Room.databaseBuilder(context.getApplicationContext(),
-                CardDatabase.class,CARD_DATABASE_NAME).build();
+                CartDatabase.class, CART_DATABASE_NAME).build();
     }
 
     public static CartRepository getInstance(Context context){
@@ -39,29 +38,29 @@ public class CartRepository {
     public static void setCartRepository(CartRepository cartRepository) {
         sCartRepository = cartRepository;
     }
-    public MutableLiveData<Product> getProductsLiveData() {
+    public MutableLiveData<com.example.onlinemarket.data.model.Product> getProductsLiveData() {
         return mProductsLiveData;
     }
 
-    public void setProductsLiveData(MutableLiveData<Product> productsLiveData) {
+    public void setProductsLiveData(MutableLiveData<com.example.onlinemarket.data.model.Product> productsLiveData) {
         mProductsLiveData = productsLiveData;
     }
 
-    public void insertToCard(CardProduct cardProduct) {
-        mDatabase.cardDao().insert(cardProduct);
+    public void insertToCart(Product product) {
+        mDatabase.cartDao().insert(product);
     }
 
-    public void deleteFromCard(CardProduct cardProduct) {
-        mDatabase.cardDao().delete(cardProduct);
+    public void deleteFromCart(Product product) {
+        mDatabase.cartDao().delete(product);
     }
 
-    public LiveData<CardProduct> getProductFromCard(Integer id) {
-        return mDatabase.cardDao().getById(id);
+    public LiveData<Product> getProductFromCart(Integer id) {
+        return mDatabase.cartDao().getById(id);
     }
 
 
-    public LiveData<List<CardProduct>> getAllFromCard() {
-        return mDatabase.cardDao().getAll();
+    public LiveData<List<Product>> getAllFromCart() {
+        return mDatabase.cartDao().getAll();
     }
 
 
