@@ -13,38 +13,27 @@ import java.util.List;
 
 public class CartRepository {
 
-    public static final String CART_DATABASE_NAME = "cardDatabase.db";
+    public static final String CART_DATABASE_NAME = "cartDatabase.db";
     private static CartRepository sCartRepository;
 
-    private MutableLiveData<com.example.onlinemarket.data.model.Product> mProductsLiveData;
     private final CartDatabase mDatabase;
 
-    private CartRepository(Context context){
-        mProductsLiveData = new MutableLiveData<>();
+    private CartRepository(Context context) {
         mDatabase = Room.databaseBuilder(context.getApplicationContext(),
-                CartDatabase.class, CART_DATABASE_NAME).build();
+                CartDatabase.class, CART_DATABASE_NAME).allowMainThreadQueries().build();
     }
 
-    public static CartRepository getInstance(Context context){
-        if (sCartRepository==null)
-            sCartRepository =  new CartRepository(context);
+    public static CartRepository getInstance(Context context) {
+        if (sCartRepository == null)
+            sCartRepository = new CartRepository(context);
         return sCartRepository;
     }
 
-    public static CartRepository getCartRepository() {
-        return sCartRepository;
-    }
 
     public static void setCartRepository(CartRepository cartRepository) {
         sCartRepository = cartRepository;
     }
-    public MutableLiveData<com.example.onlinemarket.data.model.Product> getProductsLiveData() {
-        return mProductsLiveData;
-    }
 
-    public void setProductsLiveData(MutableLiveData<com.example.onlinemarket.data.model.Product> productsLiveData) {
-        mProductsLiveData = productsLiveData;
-    }
 
     public void insertToCart(Product product) {
         mDatabase.cartDao().insert(product);

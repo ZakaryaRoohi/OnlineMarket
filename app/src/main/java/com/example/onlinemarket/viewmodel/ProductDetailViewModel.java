@@ -1,6 +1,7 @@
 package com.example.onlinemarket.viewmodel;
 
 import android.app.Application;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -8,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.onlinemarket.data.model.Product;
+import com.example.onlinemarket.data.repository.CartRepository;
 import com.example.onlinemarket.data.repository.ProductRepository;
 import com.example.onlinemarket.network.RetrofitInstance;
 import com.example.onlinemarket.network.WooApi;
@@ -21,10 +23,15 @@ public class ProductDetailViewModel extends AndroidViewModel {
 
     private final ProductRepository mProductRepository;
 
+    private CartRepository mCartRepository;
+    private LiveData<Product> mProduct;
 
     public ProductDetailViewModel(@NonNull Application application) {
         super(application);
+        mProduct = new MutableLiveData<>();
         mProductRepository = ProductRepository.getInstance();
+        mCartRepository = CartRepository.getInstance(getApplication());
+
     }
 
 
@@ -33,10 +40,15 @@ public class ProductDetailViewModel extends AndroidViewModel {
     }
 
     public LiveData<Product> getProductMutableLiveData() {
+        mProduct = mProductRepository.getProductByIdMutableLiveData();
         return mProductRepository.getProductByIdMutableLiveData();
     }
 
     public MutableLiveData<ConnectionState> getConnectionStateLiveData() {
         return mProductRepository.getConnectionStateLiveData();
+    }
+
+    public void onClick(View v) {
+        mCartRepository.insertToCart(mProduct.getValue());
     }
 }
