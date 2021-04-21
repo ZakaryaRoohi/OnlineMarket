@@ -4,9 +4,10 @@ package com.example.onlinemarket.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Attribute {
+public class Attribute implements Serializable {
 
     @SerializedName("id")
     @Expose
