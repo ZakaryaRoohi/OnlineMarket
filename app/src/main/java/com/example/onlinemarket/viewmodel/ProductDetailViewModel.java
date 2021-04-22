@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.onlinemarket.data.database.entity.CartProduct;
 import com.example.onlinemarket.data.model.Product;
 import com.example.onlinemarket.data.repository.CartRepository;
 import com.example.onlinemarket.data.repository.ProductRepository;
@@ -49,6 +50,7 @@ public class ProductDetailViewModel extends AndroidViewModel {
     }
 
     public void onClick(View v) {
-        mCartRepository.insertToCart(mProduct.getValue());
+        CartProduct cartProduct = new CartProduct(mProduct.getValue().getId(),"",1);
+        mCartRepository.insertToCart(cartProduct);
     }
 }

@@ -55,6 +55,7 @@ public class ProductRepository {
         }
         return sRepository;
     }
+
     public MutableLiveData<List<Product>> getCategoryProductsLiveData() {
         return mCategoryProductsLiveData;
     }
@@ -67,9 +68,11 @@ public class ProductRepository {
     public LiveData<Product> getProductByIdMutableLiveData() {
         return mProductByIdMutableLiveData;
     }
+
     public LiveData<List<Product>> getAllProductsLiveData() {
         return mAllProductsLiveData;
     }
+
     public LiveData<List<Product>> getOnSaleProductsLiveData() {
         return mOnSaleProductsLiveData;
     }
@@ -77,12 +80,22 @@ public class ProductRepository {
     public LiveData<List<Product>> getLatestProductsLiveData() {
         return mLatestProductsLiveData;
     }
-    public LiveData<List<Product>> getTopRatingProductsLiveData(){
+
+    public LiveData<List<Product>> getTopRatingProductsLiveData() {
         return mTopRatingProductsLiveData;
     }
 
     public LiveData<List<Product>> getPopularProductsLiveData() {
         return mPopularProductsLiveData;
+    }
+
+
+    public Product findProductById(Integer id) {
+        for (Product product : mAllProductsLiveData.getValue()) {
+            if (product.getId().equals(id))
+                return product;
+        }
+        return null;
     }
 
     public void fetchProductById(Integer productId) {
@@ -104,8 +117,26 @@ public class ProductRepository {
             }
         });
     }
+
     public void fetchInitData() {
         mConnectionStateMutableLiveData.setValue(ConnectionState.LOADING);
+
+        mWooApi.getAllProducts().enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful()) {
+                    mAllProductsLiveData.setValue(response.body());
+                    fetchOnSaleProducts();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                initInternetError();
+            }
+        });
+    }
+     private void fetchOnSaleProducts(){
         //offered products
         mWooApi.getOnSaleProducts(10, 1).enqueue(new Callback<List<Product>>() {
             @Override
@@ -140,6 +171,7 @@ public class ProductRepository {
             }
         });
     }
+
     private void fetchBestProducts() {
         mWooApi.getProducts(10, 1, "rating").enqueue(new Callback<List<Product>>() {
             @Override
@@ -157,6 +189,7 @@ public class ProductRepository {
             }
         });
     }
+
     private void fetchPopularProducts() {
         mWooApi.getProducts(10, 1, "popularity").enqueue(new Callback<List<Product>>() {
             @Override
@@ -196,12 +229,13 @@ public class ProductRepository {
         });
 
     }
-    public void fetchCategoryProducts (Integer categoryId){
+
+    public void fetchCategoryProducts(Integer categoryId) {
         mConnectionStateMutableLiveData.setValue(ConnectionState.LOADING);
         mWooApi.getCategoryProducts(categoryId, 10, 1).enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     mCategoryProductsLiveData.setValue(response.body());
                     mConnectionStateMutableLiveData.setValue(ConnectionState.START_ACTIVITY);
                 }
@@ -213,6 +247,7 @@ public class ProductRepository {
             }
         });
     }
+
     private void initInternetError() {
         mConnectionStateMutableLiveData.setValue(ConnectionState.ERROR);
     }

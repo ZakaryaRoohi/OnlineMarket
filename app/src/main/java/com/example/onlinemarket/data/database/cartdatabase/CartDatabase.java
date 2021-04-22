@@ -7,10 +7,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.onlinemarket.data.database.dao.CartDao;
-import com.example.onlinemarket.data.model.Product;
+import com.example.onlinemarket.data.database.entity.CartProduct;
 
-@Database(entities = {Product.class}, version = 1, exportSchema = false)
-
+@Database(entities = {CartProduct.class}, version = 1, exportSchema = false)
 public abstract class CartDatabase extends RoomDatabase {
 
     public static final String CART_DATABASE_NAME = "cartDatabase.db";

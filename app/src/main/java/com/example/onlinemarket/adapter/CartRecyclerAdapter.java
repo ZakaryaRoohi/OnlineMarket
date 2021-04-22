@@ -48,7 +48,8 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapte
 
     public static class CartRecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        private RowItemCartBinding mBinding;
+        private final RowItemCartBinding mBinding;
+
         public CartRecyclerViewHolder(@NonNull RowItemCartBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
@@ -57,11 +58,11 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapte
         public void bindProduct(Product product){
             mBinding.textViewCartItemTitle.setText(product.getName());
             mBinding.textViewCartItemPrice.setText(product.getPrice());
-//
-//            Picasso.get()
-//                    .load(ImageUtil.getFirstImageUrlOfProduct(product))
-//                    .placeholder(R.drawable.place_holder)
-//                    .into(mBinding.imageViewCartItemImage);
+
+            Picasso.get()
+                    .load(ImageUtil.getFirstImageUrlOfProduct(product))
+                    .placeholder(R.drawable.place_holder)
+                    .into(mBinding.imageViewCartItemImage);
         }
 
     }

@@ -4,13 +4,13 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.room.Room;
 
 import com.example.onlinemarket.data.database.cartdatabase.CartDatabase;
 import com.example.onlinemarket.data.database.dao.CartDao;
-import com.example.onlinemarket.data.model.Product;
+import com.example.onlinemarket.data.database.entity.CartProduct;
 
 import java.util.List;
+
 
 public class CartRepository {
 
@@ -18,8 +18,8 @@ public class CartRepository {
     private final CartDao mCartDao;
 
     private CartRepository(Context context) {
-        CartDatabase mRoomDataBase = CartDatabase.getDataBase(context);
-        mCartDao = mRoomDataBase.cartDao();
+        CartDatabase dataBase = CartDatabase.getDataBase(context);
+        mCartDao = dataBase.cartDao();
 
     }
 
@@ -30,20 +30,20 @@ public class CartRepository {
     }
 
 
-    public void insertToCart(Product product) {
-        mCartDao.insert(product);
+    public void insertToCart(CartProduct cartProduct) {
+        mCartDao.insert(cartProduct);
     }
 
-    public void deleteFromCart(Product product) {
-        mCartDao.delete(product);
+    public void deleteFromCart(CartProduct cartProduct) {
+        mCartDao.delete(cartProduct);
     }
 
-    public LiveData<Product> getProductFromCart(Integer id) {
+    public LiveData<CartProduct> getProductFromCart(Integer id) {
         return mCartDao.getById(id);
     }
 
 
-    public LiveData<List<Product>> getAllFromCart() {
+    public List<CartProduct> getAllProducts() {
         return mCartDao.getAll();
     }
 
