@@ -28,10 +28,7 @@ public class CartFragment extends Fragment {
     }
 
     public static CartFragment newInstance() {
-        CartFragment fragment = new CartFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return  new CartFragment();
     }
 
     @Override
@@ -39,9 +36,8 @@ public class CartFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(CartFragmentViewModel.class);
 
-        mViewModel.getProductsLiveData().observe(
-                this,
-                products -> mCartRecyclerAdapter.notifyDataSetChanged());
+        mViewModel.getCartProducts().observe(
+                this, products -> mCartRecyclerAdapter.notifyDataSetChanged());
     }
 
     @Override
@@ -60,8 +56,7 @@ public class CartFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mCartRecyclerAdapter = new CartRecyclerAdapter();
-        mCartRecyclerAdapter.setProducts(mViewModel.getProductsLiveData().getValue());
-
+        mCartRecyclerAdapter.setProducts(mViewModel.getCartProducts().getValue());
         mBinding.recyclerViewCart.setAdapter(mCartRecyclerAdapter);
     }
 }

@@ -14,26 +14,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.onlinemarket.R;
-import com.example.onlinemarket.adapter.ImageSliderAdapter;
 import com.example.onlinemarket.databinding.FragmentLoadingBinding;
 import com.example.onlinemarket.util.enums.ConnectionState;
 import com.example.onlinemarket.viewmodel.ProductDetailViewModel;
-public class LoadingFragment extends Fragment {
+public class ProductDetailLoadingFragment extends Fragment {
 
     private FragmentLoadingBinding mBinding;
     private Integer mProductId;
     private ProductDetailViewModel mViewModel;
 
 
-    public LoadingFragment() {
+    public ProductDetailLoadingFragment() {
         // Required empty public constructor
     }
 
-    public static LoadingFragment newInstance() {
-        LoadingFragment fragment = new LoadingFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    public static ProductDetailLoadingFragment newInstance() {
+        return new ProductDetailLoadingFragment();
     }
 
     @Override
@@ -41,7 +37,7 @@ public class LoadingFragment extends Fragment {
         super.onCreate(savedInstanceState);
         assert getArguments() != null;
 
-        mProductId = LoadingFragmentArgs.fromBundle(getArguments()).getProductId();
+        mProductId = ProductDetailLoadingFragmentArgs.fromBundle(getArguments()).getProductId();
         mViewModel = new ViewModelProvider(this).get(ProductDetailViewModel.class);
 
         mViewModel.fetchProductById(mProductId);
@@ -54,8 +50,8 @@ public class LoadingFragment extends Fragment {
                     loadInternetError();
                     break;
                 case START_ACTIVITY:
-                    LoadingFragmentDirections.ActionLoadingFragmentToProductDetailFragment action =
-                            LoadingFragmentDirections
+                    ProductDetailLoadingFragmentDirections.ActionLoadingFragmentToProductDetailFragment action =
+                            ProductDetailLoadingFragmentDirections
                                     .actionLoadingFragmentToProductDetailFragment
                                             (mViewModel.getProductMutableLiveData().getValue());
                     Navigation.findNavController(getView()).navigate(action);

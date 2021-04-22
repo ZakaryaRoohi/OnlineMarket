@@ -9,10 +9,17 @@ import androidx.room.RoomDatabase;
 import com.example.onlinemarket.data.database.dao.CartDao;
 import com.example.onlinemarket.data.database.entity.CartProduct;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 @Database(entities = {CartProduct.class}, version = 1, exportSchema = false)
 public abstract class CartDatabase extends RoomDatabase {
 
     public static final String CART_DATABASE_NAME = "cartDatabase.db";
+
+    private static final int NUMBER_OF_THREADS = 4;
+    public static ExecutorService dataBaseWriteExecutor = Executors
+            .newFixedThreadPool(NUMBER_OF_THREADS);
 
     public abstract CartDao cartDao();
 

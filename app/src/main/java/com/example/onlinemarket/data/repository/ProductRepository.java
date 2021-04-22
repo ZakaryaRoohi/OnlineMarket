@@ -90,14 +90,6 @@ public class ProductRepository {
     }
 
 
-    public Product findProductById(Integer id) {
-        for (Product product : mAllProductsLiveData.getValue()) {
-            if (product.getId().equals(id))
-                return product;
-        }
-        return null;
-    }
-
     public void fetchProductById(Integer productId) {
         //TODO : later handle error when internet state enable and disable
         mConnectionStateMutableLiveData.setValue(ConnectionState.LOADING);

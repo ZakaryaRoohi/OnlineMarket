@@ -12,13 +12,7 @@ import com.example.onlinemarket.data.database.entity.CartProduct;
 import com.example.onlinemarket.data.model.Product;
 import com.example.onlinemarket.data.repository.CartRepository;
 import com.example.onlinemarket.data.repository.ProductRepository;
-import com.example.onlinemarket.network.RetrofitInstance;
-import com.example.onlinemarket.network.WooApi;
 import com.example.onlinemarket.util.enums.ConnectionState;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ProductDetailViewModel extends AndroidViewModel {
 
@@ -51,6 +45,6 @@ public class ProductDetailViewModel extends AndroidViewModel {
 
     public void onClick(View v) {
         CartProduct cartProduct = new CartProduct(mProduct.getValue().getId(),"",1);
-        mCartRepository.insertToCart(cartProduct);
+        mCartRepository.insert(cartProduct);
     }
 }
