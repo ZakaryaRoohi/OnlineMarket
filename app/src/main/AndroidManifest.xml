@@ -13,9 +13,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OnlineMarket">
+        android:theme="@style/Theme.OnlineMarketWhiteStatusBar">
         <activity android:name=".view.activity.MainActivity" />
-        <activity android:name=".view.activity.SplashActivity">
+        <activity
+            android:name=".view.activity.SplashActivity"
+            android:theme="@style/Theme.OnlineMarket.darkStatusBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

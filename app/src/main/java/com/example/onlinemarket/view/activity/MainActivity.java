@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         unregisterReceiver(mInternetState);
     }
 
-
     private boolean internetConnected(Context context) {
         try {
             ConnectivityManager connectivityManager =
@@ -86,6 +85,4 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     }
-
-
 }

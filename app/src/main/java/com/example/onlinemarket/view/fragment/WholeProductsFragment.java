@@ -60,12 +60,8 @@ public class WholeProductsFragment extends Fragment {
             mWholeProductsAdapter.notifyDataSetChanged();
         });
 
-        mWholeProductsAdapter.getProducts().observe(this, new Observer<List<Product>>() {
-            @Override
-            public void onChanged(List<Product> products) {
-                mWholeProductsAdapter.notifyDataSetChanged();
-            }
-        });
+        mWholeProductsAdapter.getProducts().observe(
+                this, products -> mWholeProductsAdapter.notifyDataSetChanged());
 
     }
 

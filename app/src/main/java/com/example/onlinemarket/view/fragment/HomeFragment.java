@@ -83,6 +83,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mImageSliderAdapter = new ImageSliderAdapter(getContext());
         List<String> stringsResource = new ArrayList<>();
 
@@ -94,8 +95,6 @@ public class HomeFragment extends Fragment {
         mImageSliderAdapter.setStringImageUrl(stringsResource);
 
         mBinding.imageSlider.setSliderAdapter(mImageSliderAdapter);
-
-
         mBinding.recyclerViewOnSaleProduct.setAdapter(mOnSaleProductsAdapter);
         mBinding.recyclerViewLatestProduct.setAdapter(mLatestProductsAdapter);
         mBinding.recyclerViewTopRatingProduct.setAdapter(mTopRatingProductsAdapter);
