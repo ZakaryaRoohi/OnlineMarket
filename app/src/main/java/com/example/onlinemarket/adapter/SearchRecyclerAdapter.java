@@ -7,11 +7,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.data.model.product.Product;
 import com.example.onlinemarket.databinding.RowItemSearchResultBinding;
+import com.example.onlinemarket.view.fragment.SearchFragment;
+import com.example.onlinemarket.view.fragment.SearchFragmentDirections;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +65,12 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
         public void bindSearchItem(Product product) {
             mProduct = product;
             mBinding.textViewSearchTitle.setText(mProduct.getName());
+
+            mBinding.getRoot().setOnClickListener(v -> {
+                SearchFragmentDirections.ActionSearchFragmentToProductDetailLoadingFragment action =
+                        SearchFragmentDirections.actionSearchFragmentToProductDetailLoadingFragment(mProduct.getId());
+                Navigation.findNavController(v).navigate(action);
+            });
 
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 mBinding.textViewSearchDescription

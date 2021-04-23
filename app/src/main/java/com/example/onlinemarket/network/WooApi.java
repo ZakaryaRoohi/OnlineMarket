@@ -1,12 +1,15 @@
 package com.example.onlinemarket.network;
 
+import com.example.onlinemarket.data.model.customer.Customer;
 import com.example.onlinemarket.data.model.product.Category;
 import com.example.onlinemarket.data.model.product.Product;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -44,5 +47,12 @@ public interface WooApi {
                                             @Query("page") int numberOfPage,
                                             @Query("search") String search);
 
+
+    //customers
+    @POST(BASE_URL + "customers" + API_KEY)
+    Call<Customer> registerCustomer(@Body Customer customer);
+
+    @GET(BASE_URL + "customers" + API_KEY)
+    Call<List<Customer>> getCustomer(@Query("email") String email);
 }
 
