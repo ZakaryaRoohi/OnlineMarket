@@ -25,7 +25,6 @@ public class CartRepository {
 
     private final MutableLiveData<ConnectionState> mConnectionStateMutableLiveData;
     private final WooApi mWooApi;
-
     private static CartRepository sCartRepository;
     private final CartDao mCartDao;
     private final MutableLiveData<List<Product>> mProductsLiveData;
@@ -44,6 +43,7 @@ public class CartRepository {
             sCartRepository = new CartRepository(context.getApplicationContext());
         return sCartRepository;
     }
+
     public MutableLiveData<ConnectionState> getConnectionStateMutableLiveData() {
         return mConnectionStateMutableLiveData;
     }
@@ -64,6 +64,7 @@ public class CartRepository {
         mCartDao.update(cartProduct);
     }
 
+
     public CartProduct get(Integer productId) {
         return mCartDao.getById(productId);
     }
@@ -71,6 +72,8 @@ public class CartRepository {
     public List<CartProduct> getAll() {
         return mCartDao.getAll();
     }
+
+
     public void fetchCartProducts() {
         mConnectionStateMutableLiveData.setValue(ConnectionState.LOADING);
         mProductsLiveData.postValue(new ArrayList<>());
@@ -102,8 +105,5 @@ public class CartRepository {
             });
         }
     }
-
-
-
 
 }

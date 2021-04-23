@@ -17,10 +17,11 @@ import java.util.List;
 public interface CartDao {
 
 
+    //TODO : use live data with room i test it but return null pointer
     @Query("select * from cart_product")
     List<CartProduct> getAll();
 
-    @Query("select * from cart_product where mId == :productId ")
+    @Query("select * from cart_product where mProductId == :productId ")
     CartProduct getById(Integer productId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -31,8 +32,8 @@ public interface CartDao {
 
     @Delete
     void delete(CartProduct cartProduct);
-    @Query("delete from cart_product where productId = :productId ")
-    void delete(Integer productId);
 
+    @Query("delete from cart_product where mProductId = :productId ")
+    void delete(Integer productId);
 
 }

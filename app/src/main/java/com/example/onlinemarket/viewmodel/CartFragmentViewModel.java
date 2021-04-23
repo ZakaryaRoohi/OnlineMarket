@@ -13,12 +13,11 @@ import com.example.onlinemarket.util.enums.ConnectionState;
 import java.util.List;
 
 public class CartFragmentViewModel extends AndroidViewModel {
-
     private final CartRepository mCartRepository;
+
 
     public CartFragmentViewModel(@NonNull Application application) {
         super(application);
-
         mCartRepository = CartRepository.getInstance(application);
     }
 

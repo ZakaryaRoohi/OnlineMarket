@@ -53,6 +53,8 @@ public class HomeFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
 
+
+
         initAdapters();
 
         mViewModel.getOfferedProductsLiveData().observe(this, products -> {
@@ -73,16 +75,25 @@ public class HomeFragment extends Fragment {
 
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+
+
         return mBinding.getRoot();
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+/*        Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);*/
 
         mImageSliderAdapter = new ImageSliderAdapter(getContext());
         List<String> stringsResource = new ArrayList<>();
@@ -95,12 +106,16 @@ public class HomeFragment extends Fragment {
         mImageSliderAdapter.setStringImageUrl(stringsResource);
 
         mBinding.imageSlider.setSliderAdapter(mImageSliderAdapter);
+
+
         mBinding.recyclerViewOnSaleProduct.setAdapter(mOnSaleProductsAdapter);
         mBinding.recyclerViewLatestProduct.setAdapter(mLatestProductsAdapter);
         mBinding.recyclerViewTopRatingProduct.setAdapter(mTopRatingProductsAdapter);
         mBinding.recyclerViewPopularProduct.setAdapter(mPopularProductsAdapter);
 
         setListeners();
+
+
     }
 
     private void setListeners() {
@@ -112,8 +127,8 @@ public class HomeFragment extends Fragment {
 
         mBinding.textViewWholeTopRatingProducts.setOnClickListener(v -> navigateToWholeProductsFragment(v, "rating"));
 
-
     }
+
     private void navigateToWholeProductsFragment(View v, String orderBy) {
         HomeFragmentDirections.ActionHomeFragmentToWholeProductsFragment action = HomeFragmentDirections
                 .actionHomeFragmentToWholeProductsFragment(orderBy);

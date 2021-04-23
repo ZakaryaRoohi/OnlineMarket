@@ -27,8 +27,7 @@
         <argument
             android:name="orderBy"
             app:argType="string"
-            app:nullable="true"/>
-
+            app:nullable="true" />
         <argument
             android:name="categoryId"
             android:defaultValue="-1"
@@ -36,7 +35,6 @@
         <action
             android:id="@+id/action_wholeProductsFragment_to_productDetailLoadingFragment"
             app:destination="@id/productDetailLoadingFragment" />
-
     </fragment>
 
     <fragment
@@ -47,8 +45,6 @@
         <action
             android:id="@+id/action_nav_fragCategory_to_categoryProductsLoadingFragment"
             app:destination="@id/categoryProductsLoadingFragment" />
-
-
     </fragment>
 
     <fragment
@@ -75,7 +71,6 @@
             android:name="categoryId"
             app:argType="integer" />
     </fragment>
-
     <fragment
         android:id="@+id/productDetailLoadingFragment"
         android:name="com.example.onlinemarket.view.fragment.ProductDetailLoadingFragment"
@@ -96,7 +91,7 @@
     <fragment
         android:id="@+id/nav_fragCart"
         android:name="com.example.onlinemarket.view.fragment.CartProductsLoadingFragment"
-        android:label="CartProductsLoadingFragment" >
+        android:label="CartProductsLoadingFragment">
         <action
             android:id="@+id/action_nav_fragCart_to_cartFragment"
             app:destination="@id/cartFragment" />
@@ -106,24 +101,27 @@
         android:id="@+id/cartFragment"
         android:name="com.example.onlinemarket.view.fragment.CartFragment"
         android:label="CartFragment" />
-
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.onlinemarket.view.fragment.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search">
+
         <action
             android:id="@+id/action_searchFragment_to_productDetailLoadingFragment"
             app:destination="@id/productDetailLoadingFragment" />
         <action
             android:id="@+id/action_searchFragment_to_wholeProductsFragment"
             app:destination="@id/wholeProductsFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/checkRegistrationFragment"
         android:name="com.example.onlinemarket.view.fragment.RegistrationCheckFragment"
         android:label="checkRegistrationFragment"
         tools:layout="@layout/fragment_registration_check" >
+
+
         <action
             android:id="@+id/action_checkRegistrationFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
@@ -135,7 +133,8 @@
         android:id="@+id/loginFragment"
         android:name="com.example.onlinemarket.view.fragment.LoginFragment"
         android:label="LoginFragment"
-        tools:layout="@layout/fragment_login">
+        tools:layout="@layout/fragment_login"
+        >
         <argument
             android:name="email"
             app:argType="string" />
@@ -147,7 +146,8 @@
         android:id="@+id/signUpFragment"
         android:name="com.example.onlinemarket.view.fragment.SignUpFragment"
         android:label="SignUpFragment"
-        tools:layout="@layout/fragment_sign_up">
+        tools:layout="@layout/fragment_sign_up"
+        >
         <argument
             android:name="email"
             app:argType="string" />
@@ -183,7 +183,6 @@
         app:exitAnim="@anim/slide_out_top"
         app:popEnterAnim="@anim/slide_in_top"
         app:popExitAnim="@anim/slide_out_bottom" />
-
     <fragment
         android:id="@+id/loginLoadingFragment"
         android:name="com.example.onlinemarket.view.fragment.LoginLoadingFragment"
@@ -210,9 +209,6 @@
         android:label="CustomerFragment"
         tools:layout="@layout/fragment_customer"
         />
-
-
-
 
 
 </navigation>

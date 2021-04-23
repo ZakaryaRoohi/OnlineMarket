@@ -23,7 +23,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private BroadcastReceiver mInternetState;
 
     public static Intent newIntent(Context context) {
@@ -35,9 +34,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         NavController navController = Navigation.findNavController(this, R.id.main_nav_host);
+
         mBinding.bottomNavigation.setSelectedItemId(R.id.nav_fragHome);
+
         NavigationUI.setupWithNavController(mBinding.bottomNavigation, navController);
 
         mBinding.mainSearchToolbar.setOnClickListener(v -> navController.navigate(R.id.action_global_searchFragment));

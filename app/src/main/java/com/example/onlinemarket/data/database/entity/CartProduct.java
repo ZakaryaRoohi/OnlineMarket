@@ -8,25 +8,13 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "cart_product")
 public class CartProduct {
 
-    @PrimaryKey(autoGenerate = true)
-    private int mId;
-
-    @ColumnInfo(name = "productId")
+    @PrimaryKey
     private Integer mProductId;
-
     @ColumnInfo(name = "color")
     private String mColor;
-
     @ColumnInfo(name = "count")
     private int mCount;
 
-    public int getId() {
-        return mId;
-    }
-
-    public void setId(int id) {
-        mId = id;
-    }
 
     public Integer getProductId() {
         return mProductId;
@@ -58,7 +46,7 @@ public class CartProduct {
         mColor = color;
         mCount = count;
     }
-    public CartProduct(){
 
+    public CartProduct() {
     }
 }

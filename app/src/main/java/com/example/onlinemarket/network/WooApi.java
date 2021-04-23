@@ -27,7 +27,14 @@ public interface WooApi {
                                     @Query("orderby") String orderBy);
 
     @GET(BASE_URL + "products" + API_KEY)
+    Call<List<Product>> getProductsBySearch(@Query("per_page") int perPage,
+                                            @Query("page") int numberOfPage,
+                                            @Query("search") String search);
+
+
+    @GET(BASE_URL + "products" + API_KEY)
     Call<List<Product>> getAllProducts();
+
 
     @GET(BASE_URL + "products/{productId}" + API_KEY)
     Call<Product> getProductById(@Path("productId") Integer productId);
@@ -36,16 +43,13 @@ public interface WooApi {
     //so for get all of them page = 1 and per_page= 18
     @GET(BASE_URL + "products" + "/categories" + API_KEY)
     Call<List<Category>> getAllCategories(@Query("per_page") int perPage, @Query("page") int page);
+
+
     //for get products of a specific category
     @GET(BASE_URL + "products" + API_KEY)
     Call<List<Product>> getCategoryProducts(@Query("category") int categoryId,
                                             @Query("per_page") int perPage,
                                             @Query("page") int page);
-
-    @GET(BASE_URL + "products" + API_KEY)
-    Call<List<Product>> getProductsBySearch(@Query("per_page") int perPage,
-                                            @Query("page") int numberOfPage,
-                                            @Query("search") String search);
 
 
     //customers
@@ -54,5 +58,5 @@ public interface WooApi {
 
     @GET(BASE_URL + "customers" + API_KEY)
     Call<List<Customer>> getCustomer(@Query("email") String email);
-}
 
+}

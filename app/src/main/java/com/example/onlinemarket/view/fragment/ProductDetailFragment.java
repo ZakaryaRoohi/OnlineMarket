@@ -20,7 +20,6 @@ import com.example.onlinemarket.viewmodel.ProductDetailViewModel;
 
 public class ProductDetailFragment extends Fragment {
 
-
     private ImageSliderAdapter mImageSliderAdapter;
     private ProductDetailViewModel mViewModel;
     private FragmentProductDetailBinding mBinding;
