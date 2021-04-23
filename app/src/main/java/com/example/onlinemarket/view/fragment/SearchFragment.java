@@ -1,5 +1,6 @@
 package com.example.onlinemarket.view.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,9 +14,11 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.adapter.SearchRecyclerAdapter;
+import com.example.onlinemarket.databinding.ActivityMainBinding;
 import com.example.onlinemarket.databinding.FragmentSearchBinding;
 import com.example.onlinemarket.viewmodel.SearchFragmentViewModel;
 
@@ -25,7 +28,7 @@ public class SearchFragment extends Fragment {
     private FragmentSearchBinding mBinding;
     private SearchRecyclerAdapter mSearchRecyclerAdapter;
     private SearchFragmentViewModel mViewModel;
-
+    private ActivityMainBinding mMainBinding;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -73,6 +76,14 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mBinding.toolbarSearch.editTextSearch.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getActivity()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        imm.showSoftInput(
+                mBinding.toolbarSearch.editTextSearch,
+                InputMethodManager.SHOW_IMPLICIT);
 
         mSearchRecyclerAdapter = new SearchRecyclerAdapter();
         mBinding.recyclerViewSearchResult.setAdapter(mSearchRecyclerAdapter);
