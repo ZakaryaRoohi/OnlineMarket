@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.databinding.FragmentSignUpBinding;
+import com.example.onlinemarket.util.StringUtil;
 
 public class SignUpFragment extends Fragment {
 

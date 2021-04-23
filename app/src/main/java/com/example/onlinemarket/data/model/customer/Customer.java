@@ -141,5 +141,8 @@ public class Customer implements Serializable {
         this.avatarUrl = avatarUrl;
     }
 
+    public String getFullName() {
+        return firstName.concat(" ").concat(lastName);
+    }
 
 }

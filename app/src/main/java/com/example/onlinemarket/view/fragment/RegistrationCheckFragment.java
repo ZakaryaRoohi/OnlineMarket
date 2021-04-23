@@ -20,6 +20,7 @@ import com.example.onlinemarket.viewmodel.RegistrationCheckViewModel;
 
 public class RegistrationCheckFragment extends Fragment {
 
+
     private RegistrationCheckViewModel mViewModel;
     private FragmentRegistrationCheckBinding mBinding;
 
@@ -31,24 +32,23 @@ public class RegistrationCheckFragment extends Fragment {
         return new RegistrationCheckFragment();
     }
 
-
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mViewModel = new ViewModelProvider(this).get(RegistrationCheckViewModel.class);
+
         mViewModel.getConnectionStateLiveData().observe(this, connectionState -> {
             switch (connectionState) {
                 case START_ACTIVITY:
                     if (mViewModel.getCustomerLiveData().getValue() != null) {
-                        RegistrationCheckFragmentDirections.ActionNavFragLoginToLoginFragment action =
-                                RegistrationCheckFragmentDirections.actionNavFragLoginToLoginFragment(
-                                        mBinding.editTextEmail.getText().toString());
+                        RegistrationCheckFragmentDirections.ActionCheckRegistrationFragmentToLoginFragment action =
+                                RegistrationCheckFragmentDirections
+                                        .actionCheckRegistrationFragmentToLoginFragment(mBinding.editTextEmail.getText().toString());
                         Navigation.findNavController(getView()).navigate(action);
                     } else {
-                        RegistrationCheckFragmentDirections.ActionNavFragLoginToSignUpFragment action =
-                                RegistrationCheckFragmentDirections.actionNavFragLoginToSignUpFragment(
-                                        mBinding.editTextEmail.getText().toString());
+                        RegistrationCheckFragmentDirections.ActionCheckRegistrationFragmentToSignUpFragment action =
+                                RegistrationCheckFragmentDirections
+                                        .actionCheckRegistrationFragmentToSignUpFragment(mBinding.editTextEmail.getText().toString());
                         Navigation.findNavController(getView()).navigate(action);
                     }
                     break;
@@ -60,20 +60,15 @@ public class RegistrationCheckFragment extends Fragment {
                     break;
                 default:
                     break;
-
             }
         });
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        mBinding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_registration_check,
-                container,
-                false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_registration_check, container, false);
         return mBinding.getRoot();
     }
 
@@ -82,14 +77,16 @@ public class RegistrationCheckFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mBinding.buttonLoginStepOne.setOnClickListener(v -> {
-            if (isValidEmail(mBinding.editTextEmail.getText().toString())){
-                mViewModel.getCustomerByEmail(mBinding.editTextEmail.getText().toString());
+            if (isValidEmail(mBinding.editTextEmail.getText().toString())) {
+                mViewModel.fetchCustomerFromServer(mBinding.editTextEmail.getText().toString());
             }
         });
     }
-    public static boolean isValidEmail(CharSequence target){
-        return (!TextUtils.isEmpty(target)&& Patterns.EMAIL_ADDRESS.matcher(target).matches());
+
+    public static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
+
     public void showErrorUi() {
         mBinding.progressBarCheckRegistration.hide();
         mBinding.textViewCheckRegistration.setVisibility(View.VISIBLE);

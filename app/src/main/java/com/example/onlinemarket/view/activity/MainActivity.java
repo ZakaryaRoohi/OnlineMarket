@@ -1,14 +1,11 @@
 package com.example.onlinemarket.view.activity;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-import android.view.MenuItem;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -57,11 +54,11 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.signUpFragment:
                 case R.id.shippingFragment:
                 case R.id.cartFragment:
-                case R.id.nav_fragLogin:
                 case R.id.nav_fragCart:
                 case R.id.loginFragment:
                 case R.id.wholeProductsFragment:
                 case R.id.productDetailFragment:
+                case R.id.loginLoadingFragment:
                     mBinding.mainSearchToolbar.setVisibility(View.GONE);
                     mBinding.bottomNavigation.setVisibility(View.VISIBLE);
                     break;

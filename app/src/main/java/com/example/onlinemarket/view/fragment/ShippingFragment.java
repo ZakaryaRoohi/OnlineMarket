@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,6 @@ import com.example.onlinemarket.databinding.FragmentShippingBinding;
 import com.example.onlinemarket.viewmodel.ShippingFragmentViewModel;
 
 public class ShippingFragment extends Fragment {
-
 
     private ShippingFragmentViewModel mViewModel;
     private FragmentShippingBinding mBinding;
@@ -56,7 +56,10 @@ public class ShippingFragment extends Fragment {
                     showLoadingUi();
                     break;
                 case START_ACTIVITY:
-
+                    ShippingFragmentDirections.ActionShippingFragmentToLoginLoadingFragment action =
+                            ShippingFragmentDirections.actionShippingFragmentToLoginLoadingFragment(mEmail);
+                    Navigation.findNavController(getView())
+                            .navigate(action);
                     break;
                 default:
                     break;
@@ -88,7 +91,8 @@ public class ShippingFragment extends Fragment {
                     mBinding.editTextCountry.getText().toString()
             );
             Customer customer = new Customer(mEmail, mFirstName, mLastName, shipping);
-            mViewModel.postCustomer(customer);
+            mViewModel.postCustomerToDataBase(mEmail, mPassword);
+            mViewModel.postCustomerToServer(customer);
         });
     }
 
