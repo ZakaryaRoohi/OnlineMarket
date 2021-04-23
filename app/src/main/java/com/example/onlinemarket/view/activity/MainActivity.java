@@ -26,40 +26,57 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding mBinding;
+
     private BroadcastReceiver mInternetState;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, MainActivity.class);
     }
 
+    private ActivityMainBinding mBinding;
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
         NavController navController = Navigation.findNavController(this, R.id.main_nav_host);
         mBinding.bottomNavigation.setSelectedItemId(R.id.nav_fragHome);
         NavigationUI.setupWithNavController(mBinding.bottomNavigation, navController);
+
+        mBinding.mainSearchToolbar.setOnClickListener(v -> navController.navigate(R.id.action_global_searchFragment));
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             switch (destination.getId()) {
                 case R.id.nav_fragHome:
                 case R.id.nav_fragCategory:
                     mBinding.bottomNavigation.setVisibility(View.VISIBLE);
+                    mBinding.mainSearchToolbar.setVisibility(View.VISIBLE);
                     break;
+                case R.id.categoryProductsLoadingFragment:
+                case R.id.productDetailLoadingFragment:
+                case R.id.signUpFragment:
+                case R.id.shippingFragment:
+                case R.id.cartFragment:
+                case R.id.nav_fragLogin:
+                case R.id.nav_fragCart:
+                case R.id.loginFragment:
                 case R.id.wholeProductsFragment:
-                    mBinding.bottomNavigation.setVisibility(View.VISIBLE);
                 case R.id.productDetailFragment:
-                    //TODO : But add a special tool bar to this fragment to click on close button to return to before fragment
-                    mBinding.bottomNavigation.setVisibility(View.GONE);
+                    mBinding.mainSearchToolbar.setVisibility(View.GONE);
+                    mBinding.bottomNavigation.setVisibility(View.VISIBLE);
+                    break;
+
                 case R.id.searchFragment:
                     mBinding.bottomNavigation.setVisibility(View.GONE);
+                    mBinding.mainSearchToolbar.setVisibility(View.GONE);
                     break;
+
+
                 default:
                     break;
             }
         });
+
         mInternetState = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -74,28 +91,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     public static float convertDpToPixel(float dp, Context context) {
         return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        registerReceiver(mInternetState, new IntentFilter("android.net.com.CONNECTIVITY_CHANGE"));
+        registerReceiver(mInternetState, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         unregisterReceiver(mInternetState);
+
     }
 
     private boolean internetConnected(Context context) {
         try {
             ConnectivityManager connectivityManager =
                     (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             return (networkInfo != null && networkInfo.isConnected());
         } catch (NullPointerException e) {
@@ -103,4 +120,5 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     }
+
 }
