@@ -66,7 +66,7 @@
         android:label="ProductDetailFragment">
         <argument
             android:name="product"
-            app:argType="com.example.onlinemarket.data.model.Product" />
+            app:argType="com.example.onlinemarket.data.model.product.Product" />
     </fragment>
 
 

@@ -17,8 +17,7 @@ import com.example.onlinemarket.util.enums.ConnectionState;
 public class ProductDetailViewModel extends AndroidViewModel {
 
     private final ProductRepository mProductRepository;
-
-    private CartRepository mCartRepository;
+    private final CartRepository mCartRepository;
     private LiveData<Product> mProduct;
 
     public ProductDetailViewModel(@NonNull Application application) {
@@ -26,7 +25,6 @@ public class ProductDetailViewModel extends AndroidViewModel {
         mProduct = new MutableLiveData<>();
         mProductRepository = ProductRepository.getInstance();
         mCartRepository = CartRepository.getInstance(getApplication());
-
     }
 
 
@@ -43,8 +41,11 @@ public class ProductDetailViewModel extends AndroidViewModel {
         return mProductRepository.getConnectionStateLiveData();
     }
 
+
     public void onClick(View v) {
-        CartProduct cartProduct = new CartProduct(mProduct.getValue().getId(),"",1);
+        CartProduct cartProduct = new CartProduct(mProduct.getValue().getId(), "", 1);
         mCartRepository.insert(cartProduct);
     }
+
+
 }

@@ -17,12 +17,13 @@ import com.example.onlinemarket.R;
 import com.example.onlinemarket.databinding.FragmentLoadingBinding;
 import com.example.onlinemarket.util.enums.ConnectionState;
 import com.example.onlinemarket.viewmodel.ProductDetailViewModel;
+
 public class ProductDetailLoadingFragment extends Fragment {
 
     private FragmentLoadingBinding mBinding;
+
     private Integer mProductId;
     private ProductDetailViewModel mViewModel;
-
 
     public ProductDetailLoadingFragment() {
         // Required empty public constructor
@@ -35,12 +36,13 @@ public class ProductDetailLoadingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        assert getArguments() != null;
 
+        assert getArguments() != null;
         mProductId = ProductDetailLoadingFragmentArgs.fromBundle(getArguments()).getProductId();
         mViewModel = new ViewModelProvider(this).get(ProductDetailViewModel.class);
 
         mViewModel.fetchProductById(mProductId);
+
         mViewModel.getConnectionStateLiveData().observe(this, connectionState -> {
             switch (connectionState) {
                 case LOADING:
@@ -58,14 +60,15 @@ public class ProductDetailLoadingFragment extends Fragment {
                     break;
                 default:
                     break;
-
             }
-    });
+        });
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         mBinding = DataBindingUtil.
                 inflate(inflater, R.layout.fragment_loading, container, false);
 
@@ -82,6 +85,7 @@ public class ProductDetailLoadingFragment extends Fragment {
             showLoadingUi();
         });
     }
+
     private void showLoadingUi() {
         mBinding.buttonRetry.setVisibility(View.GONE);
         mBinding.textViewNoInternet.setVisibility(View.GONE);
@@ -96,4 +100,5 @@ public class ProductDetailLoadingFragment extends Fragment {
         mBinding.progressBarLoadingFragment.setVisibility(View.GONE);
         mBinding.progressBarLoadingFragment.hide();
     }
+
 }

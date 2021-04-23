@@ -38,6 +38,7 @@ public class ProductDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ViewModelProvider(this).get(ProductDetailViewModel.class);
+
     }
 
     @Override
@@ -57,9 +58,12 @@ public class ProductDetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mImageSliderAdapter = new ImageSliderAdapter(getContext());
-        mImageSliderAdapter.setStringImageUrl(
-                ImageUtil.getAllImageUrlOfProduct(mViewModel.getProductMutableLiveData().getValue())
-        );
+        mImageSliderAdapter
+                .setStringImageUrl(
+                        ImageUtil.getAllImageUrlOfProduct(
+                                mViewModel.getProductMutableLiveData().getValue()));
+
         mBinding.imageSliderProductDetailImages.setSliderAdapter(mImageSliderAdapter);
+
     }
 }
