@@ -1,7 +1,6 @@
 package com.example.onlinemarket.adapter;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -9,12 +8,11 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinemarket.R;
-import com.example.onlinemarket.data.model.Product;
+import com.example.onlinemarket.data.model.product.Product;
 import com.example.onlinemarket.databinding.RowItemCartBinding;
 import com.example.onlinemarket.util.ImageUtil;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapter.CartRecyclerViewHolder> {

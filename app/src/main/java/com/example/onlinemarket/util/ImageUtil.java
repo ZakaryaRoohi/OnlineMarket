@@ -2,9 +2,8 @@ package com.example.onlinemarket.util;
 
 import android.net.Uri;
 
-import com.example.onlinemarket.data.model.Category;
-import com.example.onlinemarket.data.model.Product;
-import com.example.onlinemarket.data.model.Image;
+import com.example.onlinemarket.data.model.product.Product;
+import com.example.onlinemarket.data.model.product.Image;
 
 import java.util.ArrayList;
 import java.util.List;

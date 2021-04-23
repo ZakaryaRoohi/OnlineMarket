@@ -1,6 +1,6 @@
 package com.example.onlinemarket.util;
 
-import com.example.onlinemarket.data.model.Category;
+import com.example.onlinemarket.data.model.product.Category;
 
 import java.util.ArrayList;
 import java.util.List;

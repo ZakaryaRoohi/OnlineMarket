@@ -1,6 +1,5 @@
 package com.example.onlinemarket.adapter;
 
-import android.content.Context;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -13,8 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinemarket.R;
-import com.example.onlinemarket.data.model.Category;
-import com.example.onlinemarket.data.model.Product;
+import com.example.onlinemarket.data.model.product.Product;
 import com.example.onlinemarket.databinding.RowItemWholeProductsBinding;
 import com.example.onlinemarket.network.RetrofitInstance;
 import com.example.onlinemarket.network.WooApi;
@@ -213,11 +211,11 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                 mBinding.rowItemWholeProductsDescription.setText(
-                        Html.fromHtml(mProduct.getDescription(),
+                        Html.fromHtml(mProduct.getShortDescription(),
                                 Html.FROM_HTML_MODE_LEGACY));
             } else {
                 mBinding.rowItemWholeProductsDescription.setText(
-                        Html.fromHtml(mProduct.getDescription()));
+                        Html.fromHtml(mProduct.getShortDescription()));
             }
 
             Picasso.get()

@@ -1,7 +1,7 @@
 package com.example.onlinemarket.network;
 
-import com.example.onlinemarket.data.model.Category;
-import com.example.onlinemarket.data.model.Product;
+import com.example.onlinemarket.data.model.product.Category;
+import com.example.onlinemarket.data.model.product.Product;
 
 import java.util.List;
 

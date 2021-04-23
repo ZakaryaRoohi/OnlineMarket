@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.onlinemarket.data.database.cartdatabase.CartDatabase;
 import com.example.onlinemarket.data.database.dao.CartDao;
 import com.example.onlinemarket.data.database.entity.CartProduct;
-import com.example.onlinemarket.data.model.Product;
+import com.example.onlinemarket.data.model.product.Product;
 import com.example.onlinemarket.network.RetrofitInstance;
 import com.example.onlinemarket.network.WooApi;
 import com.example.onlinemarket.util.enums.ConnectionState;

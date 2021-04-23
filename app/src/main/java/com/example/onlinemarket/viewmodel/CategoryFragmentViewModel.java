@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.onlinemarket.data.model.Category;
+import com.example.onlinemarket.data.model.product.Category;
 import com.example.onlinemarket.data.repository.CategoryRepository;
 
 import java.util.List;

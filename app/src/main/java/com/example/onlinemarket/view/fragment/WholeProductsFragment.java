@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -15,11 +14,8 @@ import android.view.ViewGroup;
 
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.adapter.WholeProductsAdapter;
-import com.example.onlinemarket.data.model.Product;
 import com.example.onlinemarket.databinding.FragmentWholeProductsBinding;
 import com.example.onlinemarket.viewmodel.WholeProductFragmentViewModel;
-
-import java.util.List;
 
 
 public class WholeProductsFragment extends Fragment {

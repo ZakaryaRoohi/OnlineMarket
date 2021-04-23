@@ -3,8 +3,8 @@ package com.example.onlinemarket.data.repository;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.onlinemarket.data.model.Category;
-import com.example.onlinemarket.data.model.Product;
+import com.example.onlinemarket.data.model.product.Category;
+import com.example.onlinemarket.data.model.product.Product;
 import com.example.onlinemarket.network.RetrofitInstance;
 import com.example.onlinemarket.network.WooApi;
 import com.example.onlinemarket.util.CategoryUtil;

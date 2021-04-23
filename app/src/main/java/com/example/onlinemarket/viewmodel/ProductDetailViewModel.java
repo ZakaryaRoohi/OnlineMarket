@@ -9,7 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.onlinemarket.data.database.entity.CartProduct;
-import com.example.onlinemarket.data.model.Product;
+import com.example.onlinemarket.data.model.product.Product;
 import com.example.onlinemarket.data.repository.CartRepository;
 import com.example.onlinemarket.data.repository.ProductRepository;
 import com.example.onlinemarket.util.enums.ConnectionState;

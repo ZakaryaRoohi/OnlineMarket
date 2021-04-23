@@ -42,6 +42,24 @@ public class MainActivity extends AppCompatActivity {
         mBinding.bottomNavigation.setSelectedItemId(R.id.nav_fragHome);
         NavigationUI.setupWithNavController(mBinding.bottomNavigation, navController);
 
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            switch (destination.getId()) {
+                case R.id.nav_fragHome:
+                case R.id.nav_fragCategory:
+                    mBinding.bottomNavigation.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.wholeProductsFragment:
+                    mBinding.bottomNavigation.setVisibility(View.VISIBLE);
+                case R.id.productDetailFragment:
+                    //TODO : But add a special tool bar to this fragment to click on close button to return to before fragment
+                    mBinding.bottomNavigation.setVisibility(View.GONE);
+                case R.id.searchFragment:
+                    mBinding.bottomNavigation.setVisibility(View.GONE);
+                    break;
+                default:
+                    break;
+            }
+        });
         mInternetState = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

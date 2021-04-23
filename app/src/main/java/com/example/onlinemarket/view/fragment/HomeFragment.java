@@ -101,8 +101,6 @@ public class HomeFragment extends Fragment {
         mBinding.recyclerViewPopularProduct.setAdapter(mPopularProductsAdapter);
 
         setListeners();
-
-
     }
 
     private void setListeners() {
@@ -114,7 +112,7 @@ public class HomeFragment extends Fragment {
 
         mBinding.textViewWholeTopRatingProducts.setOnClickListener(v -> navigateToWholeProductsFragment(v, "rating"));
 
-        mBinding.homeToolbar.setOnClickListener(v -> Navigation.findNavController(v)
+        mBinding.mainSearchToolbar.setOnClickListener(v -> Navigation.findNavController(v)
                 .navigate(HomeFragmentDirections.actionNavFragHomeToSearchFragment()));
 
     }

@@ -9,7 +9,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinemarket.R;
-import com.example.onlinemarket.data.model.Product;
+import com.example.onlinemarket.data.model.product.Product;
 import com.example.onlinemarket.databinding.RowItemProductBinding;
 import com.example.onlinemarket.util.ImageUtil;
 import com.example.onlinemarket.view.fragment.HomeFragmentDirections;

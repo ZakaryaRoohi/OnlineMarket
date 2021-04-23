@@ -1,9 +1,6 @@
 package com.example.onlinemarket.adapter;
 
-import android.content.Context;
-import android.renderscript.ScriptGroup;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -12,9 +9,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinemarket.R;
-import com.example.onlinemarket.data.model.Category;
+import com.example.onlinemarket.data.model.product.Category;
 import com.example.onlinemarket.databinding.RowItemCategoryBinding;
-import com.example.onlinemarket.view.fragment.CategoryFragment;
 import com.example.onlinemarket.view.fragment.CategoryFragmentDirections;
 import com.squareup.picasso.Picasso;
 

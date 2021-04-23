@@ -54,6 +54,10 @@
         <action
             android:id="@+id/action_nav_fragCategory_to_categoryProductsLoadingFragment"
             app:destination="@id/categoryProductsLoadingFragment" />
+        <action
+            android:id="@+id/action_nav_fragCategory_to_searchFragment2"
+            app:destination="@id/searchFragment" />
+
     </fragment>
 
     <fragment
@@ -120,7 +124,15 @@
         <action
             android:id="@+id/action_searchFragment_to_productDetailLoadingFragment"
             app:destination="@id/productDetailLoadingFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_wholeProductsFragment"
+            app:destination="@id/wholeProductsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_fragLogin"
+        android:name="com.example.onlinemarket.view.fragment.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 
 
 </navigation>
