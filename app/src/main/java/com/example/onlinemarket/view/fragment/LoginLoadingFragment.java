@@ -1,6 +1,10 @@
 package com.example.onlinemarket.view.fragment;
 
+
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,17 +13,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.data.database.entity.Customer;
 import com.example.onlinemarket.databinding.FragmentLoadingBinding;
 import com.example.onlinemarket.viewmodel.LoadingLoginViewModel;
 
-
- class LoginLoadingFragment extends Fragment {
+public class LoginLoadingFragment extends Fragment {
 
     private LoadingLoginViewModel mViewModel;
     private FragmentLoadingBinding mBinding;
@@ -70,6 +69,7 @@ import com.example.onlinemarket.viewmodel.LoadingLoginViewModel;
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //TODO check current login customer then decide which fragment to show
         if (mCustomer == null) {
             Navigation.findNavController(view)
                     .navigate(LoginLoadingFragmentDirections
