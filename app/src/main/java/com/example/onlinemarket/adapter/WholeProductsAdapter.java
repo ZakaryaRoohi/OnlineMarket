@@ -1,6 +1,7 @@
 package com.example.onlinemarket.adapter;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -100,11 +101,11 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
         });
     }
 
-   private void addToLatestProducts(){
-        mWooApi.getProducts(10 , mPage,"date").enqueue(new Callback<List<Product>>() {
+    private void addToLatestProducts() {
+        mWooApi.getProducts(10, mPage, "date").enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     mPage++;
                     List<Product> products = mProducts.getValue();
                     products.addAll(response.body());
@@ -117,9 +118,10 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
 
             }
         });
-   }
-   private void addToTopRatingProducts(){
-        mWooApi.getProducts(10 , mPage,"rating").enqueue(new Callback<List<Product>>() {
+    }
+
+    private void addToTopRatingProducts() {
+        mWooApi.getProducts(10, mPage, "rating").enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 mPage++;
@@ -133,10 +135,10 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
 
             }
         });
-   }
+    }
 
-   private void addToPopularProducts(){
-        mWooApi.getProducts(10,mPage,"popularity").enqueue(new Callback<List<Product>>() {
+    private void addToPopularProducts() {
+        mWooApi.getProducts(10, mPage, "popularity").enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 mPage++;
@@ -150,10 +152,10 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
 
             }
         });
-   }
+    }
 
-   private void addToCategoryProducts(int categoryId){
-        mWooApi.getCategoryProducts(categoryId,10,mPage).enqueue(new Callback<List<Product>>() {
+    private void addToCategoryProducts(int categoryId) {
+        mWooApi.getCategoryProducts(categoryId, 10, mPage).enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 mPage++;
@@ -167,7 +169,7 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
 
             }
         });
-   }
+    }
 
     @NonNull
     @Override
@@ -208,6 +210,15 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
             mBinding.rowItemWholeProductsTitle.setText(mProduct.getName());
             mBinding.rowItemWholeProductsSalesPrice.setText(mProduct.getPrice());
             mBinding.rowItemWholeProductsRegularPrice.setText(mProduct.getRegularPrice());
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                mBinding.rowItemWholeProductsDescription.setText(
+                        Html.fromHtml(mProduct.getDescription(),
+                                Html.FROM_HTML_MODE_LEGACY));
+            } else {
+                mBinding.rowItemWholeProductsDescription.setText(
+                        Html.fromHtml(mProduct.getDescription()));
+            }
 
             Picasso.get()
                     .load(ImageUtil.getFirstImageUrlOfProduct(mProduct))

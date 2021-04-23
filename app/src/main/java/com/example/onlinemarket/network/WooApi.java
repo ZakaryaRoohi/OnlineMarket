@@ -39,5 +39,10 @@ public interface WooApi {
                                             @Query("per_page") int perPage,
                                             @Query("page") int page);
 
+    @GET(BASE_URL + "products" + API_KEY)
+    Call<List<Product>> getProductsBySearch(@Query("per_page") int perPage,
+                                            @Query("page") int numberOfPage,
+                                            @Query("search") String search);
+
 }
 
