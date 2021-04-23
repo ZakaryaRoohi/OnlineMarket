@@ -8,12 +8,15 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.onlinemarket.R;
@@ -77,19 +80,29 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        openKeyboardWhenFragmentComeUp();
+        initAdapter();
+        setListeners();
+    }
+    private void initAdapter() {
+        mSearchRecyclerAdapter = new SearchRecyclerAdapter();
+        mBinding.recyclerViewSearchResult.setAdapter(mSearchRecyclerAdapter);
+    }
+    private void openKeyboardWhenFragmentComeUp() {
         mBinding.toolbarSearch.editTextSearch.requestFocus();
         InputMethodManager imm = (InputMethodManager) getActivity()
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        imm.showSoftInput(
-                mBinding.toolbarSearch.editTextSearch,
+        imm.showSoftInput(mBinding.toolbarSearch.editTextSearch,
                 InputMethodManager.SHOW_IMPLICIT);
+    }
 
-        mSearchRecyclerAdapter = new SearchRecyclerAdapter();
-        mBinding.recyclerViewSearchResult.setAdapter(mSearchRecyclerAdapter);
-        mBinding.toolbarSearch.imageViewBackToHome.setOnClickListener(v -> getActivity().onBackPressed());
+    private void setListeners() {
+        mBinding.toolbarSearch.imageViewBackToHome
+                .setOnClickListener(v -> getActivity().onBackPressed());
 
-        mBinding.toolbarSearch.editTextSearch.addTextChangedListener(new TextWatcher() {
+        mBinding.toolbarSearch.editTextSearch
+                .addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -104,6 +117,21 @@ public class SearchFragment extends Fragment {
             public void afterTextChanged(Editable s) {
             mViewModel.fetchResults(s.toString());
             }
+        });
+
+        mBinding.toolbarSearch.editTextSearch.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == EditorInfo.IME_ACTION_DONE ||
+                    keyCode == EditorInfo.IME_ACTION_GO ||
+                    keyCode == EditorInfo.IME_ACTION_SEARCH ||
+                    event.getAction() == KeyEvent.ACTION_DOWN &&
+                            event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                SearchFragmentDirections.ActionSearchFragmentToWholeProductsFragment action =
+                        SearchFragmentDirections.actionSearchFragmentToWholeProductsFragment("search");
+                Navigation.findNavController(v).navigate(action);
+
+                return true;
+            }
+            return false;
         });
     }
 }
