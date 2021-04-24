@@ -32,5 +32,8 @@ public class CartFragmentViewModel extends AndroidViewModel {
     public LiveData<ConnectionState> getConnectionStateLiveData() {
         return mCartRepository.getConnectionStateMutableLiveData();
     }
+    public LiveData <String> getTotalPriceLiveData (){
+        return mCartRepository.getTotalPriceMutableLiveData();
+    }
 
 }

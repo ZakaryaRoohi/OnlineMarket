@@ -28,6 +28,7 @@ public class CartRepository {
     private static CartRepository sCartRepository;
     private final CartDao mCartDao;
     private final MutableLiveData<List<Product>> mProductsLiveData;
+    private final MutableLiveData<String> mTotalPriceMutableLiveData;
 
     private CartRepository(Context context) {
         CartDatabase dataBase = CartDatabase.getDataBase(context.getApplicationContext());
@@ -35,6 +36,7 @@ public class CartRepository {
         mWooApi = RetrofitInstance.getInstance().create(WooApi.class);
         mProductsLiveData = new MutableLiveData<>();
         mConnectionStateMutableLiveData = new MutableLiveData<>();
+        mTotalPriceMutableLiveData = new MutableLiveData<>();
 
     }
 
@@ -69,8 +71,38 @@ public class CartRepository {
         return mCartDao.getById(productId);
     }
 
+    public MutableLiveData<String> getTotalPriceMutableLiveData() {
+        return mTotalPriceMutableLiveData;
+    }
+
     public List<CartProduct> getAll() {
         return mCartDao.getAll();
+    }
+
+    public void calculateTotalPrice() {
+        int sum = 0;
+        for (Product product : mProductsLiveData.getValue()) {
+            sum += (Integer.parseInt(product.getPrice()) * get(product.getId()).getCount());
+        }
+        mTotalPriceMutableLiveData.postValue(String.valueOf(sum));
+    }
+
+    public void increaseCountOfCart(Product product) {
+        CartProduct cartProduct = get(product.getId());
+        int newCount = cartProduct.getCount() + 1;
+        cartProduct.setCount(newCount);
+        update(cartProduct);
+        calculateTotalPrice();
+    }
+
+    public void decreaseCountOfCart(Product product) {
+        CartProduct cartProduct = get(product.getId());
+        if (cartProduct.getCount() > 1) {
+            int newCount = cartProduct.getCount() - 1;
+            cartProduct.setCount(newCount);
+            update(cartProduct);
+            calculateTotalPrice();
+        }
     }
 
 
