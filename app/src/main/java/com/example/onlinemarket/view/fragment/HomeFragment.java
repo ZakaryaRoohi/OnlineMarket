@@ -92,8 +92,6 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-/*        Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);*/
 
         mImageSliderAdapter = new ImageSliderAdapter(getContext());
         List<String> stringsResource = new ArrayList<>();
@@ -131,9 +129,8 @@ public class HomeFragment extends Fragment {
 
     private void navigateToWholeProductsFragment(View v, String orderBy) {
         HomeFragmentDirections.ActionHomeFragmentToWholeProductsFragment action = HomeFragmentDirections
-                .actionHomeFragmentToWholeProductsFragment(orderBy);
-        Navigation.findNavController(v)
-                .navigate(action);
+                .actionHomeFragmentToWholeProductsFragment(orderBy, null, null);
+        Navigation.findNavController(v).navigate(action);
     }
 
     public void initAdapters() {

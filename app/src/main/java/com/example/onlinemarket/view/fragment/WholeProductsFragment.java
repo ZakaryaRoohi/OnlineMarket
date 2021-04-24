@@ -11,9 +11,12 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.adapter.WholeProductsAdapter;
+import com.example.onlinemarket.data.model.product.Category;
 import com.example.onlinemarket.databinding.FragmentWholeProductsBinding;
 import com.example.onlinemarket.viewmodel.WholeProductFragmentViewModel;
 
@@ -25,7 +28,8 @@ public class WholeProductsFragment extends Fragment {
     private WholeProductFragmentViewModel mViewModel;
     private WholeProductsAdapter mWholeProductsAdapter;
     private String mOrderBy;
-    private Integer mCategoryId;
+    private Category mCategory;
+    private String mToolbarWord;
 
 
     public WholeProductsFragment() {
@@ -43,18 +47,34 @@ public class WholeProductsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        assert getArguments() != null;
-        mOrderBy = WholeProductsFragmentArgs.fromBundle(getArguments()).getOrderBy();
-        mCategoryId = WholeProductsFragmentArgs.fromBundle(getArguments()).getCategoryId();
+        if (getArguments() != null) {
+            mOrderBy = WholeProductsFragmentArgs.fromBundle(getArguments()).getOrderBy();
+            mCategory = WholeProductsFragmentArgs.fromBundle(getArguments()).getCategory();
+            mToolbarWord = WholeProductsFragmentArgs.fromBundle(getArguments()).getToolbarWord();
+        }
 
         mViewModel = new ViewModelProvider(this).get(WholeProductFragmentViewModel.class);
         mViewModel.fetchDataFromRepository(mOrderBy);
+
+        mViewModel.getSearchState().observe(this, searchState -> {
+            switch (searchState) {
+                case ERROR:
+                    break;
+                case SEARCHING:
+                    break;
+                case RESULT_BACKED:
+                    mViewModel.fetchDataFromRepository(mOrderBy);
+                    break;
+                default:
+                    break;
+            }
+        });
+
         initAdapter();
 
 
-        mViewModel.getProducts().observe(this, products -> {
-            mWholeProductsAdapter.notifyDataSetChanged();
-        });
+        mViewModel.getProducts().observe(this, products ->
+                mWholeProductsAdapter.setProducts(mViewModel.getProducts().getValue()));
 
         mWholeProductsAdapter.getProducts().observe(
                 this, products -> mWholeProductsAdapter.notifyDataSetChanged());
@@ -69,18 +89,71 @@ public class WholeProductsFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mBinding.recyclerViewWholeProducts.setAdapter(mWholeProductsAdapter);
+        initSpinner();
+        initToolbarText();
 
+        mBinding.toolbarSearch.imageViewBackToHome.setOnClickListener(v -> getActivity().onBackPressed());
+        mBinding.toolbarBack.imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
 
+        mBinding.toolbarFilter.spinnerSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                if (mToolbarWord != null)
+                    if (selectedItem.equals(getResources().getString(R.string.latest_sort))) {
+                        mViewModel.searchWithSorting(mToolbarWord, "date", "desc");
+                    } else if (selectedItem.equals(getResources().getString(R.string.popular_sort))) {
+                        mViewModel.searchWithSorting(mToolbarWord, "popularity", "desc");
+                    } else if (selectedItem.equals(getResources().getString(R.string.topRating_sort))) {
+                        mViewModel.searchWithSorting(mToolbarWord, "rating", "desc");
+                    } else if (selectedItem.equals(getResources().getString(R.string.price_descending))) {
+                        mViewModel.searchWithSorting(mToolbarWord, "price", "desc");
+                    } else {
+                        mViewModel.searchWithSorting(mToolbarWord, "price", "asc");
+                    }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void initToolbarText() {
+        mBinding.toolbarSearch.editTextSearch.setEnabled(false);
+        if (mCategory != null)
+            mBinding.toolbarSearch.editTextSearch.setText(mCategory.getName());
+        else if (!mOrderBy.equals("search")) {
+            mBinding.toolbarSearch.getRoot().setVisibility(View.GONE);
+            mBinding.toolbarFilter.getRoot().setVisibility(View.GONE);
+            mBinding.toolbarBack.getRoot().setVisibility(View.VISIBLE);
+        } else
+            mBinding.toolbarSearch.editTextSearch.setText(mToolbarWord);
     }
 
     public void initAdapter() {
         mWholeProductsAdapter = new WholeProductsAdapter();
         mWholeProductsAdapter.setOrderBy(mOrderBy);
-        mWholeProductsAdapter.setCategoryId(mCategoryId);
+        if (mCategory != null)
+            mWholeProductsAdapter.setCategoryId(mCategory.getId());
         mWholeProductsAdapter.setProducts(mViewModel.getProducts().getValue());
+    }
+
+    public void initSpinner() {
+        ArrayAdapter<CharSequence> arrayAdapter =
+                ArrayAdapter.createFromResource(
+                        getContext(),
+                        R.array.sort_items_array,
+                        android.R.layout.simple_spinner_item);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        mBinding.toolbarFilter.spinnerSort.setAdapter(arrayAdapter);
     }
 }

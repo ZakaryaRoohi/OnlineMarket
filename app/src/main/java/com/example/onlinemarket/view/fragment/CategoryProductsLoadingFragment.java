@@ -13,14 +13,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.example.onlinemarket.R;
+import com.example.onlinemarket.data.model.product.Category;
 import com.example.onlinemarket.databinding.FragmentLoadingBinding;
 import com.example.onlinemarket.viewmodel.CategoryProductsLoadingFragmentViewModel;
 
 public class CategoryProductsLoadingFragment extends Fragment {
 
+
     private CategoryProductsLoadingFragmentViewModel mViewModel;
     private FragmentLoadingBinding mBinding;
-    private Integer mCategoryId;
+    private Category mCategory;
 
     public CategoryProductsLoadingFragment() {
         // Required empty public constructor
@@ -33,10 +35,10 @@ public class CategoryProductsLoadingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCategoryId = CategoryProductsLoadingFragmentArgs.fromBundle(getArguments()).getCategoryId();
+        mCategory = CategoryProductsLoadingFragmentArgs.fromBundle(getArguments()).getCategory();
 
         mViewModel = new ViewModelProvider(this).get(CategoryProductsLoadingFragmentViewModel.class);
-        mViewModel.fetchCategoryProducts(mCategoryId);
+        mViewModel.fetchCategoryProducts(mCategory.getId());
 
 
         //TODO : refactor boilerplate here and loading fragment are same
@@ -51,8 +53,11 @@ public class CategoryProductsLoadingFragment extends Fragment {
                 case START_ACTIVITY:
                     CategoryProductsLoadingFragmentDirections.ActionCategoryProductsLoadingFragmentToWholeProductsFragment action =
                             CategoryProductsLoadingFragmentDirections
-                                    .actionCategoryProductsLoadingFragmentToWholeProductsFragment("category")
-                                    .setCategoryId(mCategoryId);
+                                    .actionCategoryProductsLoadingFragmentToWholeProductsFragment(
+                                            "category",
+                                            null,
+                                            mCategory);
+
                     Navigation.findNavController(getView()).navigate(action);
                     break;
                 default:

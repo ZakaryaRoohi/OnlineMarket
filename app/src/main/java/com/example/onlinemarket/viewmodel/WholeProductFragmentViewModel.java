@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.onlinemarket.data.model.product.Product;
 import com.example.onlinemarket.data.repository.ProductRepository;
+import com.example.onlinemarket.util.enums.SearchState;
 
 import java.util.List;
 
@@ -42,6 +43,14 @@ public class WholeProductFragmentViewModel extends ViewModel {
             default:
                 break;
         }
+    }
+
+    public void searchWithSorting(String search, String orderBy, String order) {
+        mProductRepository.searchWithSorting(search, orderBy, order);
+    }
+
+    public LiveData<SearchState> getSearchState() {
+        return mProductRepository.getSearchStateLiveData();
     }
 
 

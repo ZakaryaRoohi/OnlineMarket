@@ -33,8 +33,6 @@
     <string name="search_hint">جستجو در  </string>
     <string name="sort">مرتب سازی</string>
     <string name="filter">فیلترها</string>
-    <string name="price_descending">قیمت از زیاد به کم</string>
-    <string name="price_ascending">قیمت از کم به زیاد</string>
     <string name="commit_card">خرید خود را نهایی کنید</string>
     <string name="cart_sum">جمع کل خرید</string>
     <string name="delete">حذف</string>
@@ -77,5 +75,10 @@
     <string name="my_orders">سفارشات من</string>
     <string name="delivered_orders">تحویل شده</string>
     <string name="in_process_orders">در حال پردازش</string>
+    <string name="price_descending">گران‌ترین</string>
+    <string name="price_ascending">ارزان‌ترین</string>
+    <string name="topRating_sort">پرامتیازترین</string>
+    <string name="popular_sort">پربازدیدترین</string>
+    <string name="latest_sort">جدیدترین</string>
 
 </resources>
