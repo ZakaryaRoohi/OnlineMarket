@@ -10,12 +10,12 @@ import com.example.onlinemarket.data.database.entity.Customer;
 import com.example.onlinemarket.data.repository.CustomerRepository;
 import com.example.onlinemarket.util.enums.ConnectionState;
 
-public class LoadingLoginViewModel extends AndroidViewModel {
+public class LoginViewModel extends AndroidViewModel {
 
     private final CustomerRepository mCustomerRepository;
 
 
-    public LoadingLoginViewModel(@NonNull Application application) {
+    public LoginViewModel(@NonNull Application application) {
         super(application);
         mCustomerRepository = CustomerRepository.getInstance(application);
     }
@@ -38,6 +38,18 @@ public class LoadingLoginViewModel extends AndroidViewModel {
 
     public LiveData<com.example.onlinemarket.data.model.customer.Customer> getCustomerLiveData() {
         return mCustomerRepository.getCustomerLiveData();
+    }
+
+    public void changeStateToLogOut() {
+        mCustomerRepository.changeStateToLogOut();
+    }
+
+    public void changeStateToLogIn(String email) {
+        mCustomerRepository.changeStateToLogIn(email);
+    }
+
+    public boolean authorizePassword(String email, String password) {
+        return mCustomerRepository.authorizePassword(email, password);
     }
 
 

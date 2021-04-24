@@ -74,6 +74,25 @@ public class CustomerRepository {
         return mConnectionStateMutableLiveData;
     }
 
+    public void changeStateToLogOut() {
+        Customer customer = getCurrentLoginCustomer();
+        customer.setLoginState(false);
+        update(customer);
+    }
+
+    public void changeStateToLogIn(String email) {
+        Customer customer = getCustomerByEmail(email);
+        customer.setLoginState(true);
+        update(customer);
+    }
+
+
+    public boolean authorizePassword(String email, String password) {
+        Customer customer = getCustomerByEmail(email);
+        return customer.getPassword().equals(password);
+    }
+
+
     public LiveData<com.example.onlinemarket.data.model.customer.Customer> getCustomerLiveData() {
         return mCustomerMutableLiveData;
     }

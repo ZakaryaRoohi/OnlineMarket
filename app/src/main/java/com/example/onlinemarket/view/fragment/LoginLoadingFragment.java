@@ -16,11 +16,11 @@ import androidx.navigation.Navigation;
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.data.database.entity.Customer;
 import com.example.onlinemarket.databinding.FragmentLoadingBinding;
-import com.example.onlinemarket.viewmodel.LoadingLoginViewModel;
+import com.example.onlinemarket.viewmodel.LoginViewModel;
 
 public class LoginLoadingFragment extends Fragment {
 
-    private LoadingLoginViewModel mViewModel;
+    private LoginViewModel mViewModel;
     private FragmentLoadingBinding mBinding;
     private Customer mCustomer;
 
@@ -36,7 +36,7 @@ public class LoginLoadingFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new ViewModelProvider(this).get(LoadingLoginViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         mCustomer = mViewModel.getCurrentLoginCustomerFromDataBase();
 
         mViewModel.getConnectionStateLiveData().observe(this, connectionState -> {
