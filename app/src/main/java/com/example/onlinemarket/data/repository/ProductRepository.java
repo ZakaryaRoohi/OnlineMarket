@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.onlinemarket.data.model.product.Category;
+import com.example.onlinemarket.data.model.product.Coupon;
 import com.example.onlinemarket.data.model.product.Product;
 import com.example.onlinemarket.network.RetrofitInstance;
 import com.example.onlinemarket.network.WooApi;
@@ -35,6 +36,7 @@ public class ProductRepository {
     private final MutableLiveData<Product> mProductByIdMutableLiveData;
     private final MutableLiveData<SearchState> mSearchStateMutableLiveData;
     private final MutableLiveData<List<Product>> mProductSearchMutableLiveData;
+    private final MutableLiveData<Coupon> mCouponMutableLiveData;
 
     private final WooApi mWooApi;
 
@@ -51,6 +53,7 @@ public class ProductRepository {
         mCategoryProductsLiveData = new MutableLiveData<>();
         mSearchStateMutableLiveData = new MutableLiveData<>();
         mProductSearchMutableLiveData = new MutableLiveData<>();
+        mCouponMutableLiveData = new MutableLiveData<>();
     }
 
     public static ProductRepository getInstance() {
@@ -58,6 +61,29 @@ public class ProductRepository {
             sRepository = new ProductRepository();
         }
         return sRepository;
+    }
+
+    public LiveData<Coupon> getCouponLiveData() {
+        return mCouponMutableLiveData;
+    }
+
+    public void fetchCouponByCode(String code) {
+        mConnectionStateMutableLiveData.postValue(ConnectionState.LOADING);
+        mWooApi.getCouponByCode(code).enqueue(new Callback<List<Coupon>>() {
+            @Override
+            public void onResponse(Call<List<Coupon>> call, Response<List<Coupon>> response) {
+                if (response.isSuccessful() && !response.body().isEmpty()) {
+                    mCouponMutableLiveData.setValue(response.body().get(0));
+                    mConnectionStateMutableLiveData.setValue(ConnectionState.START_ACTIVITY);
+                }
+                mConnectionStateMutableLiveData.setValue(ConnectionState.NOTHING);
+            }
+
+            @Override
+            public void onFailure(Call<List<Coupon>> call, Throwable t) {
+                mConnectionStateMutableLiveData.setValue(ConnectionState.ERROR);
+            }
+        });
     }
 
     public void searchWithSorting(String search, String orderBy, String order) {

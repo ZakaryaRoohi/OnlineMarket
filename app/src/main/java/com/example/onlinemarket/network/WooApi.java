@@ -1,7 +1,9 @@
 package com.example.onlinemarket.network;
 
 import com.example.onlinemarket.data.model.customer.Customer;
+import com.example.onlinemarket.data.model.customer.Order;
 import com.example.onlinemarket.data.model.product.Category;
+import com.example.onlinemarket.data.model.product.Coupon;
 import com.example.onlinemarket.data.model.product.Product;
 
 import java.util.List;
@@ -10,6 +12,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -70,12 +73,28 @@ public interface WooApi {
                                              @Query("orderby") String orderBy,
                                              @Query("order") String order);
 
-
     //customers
     @POST(BASE_URL + "customers" + API_KEY)
     Call<Customer> registerCustomer(@Body Customer customer);
 
     @GET(BASE_URL + "customers" + API_KEY)
     Call<List<Customer>> getCustomer(@Query("email") String email);
+
+    //orders
+    @POST(BASE_URL + "orders" + API_KEY)
+    Call<Customer> postOrder(@Body Order order);
+
+    @GET(BASE_URL + "orders" + API_KEY)
+    Call<List<Order>> getOrdersOfCustomer(@Query("customer") int customerId,
+                                          @Query("per_page") int perPage,
+                                          @Query("page") int page);
+
+    //coupons
+    @GET(BASE_URL + "coupons" + API_KEY)
+    Call<List<Coupon>> getCouponByCode(@Query("code") String code);
+
+    @PUT(BASE_URL + "coupons/{couponId}" + API_KEY)
+    Call<Coupon> updateCoupon(@Path("couponId") int couponId,
+                              @Body Coupon coupon);
 
 }

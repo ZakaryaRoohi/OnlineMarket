@@ -231,6 +231,25 @@
             app:layout_constraintStart_toStartOf="@+id/imageView_in_process_orders"
             app:layout_constraintTop_toBottomOf="@+id/imageView_in_process_orders" />
 
+        <TextView
+            android:id="@+id/testView_number_of_in_process_orders"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/textView12"
+            app:layout_constraintEnd_toStartOf="@+id/textView12"
+            app:layout_constraintTop_toBottomOf="@+id/imageView_in_process_orders"
+            tools:text="2" />
+
+        <TextView
+            android:id="@+id/testView_number_of_delivered_orders"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/textView11"
+            app:layout_constraintEnd_toStartOf="@+id/textView11"
+            app:layout_constraintTop_toBottomOf="@+id/imageView_delivered_orders"
+            tools:text="2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
