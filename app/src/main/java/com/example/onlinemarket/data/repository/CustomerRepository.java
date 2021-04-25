@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.onlinemarket.data.database.customerdatabase.CustomerDatabase;
 import com.example.onlinemarket.data.database.dao.CustomerDao;
 import com.example.onlinemarket.data.database.entity.Customer;
+import com.example.onlinemarket.data.model.customer.Order;
 import com.example.onlinemarket.network.RetrofitInstance;
 import com.example.onlinemarket.network.WooApi;
 import com.example.onlinemarket.util.enums.ConnectionState;
@@ -90,6 +91,26 @@ public class CustomerRepository {
     public boolean authorizePassword(String email, String password) {
         Customer customer = getCustomerByEmail(email);
         return customer.getPassword().equals(password);
+    }
+
+    public void postOrdersToServer(List<Order> orders) {
+        mConnectionStateMutableLiveData.postValue(ConnectionState.LOADING);
+        for (Order order : orders) {
+            mWooApi.postOrder(order).enqueue(new Callback<Order>() {
+                @Override
+                public void onResponse(Call<Order> call, Response<Order> response) {
+                    if (orders.indexOf(order) == orders.size() - 1) {
+                        mConnectionStateMutableLiveData.setValue(ConnectionState.START_ACTIVITY);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Order> call, Throwable t) {
+                    mConnectionStateMutableLiveData.setValue(ConnectionState.ERROR);
+                }
+            });
+        }
+        mConnectionStateMutableLiveData.postValue(ConnectionState.NOTHING);
     }
 
 

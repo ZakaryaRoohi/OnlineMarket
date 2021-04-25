@@ -6,10 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.onlinemarket.data.model.customer.Order;
 import com.example.onlinemarket.data.model.product.Coupon;
 import com.example.onlinemarket.data.repository.CustomerRepository;
 import com.example.onlinemarket.data.repository.ProductRepository;
 import com.example.onlinemarket.util.enums.ConnectionState;
+
+import java.util.List;
 
 public class FinishShoppingFragmentViewModel extends AndroidViewModel {
 
@@ -34,5 +37,10 @@ public class FinishShoppingFragmentViewModel extends AndroidViewModel {
     public LiveData<ConnectionState> getConnectionStateLiveData() {
         return mProductRepository.getConnectionStateLiveData();
     }
+
+    public void postOrdersToServer(List<Order> orders) {
+        mCustomerRepository.postOrdersToServer(orders);
+    }
+
 
 }

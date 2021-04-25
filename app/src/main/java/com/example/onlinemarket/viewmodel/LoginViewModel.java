@@ -7,17 +7,19 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.onlinemarket.data.database.entity.Customer;
+import com.example.onlinemarket.data.repository.CartRepository;
 import com.example.onlinemarket.data.repository.CustomerRepository;
 import com.example.onlinemarket.util.enums.ConnectionState;
 
 public class LoginViewModel extends AndroidViewModel {
 
     private final CustomerRepository mCustomerRepository;
-
+    private final CartRepository mCartRepository;
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
         mCustomerRepository = CustomerRepository.getInstance(application);
+        mCartRepository = CartRepository.getInstance(application);
     }
 
     public Customer getCurrentLoginCustomerFromDataBase() {
@@ -50,6 +52,9 @@ public class LoginViewModel extends AndroidViewModel {
 
     public boolean authorizePassword(String email, String password) {
         return mCustomerRepository.authorizePassword(email, password);
+    }
+    public void deleteAllCarts (){
+        mCartRepository.deleteAll();
     }
 
 

@@ -98,7 +98,8 @@
         android:label="CartProductsLoadingFragment">
         <action
             android:id="@+id/action_nav_fragCart_to_cartFragment"
-            app:destination="@id/cartFragment" />
+            app:destination="@id/cartFragment"
+            app:popUpTo="@id/nav_fragHome" />
     </fragment>
 
     <fragment
@@ -202,7 +203,8 @@
 
         <action
             android:id="@+id/action_loginLoadingFragment_to_customerFragment"
-            app:destination="@id/customerFragment" />
+            app:destination="@id/customerFragment"
+            app:popUpTo="@id/nav_fragHome" />
 
         <argument
             android:name="email"
@@ -211,7 +213,8 @@
 
         <action
             android:id="@+id/action_loginLoadingFragment_to_checkRegistrationFragment"
-            app:destination="@id/checkRegistrationFragment" />
+            app:destination="@id/checkRegistrationFragment"
+            app:popUpTo="@id/nav_fragHome"/>
 
     </fragment>
     <fragment

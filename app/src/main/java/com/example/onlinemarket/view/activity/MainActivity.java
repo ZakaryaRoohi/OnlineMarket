@@ -18,6 +18,7 @@ import android.view.View;
 
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.databinding.ActivityMainBinding;
+import com.example.onlinemarket.util.UiUtil;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!internetConnected(MainActivity.this)) {
                     Snackbar snackbar = Snackbar.make(mBinding.getRoot(), R.string.no_internet, BaseTransientBottomBar.LENGTH_SHORT);
                     View snackBarView = snackbar.getView();
-                    snackBarView.setTranslationY(-(convertDpToPixel(48, MainActivity.this)));
+                    snackBarView.setTranslationY(-(UiUtil.convertDpToPixel(48, MainActivity.this)));
                     snackbar.show();
                 }
             }
@@ -91,9 +92,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public static float convertDpToPixel(float dp, Context context) {
-        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-    }
+
 
     @Override
     protected void onStart() {

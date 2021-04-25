@@ -4,12 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView_cart_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:cardCornerRadius="4dp"
         android:layout_marginTop="8dp"
-        android:orientation="vertical">
+        >
 
 
         <LinearLayout
@@ -82,7 +85,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="12dp"
-                            android:textSize="10dp"
+                            android:textSize="10sp"
                             app:fontFamily="@font/iran_yekan" />
 
                         <com.google.android.material.button.MaterialButton
@@ -123,6 +126,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
                 android:weightSum="3"
                 android:background="@color/digikala_white">
@@ -134,8 +139,8 @@
                     android:layout_marginLeft="12dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:padding="2dp"
                     tools:text="150000"
+                    android:padding="2dp"
                     android:textColor="@color/digikala_green"
                     android:textSize="12sp"
                     app:fontFamily="@font/far_roya_bd" />
@@ -155,6 +160,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
                     android:layout_weight="1"
                     android:gravity="right"
                     android:padding="2dp"
@@ -163,6 +169,8 @@
                     android:textSize="12sp"
                     app:fontFamily="@font/iran_yekan" />
 
+
+
             </LinearLayout>
 
 
@@ -170,7 +178,7 @@
                 android:id="@+id/button_cart_item_delete"
                 android:layout_width="58dp"
                 android:layout_height="38dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="4dp"
                 android:backgroundTint="@color/digikala_red"
                 android:clickable="true"
@@ -186,6 +194,6 @@
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </layout>

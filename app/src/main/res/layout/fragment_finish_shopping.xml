@@ -12,7 +12,7 @@
 
 
         <include
-            android:id="@+id/include"
+            android:id="@+id/toolbar_finish_shopping"
             layout="@layout/toolbar_finish_shopping" />
 
         <com.google.android.material.card.MaterialCardView
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_finish_shopping">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -222,6 +222,7 @@
 
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_final_payment"
                     android:layout_width="match_parent"
                     android:layout_height="72dp"
                     android:backgroundTint="@color/digikala_green"

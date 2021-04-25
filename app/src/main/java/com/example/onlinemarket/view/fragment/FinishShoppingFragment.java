@@ -43,19 +43,17 @@ public class FinishShoppingFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(FinishShoppingFragmentViewModel.class);
 
-        mViewModel.getConnectionStateLiveData().observe(this, new Observer<ConnectionState>() {
-            @Override
-            public void onChanged(ConnectionState connectionState) {
-                if (connectionState == ConnectionState.START_ACTIVITY) {
-                    mTotalPrice = StringUtil
-                            .approveCouponAmount(mTotalPrice
-                                    , mViewModel.getCouponLiveData().getValue().getAmount());
-                    mBinding.textViewTotalPriceNumber
-                            .setText(mTotalPrice);
-
-                }
+        mViewModel.getConnectionStateLiveData().observe(this, connectionState -> {
+            if (connectionState == ConnectionState.START_ACTIVITY) {
+                //TODO Send customer id to server to save which customer used this coupon once
+                mTotalPrice = StringUtil
+                        .approveCouponAmount(mTotalPrice
+                                , mViewModel.getCouponLiveData().getValue().getAmount());
+                mBinding.textViewTotalPriceNumber
+                        .setText(mTotalPrice);
             }
         });
+
     }
 
     @Override
@@ -75,6 +73,16 @@ public class FinishShoppingFragment extends Fragment {
         mBinding.buttonAddCoupon.setOnClickListener(v -> {
             if (!mBinding.editTextAddCoupon.getText().toString().trim().isEmpty())
                 mViewModel.fetchCoupon(mBinding.editTextAddCoupon.getText().toString());
+        });
+
+        mBinding.toolbarFinishShopping.imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
+
+        mBinding.buttonFinalPayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO send orders to server
+
+            }
         });
 
     }
