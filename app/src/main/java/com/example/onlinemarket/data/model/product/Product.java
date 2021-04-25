@@ -11,11 +11,11 @@ public class Product implements Serializable {
 
 	@SerializedName("id")
 	@Expose
-	public Integer id;
+	private Integer id;
 
 	@SerializedName("name")
 	@Expose
-	public String name;
+	private String name;
 
 	@SerializedName("slug")
 	@Expose
@@ -35,11 +35,11 @@ public class Product implements Serializable {
 
 	@SerializedName("description")
 	@Expose
-	public String description;
+	private String description;
 
 	@SerializedName("short_description")
 	@Expose
-	public String shortDescription;
+	private String shortDescription;
 
 	@SerializedName("price")
 	@Expose
@@ -51,7 +51,7 @@ public class Product implements Serializable {
 
 	@SerializedName("sale_price")
 	@Expose
-	public String salePrice;
+	private String salePrice;
 
 	@SerializedName("on_sale")
 	@Expose

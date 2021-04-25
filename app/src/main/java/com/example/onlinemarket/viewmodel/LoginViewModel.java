@@ -53,7 +53,7 @@ public class LoginViewModel extends AndroidViewModel {
     public boolean authorizePassword(String email, String password) {
         return mCustomerRepository.authorizePassword(email, password);
     }
-    public void deleteAllCarts (){
+    public void clearCart(){
         mCartRepository.deleteAll();
     }
 

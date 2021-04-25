@@ -87,4 +87,6 @@
     <string name="finish_payment">پرداخت نهایی</string>
     <string name="no_address_from_map">موقعیت این آدرس بر روی نقشه تعیین نشده، برای ادامه وجود موقعیت الزامی است.</string>
     <string name="added_to_cart">به سبد خرید اضافه شد</string>
+    <string name="login_for_payment">وارد حساب کاربری شوید.</string>
+    <string name="order_sent_successful">شفارش ثبت شد</string>
 </resources>
