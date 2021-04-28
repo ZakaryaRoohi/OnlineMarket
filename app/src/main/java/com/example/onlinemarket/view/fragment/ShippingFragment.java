@@ -119,13 +119,10 @@ public class ShippingFragment extends Fragment {
         MutableLiveData<LatLng> liveData = navController.getCurrentBackStackEntry()
                 .getSavedStateHandle()
                 .getLiveData(KEY);
-        liveData.observe(getViewLifecycleOwner(), new Observer<LatLng>() {
-            @Override
-            public void onChanged(LatLng latLng) {
-                mLat = latLng.latitude;
-                mLon = latLng.longitude;
-                Log.d(SHIPPING_TAG, "onChanged: " + mLat + "    " + mLon);
-            }
+        liveData.observe(getViewLifecycleOwner(), latLng -> {
+            mLat = latLng.latitude;
+            mLon = latLng.longitude;
+            Log.d(SHIPPING_TAG, "onChanged: " + mLat + "    " + mLon);
         });
 
     }

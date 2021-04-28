@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.databinding.FragmentLoginBinding;
@@ -57,7 +58,11 @@ public class LoginFragment extends Fragment {
                 mViewModel.changeStateToLogIn(mEmail);
                 Navigation.findNavController(v)
                         .navigate(LoginFragmentDirections.actionLoginFragmentToCustomerFragment());
-            }
+            } else
+                Toast.makeText(getContext(),
+                        getResources().getString(R.string.incorrect_pass),
+                        Toast.LENGTH_SHORT)
+                        .show();
         });
 
 

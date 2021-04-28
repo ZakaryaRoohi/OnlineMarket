@@ -348,7 +348,7 @@ public class ProductRepository {
     }
 
     public void fetchLatest() {
-        mConnectionStateMutableLiveData.setValue(ConnectionState.LOADING);
+        mConnectionStateMutableLiveData.postValue(ConnectionState.LOADING);
         mWooApi.getProducts(10, 1, "date").enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {

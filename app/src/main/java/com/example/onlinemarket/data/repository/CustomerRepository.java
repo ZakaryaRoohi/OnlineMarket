@@ -23,6 +23,7 @@ import retrofit2.Response;
 
 public class CustomerRepository {
 
+    public static final String TAG = "CustomerRepository";
     private final MutableLiveData<ConnectionState> mConnectionStateMutableLiveData;
     private final WooApi mWooApi;
     private static CustomerRepository sCustomerRepository;
@@ -146,6 +147,8 @@ public class CustomerRepository {
                 if (response.isSuccessful()) {
                     if (!response.body().isEmpty())
                         mCustomerMutableLiveData.setValue(response.body().get(0));
+                    else
+                        mCustomerMutableLiveData.setValue(null);
                     mConnectionStateMutableLiveData.setValue(ConnectionState.START_ACTIVITY);
                 }
                 mConnectionStateMutableLiveData.setValue(ConnectionState.NOTHING);

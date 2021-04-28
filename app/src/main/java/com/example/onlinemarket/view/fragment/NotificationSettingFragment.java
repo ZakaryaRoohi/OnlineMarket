@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,9 +18,11 @@ import android.widget.ArrayAdapter;
 
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.databinding.FragmentNotificationSettingBinding;
+import com.example.onlinemarket.viewmodel.NotificationViewModel;
 
 public class NotificationSettingFragment extends Fragment {
 
+    private NotificationViewModel mViewModel;
     private FragmentNotificationSettingBinding mBinding;
     private Integer mHour = 3;
 
@@ -28,13 +31,14 @@ public class NotificationSettingFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static NotificationSettingFragment newInstance(String param1, String param2) {
+    public static NotificationSettingFragment newInstance() {
         return new NotificationSettingFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mViewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
     }
 
     @Override
@@ -53,7 +57,9 @@ public class NotificationSettingFragment extends Fragment {
         mBinding.buttonChangeTiming.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
+                //for testing
+                mViewModel.scheduleWork(15);
+
             }
         });
 
