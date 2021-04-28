@@ -106,7 +106,7 @@ public class ProductRepository {
         return mCategoryProductsLiveData;
     }
 
-    public MutableLiveData<ConnectionState> getConnectionStateLiveData() {
+    public LiveData<ConnectionState> getConnectionStateLiveData() {
         return mConnectionStateMutableLiveData;
     }
     public LiveData<SearchState> getSearchStateLiveData() {

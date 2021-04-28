@@ -17,7 +17,6 @@ import com.example.onlinemarket.adapter.ImageSliderAdapter;
 import com.example.onlinemarket.data.model.product.Product;
 import com.example.onlinemarket.databinding.FragmentProductDetailBinding;
 import com.example.onlinemarket.util.ImageUtil;
-import com.example.onlinemarket.util.enums.ConnectionState;
 import com.example.onlinemarket.viewmodel.ProductDetailViewModel;
 
 public class ProductDetailFragment extends Fragment {
@@ -95,7 +94,6 @@ public class ProductDetailFragment extends Fragment {
 
         mBinding.loadingView.buttonRetry.setOnClickListener(v -> {
             mViewModel.fetchProductById(mProduct.getId());
-            mViewModel.getConnectionStateLiveData().setValue(ConnectionState.LOADING);
             showLoadingUi();
         });
 
