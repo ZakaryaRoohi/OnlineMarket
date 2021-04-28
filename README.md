@@ -3,7 +3,7 @@ online Shopping Application for Android OS. use MVVM clean architecture with Woo
 
 ![Shot 0003](https://user-images.githubusercontent.com/68108190/116427246-1a326c80-a859-11eb-9164-91e83cb19e97.png)
 
-***Other ScreenShuts -> end of README***
+
 
 Main View: show an auto image slider at the first and on sale,top rating,popular,best saller products
 
