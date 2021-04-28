@@ -32,7 +32,6 @@ android {
 }
 
 dependencies {
-
     implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
@@ -82,5 +81,8 @@ dependencies {
     implementation "androidx.paging:paging-runtime:$paging_version"
 
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
+// google play service map
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+// google map
+    implementation 'com.google.maps.android:android-maps-utils:2.2.0'
 }

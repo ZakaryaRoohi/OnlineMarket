@@ -89,4 +89,8 @@
     <string name="added_to_cart">به سبد خرید اضافه شد</string>
     <string name="login_for_payment">وارد حساب کاربری شوید.</string>
     <string name="order_sent_successful">شفارش ثبت شد</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="add_location">اضافه کردن موقعیت</string>
+    <string name="long_click_for_add_map_marker">برای انتخاب موقعیت انگشت خود را نگهدارید.</string>
+
 </resources>
