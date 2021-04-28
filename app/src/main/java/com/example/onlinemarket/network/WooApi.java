@@ -5,6 +5,7 @@ import com.example.onlinemarket.data.model.customer.Order;
 import com.example.onlinemarket.data.model.product.Category;
 import com.example.onlinemarket.data.model.product.Coupon;
 import com.example.onlinemarket.data.model.product.Product;
+import com.example.onlinemarket.data.model.product.Review;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import static com.example.onlinemarket.network.RetrofitInstance.API_KEY;
 import static com.example.onlinemarket.network.RetrofitInstance.BASE_URL;
 
 public interface WooApi {
+
     @GET(BASE_URL + "products" + API_KEY + "&on_sale=true")
     Call<List<Product>> getOnSaleProducts(@Query("per_page") int perPage, @Query("page") int numberOfPage);
 
@@ -35,7 +37,6 @@ public interface WooApi {
 
     @GET(BASE_URL + "products/{productId}" + API_KEY)
     Call<Product> getProductById(@Path("productId") Integer productId);
-
 
 
     //get products with search
@@ -73,12 +74,14 @@ public interface WooApi {
                                              @Query("orderby") String orderBy,
                                              @Query("order") String order);
 
+
     //customers
     @POST(BASE_URL + "customers" + API_KEY)
     Call<Customer> registerCustomer(@Body Customer customer);
 
     @GET(BASE_URL + "customers" + API_KEY)
     Call<List<Customer>> getCustomer(@Query("email") String email);
+
 
     //orders
     @POST(BASE_URL + "orders" + API_KEY)
@@ -96,5 +99,15 @@ public interface WooApi {
     @PUT(BASE_URL + "coupons/{couponId}" + API_KEY)
     Call<Coupon> updateCoupon(@Path("couponId") int couponId,
                               @Body Coupon coupon);
+
+    //reviews
+    @POST(BASE_URL + "products/reviews" + API_KEY)
+    Call<Review> postReview(@Body Review review);
+
+    @GET(BASE_URL + "products/reviews" + API_KEY)
+    Call<List<Review>> getReviewsOfProduct(@Query("product") int productId,
+                                           @Query("per_page") int perPage,
+                                           @Query("page") int page);
+
 
 }

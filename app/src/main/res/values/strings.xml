@@ -92,5 +92,15 @@
     <string name="title_activity_maps">Map</string>
     <string name="add_location">اضافه کردن موقعیت</string>
     <string name="long_click_for_add_map_marker">برای انتخاب موقعیت انگشت خود را نگهدارید.</string>
-
+    <string name="notification_time">انتخاب زمان ارسال نوتیفیکشین</string>
+    <string name="per_3_hours">سه ساعت یکبار</string>
+    <string name="per_5_hours">پنج ساعت یکبار</string>
+    <string name="per_8_hours">هشت ساعت یکبار</string>
+    <string name="per_12_hours">دوازده ساعت یکبار</string>
+    <string name="custom_time">انتخاب زمان دلخواه برحسب ساعت</string>
+    <string name="choose_time">زمان مورد نظر</string>
+    <string name="change_timing">تغییر زمان ارسال</string>
+    <string name="channel_id">digikala_channel_id</string>
+    <string name="channel_name">DigiKala Channel</string>
+    <string name="channel_description">This is a Channel for Digikala</string>
 </resources>

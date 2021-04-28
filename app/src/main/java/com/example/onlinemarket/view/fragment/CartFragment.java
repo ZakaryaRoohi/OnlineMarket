@@ -21,6 +21,7 @@ import com.example.onlinemarket.viewmodel.CartFragmentViewModel;
 
 public class CartFragment extends Fragment {
 
+    public static final String TAG = "CartFragment";
     private CartRecyclerAdapter mCartRecyclerAdapter;
     private FragmentCartBinding mBinding;
     private CartFragmentViewModel mViewModel;
@@ -32,6 +33,7 @@ public class CartFragment extends Fragment {
     public static CartFragment newInstance() {
         return new CartFragment();
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

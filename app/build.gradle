@@ -40,6 +40,7 @@ dependencies {
     def lifecycle_version = "2.2.0"
     def room_version = "2.2.5"
     def nav_version = "2.3.5"
+    def work_version = "2.4.0"
     def paging_version = "3.0.0-alpha09"
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -77,12 +78,14 @@ dependencies {
     apply plugin: "androidx.navigation.safeargs"
 
     implementation 'com.pollux:dualprogressview:0.0.1'
-//paging 3
+    //paging 3
     implementation "androidx.paging:paging-runtime:$paging_version"
 
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-// google play service map
+    // google play service map
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
-// google map
+    // google map
     implementation 'com.google.maps.android:android-maps-utils:2.2.0'
+    //work manager from jetPack
+    implementation "androidx.work:work-runtime:$work_version"
 }

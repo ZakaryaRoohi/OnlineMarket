@@ -58,14 +58,12 @@ public class CustomerFragment extends Fragment {
             Navigation.findNavController(v).navigate(CustomerFragmentDirections.actionCustomerFragmentToNavFragHome());
         });
 
-        mBinding.imageViewInProcessOrders.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO later
-            }
-        });
 
-        mBinding.imageViewNotificationBell.setOnClickListener(new View.OnClickListener() {
+        mBinding.imageViewNotificationBell.setOnClickListener(v -> Navigation.findNavController(v)
+                .navigate(CustomerFragmentDirections.actionCustomerFragmentToNotificationSettingFragment()));
+
+
+        mBinding.imageViewInProcessOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO later
