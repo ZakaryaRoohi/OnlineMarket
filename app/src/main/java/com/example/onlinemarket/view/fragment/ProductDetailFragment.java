@@ -14,8 +14,10 @@ import android.view.ViewGroup;
 
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.adapter.ImageSliderAdapter;
+import com.example.onlinemarket.data.model.product.Product;
 import com.example.onlinemarket.databinding.FragmentProductDetailBinding;
 import com.example.onlinemarket.util.ImageUtil;
+import com.example.onlinemarket.util.enums.ConnectionState;
 import com.example.onlinemarket.viewmodel.ProductDetailViewModel;
 
 public class ProductDetailFragment extends Fragment {
@@ -23,6 +25,7 @@ public class ProductDetailFragment extends Fragment {
     private ImageSliderAdapter mImageSliderAdapter;
     private ProductDetailViewModel mViewModel;
     private FragmentProductDetailBinding mBinding;
+    private Product mProduct;
 
     public ProductDetailFragment() {
         // Required empty public constructor
@@ -36,8 +39,42 @@ public class ProductDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        assert getArguments() != null;
+        mProduct = ProductDetailFragmentArgs.fromBundle(getArguments()).getProduct();
+
         mViewModel = new ViewModelProvider(this).get(ProductDetailViewModel.class);
 
+        mViewModel.fetchProductById(mProduct.getId());
+
+
+        mViewModel.getConnectionStateLiveData().observe(this, connectionState -> {
+            switch (connectionState) {
+                case LOADING:
+                    showLoadingUi();
+                    break;
+                case ERROR:
+                    loadInternetError();
+                    break;
+                case START_ACTIVITY:
+                    setUpSlider();
+                    mBinding.setViewModel(mViewModel);
+                    mBinding.loadingView.getRoot().setVisibility(View.GONE);
+                    mBinding.mainView.setVisibility(View.VISIBLE);
+                    break;
+                default:
+                    break;
+            }
+        });
+
+    }
+
+    private void setUpSlider() {
+        mImageSliderAdapter = new ImageSliderAdapter(getContext());
+        mImageSliderAdapter
+                .setStringImageUrl(
+                        ImageUtil.getAllImageUrlOfProduct(
+                                mViewModel.getProductMutableLiveData().getValue()));
+        mBinding.imageSliderProductDetailImages.setSliderAdapter(mImageSliderAdapter);
     }
 
     @Override
@@ -49,20 +86,34 @@ public class ProductDetailFragment extends Fragment {
                         container,
                         false);
 
-        mBinding.setViewModel(mViewModel);
         return mBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mImageSliderAdapter = new ImageSliderAdapter(getContext());
-        mImageSliderAdapter
-                .setStringImageUrl(
-                        ImageUtil.getAllImageUrlOfProduct(
-                                mViewModel.getProductMutableLiveData().getValue()));
 
-        mBinding.imageSliderProductDetailImages.setSliderAdapter(mImageSliderAdapter);
+        mBinding.loadingView.buttonRetry.setOnClickListener(v -> {
+            mViewModel.fetchProductById(mProduct.getId());
+            mViewModel.getConnectionStateLiveData().setValue(ConnectionState.LOADING);
+            showLoadingUi();
+        });
 
     }
+
+    private void showLoadingUi() {
+        mBinding.loadingView.buttonRetry.setVisibility(View.GONE);
+        mBinding.loadingView.textViewNoInternet.setVisibility(View.GONE);
+        mBinding.loadingView.progressBarLoadingFragment.setVisibility(View.VISIBLE);
+        mBinding.loadingView.progressBarLoadingFragment.show();
+    }
+
+
+    private void loadInternetError() {
+        mBinding.loadingView.buttonRetry.setVisibility(View.VISIBLE);
+        mBinding.loadingView.textViewNoInternet.setVisibility(View.VISIBLE);
+        mBinding.loadingView.progressBarLoadingFragment.setVisibility(View.GONE);
+        mBinding.loadingView.progressBarLoadingFragment.hide();
+    }
+
 }

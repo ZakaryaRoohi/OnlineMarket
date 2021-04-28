@@ -67,8 +67,9 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
             mBinding.textViewSearchTitle.setText(mProduct.getName());
 
             mBinding.getRoot().setOnClickListener(v -> {
-                SearchFragmentDirections.ActionSearchFragmentToProductDetailLoadingFragment action =
-                        SearchFragmentDirections.actionSearchFragmentToProductDetailLoadingFragment(mProduct.getId());
+                SearchFragmentDirections.ActionSearchFragmentToProductDetailFragment action =
+                        SearchFragmentDirections
+                                .actionSearchFragmentToProductDetailFragment(mProduct);
                 Navigation.findNavController(v).navigate(action);
             });
 

@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
                     mBinding.mainSearchToolbar.setVisibility(View.VISIBLE);
                     break;
                 case R.id.categoryProductsLoadingFragment:
-                case R.id.productDetailLoadingFragment:
                 case R.id.signUpFragment:
                 case R.id.shippingFragment:
                 case R.id.cartFragment:
