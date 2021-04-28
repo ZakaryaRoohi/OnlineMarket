@@ -28,11 +28,14 @@ import retrofit2.Response;
 
 public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdapter.WholeProductsViewHolder> {
 
+
     private final WooApi mWooApi;
     private final MutableLiveData<List<Product>> mProducts = new MutableLiveData<>();
     private String mOrderBy;
     private Integer mCategoryId;
+    private String mSearch;
     private int mPage = 2;
+
 
     public void setProducts(List<Product> products) {
         mProducts.setValue(products);
@@ -50,31 +53,41 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
         mCategoryId = categoryId;
     }
 
+    public void setSearch(String search) {
+        mSearch = search;
+    }
+
     public WholeProductsAdapter() {
         mWooApi = RetrofitInstance.getInstance().create(WooApi.class);
     }
 
     private void addToList(int position) {
-        if (position > getItemCount() - 2) {
-            switch (mOrderBy) {
-                case "onSale":
-                    addToOnSaleProducts();
-                    break;
-                case "date":
-                    addToLatestProducts();
-                    break;
-                case "popularity":
-                    addToPopularProducts();
-                    break;
-                case "rating":
-                    addToTopRatingProducts();
-                    break;
-                case "category":
-                    addToCategoryProducts(mCategoryId);
-                    break;
-                default:
-                    break;
-
+        if (mOrderBy != null) {
+            if (position > getItemCount() - 2) {
+                switch (mOrderBy) {
+                    case "onSale":
+                        addToOnSaleProducts();
+                        break;
+                    case "date":
+                        addToLatestProducts();
+                        break;
+                    case "popularity":
+                        addToPopularProducts();
+                        break;
+                    case "rating":
+                        addToTopRatingProducts();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        } else if (mCategoryId != null) {
+            if (position > getItemCount() - 2) {
+                addToCategoryProducts(mCategoryId);
+            }
+        } else if (mSearch != null) {
+            if (position > getItemCount() - 2) {
+                addToSearchProducts(mSearch);
             }
         }
     }
@@ -88,7 +101,6 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
                     List<Product> products = mProducts.getValue();
                     products.addAll(response.body());
                     mProducts.setValue(products);
-
                 }
             }
 
@@ -122,10 +134,12 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
         mWooApi.getProducts(10, mPage, "rating").enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                mPage++;
-                List<Product> products = mProducts.getValue();
-                products.addAll(response.body());
-                mProducts.setValue(products);
+                if (response.isSuccessful()) {
+                    mPage++;
+                    List<Product> products = mProducts.getValue();
+                    products.addAll(response.body());
+                    mProducts.setValue(products);
+                }
             }
 
             @Override
@@ -139,10 +153,12 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
         mWooApi.getProducts(10, mPage, "popularity").enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                mPage++;
-                List<Product> products = mProducts.getValue();
-                products.addAll(response.body());
-                mProducts.setValue(products);
+                if (response.isSuccessful()) {
+                    mPage++;
+                    List<Product> products = mProducts.getValue();
+                    products.addAll(response.body());
+                    mProducts.setValue(products);
+                }
             }
 
             @Override
@@ -156,10 +172,12 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
         mWooApi.getCategoryProducts(categoryId, 10, mPage).enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                mPage++;
-                List<Product> products = mProducts.getValue();
-                products.addAll(response.body());
-                mProducts.setValue(products);
+                if (response.isSuccessful()) {
+                    mPage++;
+                    List<Product> products = mProducts.getValue();
+                    products.addAll(response.body());
+                    mProducts.setValue(products);
+                }
             }
 
             @Override
@@ -169,11 +187,32 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
         });
     }
 
+    private void addToSearchProducts(String search) {
+        mWooApi.getProductsBySearch(10, mPage, search).enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful()) {
+                    mPage++;
+                    List<Product> products = mProducts.getValue();
+                    products.addAll(response.body());
+                    mProducts.setValue(products);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+
+            }
+        });
+    }
+
+
     @NonNull
     @Override
     public WholeProductsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RowItemWholeProductsBinding binding = DataBindingUtil
-                .inflate(LayoutInflater.from(parent.getContext()),
+                .inflate(
+                        LayoutInflater.from(parent.getContext()),
                         R.layout.row_item_whole_products,
                         parent,
                         false);
@@ -181,7 +220,7 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull WholeProductsAdapter.WholeProductsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull WholeProductsViewHolder holder, int position) {
         holder.bindProduct(mProducts.getValue().get(position));
         addToList(position);
     }
@@ -200,7 +239,6 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
             super(binding.getRoot());
             mBinding = binding;
 
-
         }
 
         public void bindProduct(Product product) {
@@ -209,30 +247,25 @@ public class WholeProductsAdapter extends RecyclerView.Adapter<WholeProductsAdap
             mBinding.rowItemWholeProductsSalesPrice.setText(mProduct.getPrice());
             mBinding.rowItemWholeProductsRegularPrice.setText(mProduct.getRegularPrice());
 
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                mBinding.rowItemWholeProductsDescription.setText(
-                        Html.fromHtml(mProduct.getDescription(),
-                                Html.FROM_HTML_MODE_LEGACY));
 
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                mBinding.rowItemWholeProductsDescription.setText(Html.fromHtml(mProduct.getDescription(), Html.FROM_HTML_MODE_LEGACY));
             } else {
-                mBinding.rowItemWholeProductsDescription.setText(
-                        Html.fromHtml(mProduct.getShortDescription()));
+                mBinding.rowItemWholeProductsDescription.setText(Html.fromHtml(mProduct.getShortDescription()));
             }
 
             Picasso.get()
                     .load(ImageUtil.getFirstImageUrlOfProduct(mProduct))
-                    .placeholder(R.drawable.place_holder)
+                    .placeholder(R.drawable.logo)
                     .into(mBinding.rowItemWholeProductsImage);
 
             mBinding.cardViewRowItemWholeProducts.setOnClickListener(v -> {
-                WholeProductsFragmentDirections.ActionWholeProductsFragmentToProductDetailFragment  action =
-                        WholeProductsFragmentDirections.
-                                actionWholeProductsFragmentToProductDetailFragment(mProduct);
+                WholeProductsFragmentDirections.ActionWholeProductsFragmentToProductDetailFragment action =
+                        WholeProductsFragmentDirections
+                                .actionWholeProductsFragmentToProductDetailFragment(mProduct);
                 Navigation.findNavController(v).navigate(action);
 
             });
-
         }
     }
-
 }

@@ -26,7 +26,9 @@ public class WholeProductsFragment extends Fragment {
 
     private FragmentWholeProductsBinding mBinding;
     private WholeProductFragmentViewModel mViewModel;
+
     private WholeProductsAdapter mWholeProductsAdapter;
+
     private String mOrderBy;
     private Category mCategory;
     private String mToolbarWord;
@@ -53,31 +55,39 @@ public class WholeProductsFragment extends Fragment {
             mToolbarWord = WholeProductsFragmentArgs.fromBundle(getArguments()).getToolbarWord();
         }
 
-        mViewModel = new ViewModelProvider(this).get(WholeProductFragmentViewModel.class);
-        mViewModel.fetchDataFromRepository(mOrderBy);
 
-        mViewModel.getSearchState().observe(this, searchState -> {
-            switch (searchState) {
+        mViewModel = new ViewModelProvider(this).get(WholeProductFragmentViewModel.class);
+
+
+        if (mCategory != null) {
+            mViewModel.fetchCategoryProducts(mCategory.getId());
+        } else if (mOrderBy != null) {
+            mViewModel.fetchOrderByProducts(mOrderBy);
+
+        } else if (mToolbarWord != null)
+            mViewModel.fetchSearchProducts(mToolbarWord);
+
+
+        mViewModel.getConnectionStateLiveData().observe(this, connectionState -> {
+            switch (connectionState) {
+                case LOADING:
+                    showLoadingUi();
+                    break;
                 case ERROR:
+                    loadInternetError();
                     break;
-                case SEARCHING:
-                    break;
-                case RESULT_BACKED:
-                    mViewModel.fetchDataFromRepository(mOrderBy);
+                case START_ACTIVITY:
+                    initUi();
+                    mBinding.loadingView.getRoot().setVisibility(View.GONE);
+                    mBinding.mainView.setVisibility(View.VISIBLE);
+                    mWholeProductsAdapter.getProducts().observe(
+                            this, products -> mWholeProductsAdapter.notifyDataSetChanged());
                     break;
                 default:
                     break;
             }
         });
 
-        initAdapter();
-
-
-        mViewModel.getProducts().observe(this, products ->
-                mWholeProductsAdapter.setProducts(mViewModel.getProducts().getValue()));
-
-        mWholeProductsAdapter.getProducts().observe(
-                this, products -> mWholeProductsAdapter.notifyDataSetChanged());
 
     }
 
@@ -93,10 +103,6 @@ public class WholeProductsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        mBinding.recyclerViewWholeProducts.setAdapter(mWholeProductsAdapter);
-        initSpinner();
-        initToolbarText();
 
         mBinding.toolbarSearch.imageViewBackToHome.setOnClickListener(v -> getActivity().onBackPressed());
         mBinding.toolbarBack.imageViewBack.setOnClickListener(v -> getActivity().onBackPressed());
@@ -143,7 +149,7 @@ public class WholeProductsFragment extends Fragment {
         mBinding.toolbarSearch.editTextSearch.setEnabled(false);
         if (mCategory != null)
             mBinding.toolbarSearch.editTextSearch.setText(mCategory.getName());
-        else if (!mOrderBy.equals("search")) {
+        else if (mOrderBy != null) {
             mBinding.toolbarSearch.getRoot().setVisibility(View.GONE);
             mBinding.toolbarFilter.getRoot().setVisibility(View.GONE);
             mBinding.toolbarBack.getRoot().setVisibility(View.VISIBLE);
@@ -151,12 +157,36 @@ public class WholeProductsFragment extends Fragment {
             mBinding.toolbarSearch.editTextSearch.setText(mToolbarWord);
     }
 
-    public void initAdapter() {
+    public void initUi() {
         mWholeProductsAdapter = new WholeProductsAdapter();
-        mWholeProductsAdapter.setOrderBy(mOrderBy);
-        if (mCategory != null)
+        if (mOrderBy != null) {
+            mWholeProductsAdapter.setOrderBy(mOrderBy);
+            switch (mOrderBy) {
+                case "onSale":
+                    mWholeProductsAdapter.setProducts(mViewModel.getOnSaleProducts().getValue());
+                    break;
+                case "date":
+                    mWholeProductsAdapter.setProducts(mViewModel.getLatestProducts().getValue());
+                    break;
+                case "popularity":
+                    mWholeProductsAdapter.setProducts(mViewModel.getPopularProducts().getValue());
+                    break;
+                case "rating":
+                    mWholeProductsAdapter.setProducts(mViewModel.getTopRatingProducts().getValue());
+                    break;
+                default:
+                    break;
+            }
+        } else if (mCategory != null) {
             mWholeProductsAdapter.setCategoryId(mCategory.getId());
-        mWholeProductsAdapter.setProducts(mViewModel.getProducts().getValue());
+            mWholeProductsAdapter.setProducts(mViewModel.getCategoryProducts().getValue());
+        } else if (mToolbarWord != null) {
+            mWholeProductsAdapter.setSearch(mToolbarWord);
+            mWholeProductsAdapter.setProducts(mViewModel.getProductSearchLiveData().getValue());
+        }
+        mBinding.recyclerViewWholeProducts.setAdapter(mWholeProductsAdapter);
+        initSpinner();
+        initToolbarText();
     }
 
     public void initSpinner() {
@@ -168,5 +198,20 @@ public class WholeProductsFragment extends Fragment {
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         mBinding.toolbarFilter.spinnerSort.setAdapter(arrayAdapter);
+    }
+
+    private void showLoadingUi() {
+        mBinding.loadingView.buttonRetry.setVisibility(View.GONE);
+        mBinding.loadingView.textViewNoInternet.setVisibility(View.GONE);
+        mBinding.loadingView.progressBarLoadingFragment.setVisibility(View.VISIBLE);
+        mBinding.loadingView.progressBarLoadingFragment.show();
+    }
+
+
+    private void loadInternetError() {
+        mBinding.loadingView.buttonRetry.setVisibility(View.VISIBLE);
+        mBinding.loadingView.textViewNoInternet.setVisibility(View.VISIBLE);
+        mBinding.loadingView.progressBarLoadingFragment.setVisibility(View.GONE);
+        mBinding.loadingView.progressBarLoadingFragment.hide();
     }
 }

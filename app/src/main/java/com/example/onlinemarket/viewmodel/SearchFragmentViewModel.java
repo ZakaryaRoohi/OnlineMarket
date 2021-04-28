@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.onlinemarket.data.model.product.Product;
 import com.example.onlinemarket.data.repository.ProductRepository;
-import com.example.onlinemarket.util.enums.SearchState;
+import com.example.onlinemarket.util.enums.ConnectionState;
 
 import java.util.List;
 
@@ -21,11 +21,11 @@ public class SearchFragmentViewModel extends ViewModel {
         return mProductRepository.getProductSearchLiveData();
     }
 
-    public LiveData<SearchState> getSearchState (){
-        return mProductRepository.getSearchStateLiveData();
+    public LiveData<ConnectionState> getSearchState() {
+        return mProductRepository.getConnectionStateLiveData();
     }
 
-    public void fetchResults(String search) {
+    public void fetchProductsBySearch(String search) {
         mProductRepository.fetchProductsBySearch(search);
     }
 }

@@ -47,8 +47,8 @@
         android:label="fragment_category"
         tools:layout="@layout/fragment_category">
         <action
-            android:id="@+id/action_nav_fragCategory_to_categoryProductsLoadingFragment"
-            app:destination="@id/categoryProductsLoadingFragment" />
+            android:id="@+id/action_nav_fragCategory_to_wholeProductsFragment"
+            app:destination="@id/wholeProductsFragment" />
     </fragment>
 
     <fragment
@@ -59,24 +59,6 @@
             android:name="product"
             app:argType="com.example.onlinemarket.data.model.product.Product" />
     </fragment>
-
-
-    <fragment
-        android:id="@+id/categoryProductsLoadingFragment"
-        android:name="com.example.onlinemarket.view.fragment.CategoryProductsLoadingFragment"
-        android:label="fragment_category_products_loading"
-        tools:layout="@layout/fragment_loading">
-        <action
-            android:id="@+id/action_categoryProductsLoadingFragment_to_wholeProductsFragment"
-            app:destination="@id/wholeProductsFragment"
-            app:popUpTo="@id/categoryProductsLoadingFragment"
-            app:popUpToInclusive="true" />
-        <argument
-            android:name="category"
-            app:argType="com.example.onlinemarket.data.model.product.Category" />
-    </fragment>
-
-
 
     <fragment
         android:id="@+id/nav_fragCart"

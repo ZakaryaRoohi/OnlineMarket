@@ -5,7 +5,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.onlinemarket.data.model.product.Category;
+import com.example.onlinemarket.data.model.product.Product;
 import com.example.onlinemarket.data.repository.CategoryRepository;
+import com.example.onlinemarket.data.repository.ProductRepository;
+import com.example.onlinemarket.util.enums.ConnectionState;
 
 import java.util.List;
 
@@ -20,9 +23,12 @@ public class CategoryFragmentViewModel extends ViewModel {
     private final MutableLiveData<List<Category>> mChildParent6LiveData;
 
     private final CategoryRepository mCategoryRepository;
+    private final ProductRepository mProductRepository;
 
     public CategoryFragmentViewModel(){
         mCategoryRepository = CategoryRepository.getInstance();
+        mProductRepository = ProductRepository.getInstance();
+
         mParentCategoriesLiveData = new MutableLiveData<>();
         mChildParent1LiveData = new MutableLiveData<>();
         mChildParent2LiveData = new MutableLiveData<>();
@@ -71,4 +77,17 @@ public class CategoryFragmentViewModel extends ViewModel {
         return mChildParent6LiveData;
     }
 
+    //fetching category products
+
+    public void fetchCategoryProducts(Integer productId) {
+        mProductRepository.fetchCategoryProducts(productId);
+    }
+
+    public LiveData<List<Product>> getCategoryProducts() {
+        return mProductRepository.getCategoryProductsLiveData();
+    }
+
+    public MutableLiveData<ConnectionState> getConnectionStateLiveData() {
+        return mProductRepository.getConnectionStateLiveData();
+    }
 }
