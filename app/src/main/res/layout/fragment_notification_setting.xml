@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:hint="@string/choose_time"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             app:layout_constraintBottom_toBottomOf="@+id/textView6"
             app:layout_constraintEnd_toStartOf="@+id/textView6"
             app:layout_constraintStart_toStartOf="parent"

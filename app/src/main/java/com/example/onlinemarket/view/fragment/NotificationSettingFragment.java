@@ -1,5 +1,6 @@
 package com.example.onlinemarket.view.fragment;
 
+import android.nfc.FormatException;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,11 +11,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.example.onlinemarket.R;
 import com.example.onlinemarket.databinding.FragmentNotificationSettingBinding;
@@ -44,7 +47,11 @@ public class NotificationSettingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_notification_setting, container, false);
+        mBinding = DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_notification_setting,
+                container,
+                false);
         return mBinding.getRoot();
     }
 
@@ -57,9 +64,12 @@ public class NotificationSettingFragment extends Fragment {
         mBinding.buttonChangeTiming.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //for testing
-                mViewModel.scheduleWork(15);
 
+                mViewModel.scheduleWork(mHour);
+                Toast.makeText(getActivity(),
+                            "زمان ارسال نوتیفیکشن به "+mHour+" ساعت تغییر یافت",
+                            Toast.LENGTH_SHORT)
+                            .show();
             }
         });
 
@@ -71,7 +81,16 @@ public class NotificationSettingFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mHour = Integer.parseInt((String) s);
+
+                try {
+                    mHour = Integer.parseInt(mBinding.editTextCustomTime.getText().toString());
+                } catch (NumberFormatException e) {
+                    //if input format type wasn't valid show toast to user
+//                    Toast.makeText(getActivity(),
+//                            "invalid number format",
+//                            Toast.LENGTH_SHORT)
+//                            .show();
+                }
             }
 
             @Override
@@ -79,6 +98,8 @@ public class NotificationSettingFragment extends Fragment {
 
             }
         });
+
+
         mBinding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
