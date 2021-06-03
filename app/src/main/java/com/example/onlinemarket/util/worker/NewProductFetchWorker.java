@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.solver.state.State;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavDeepLinkBuilder;
@@ -65,6 +66,7 @@ public class NewProductFetchWorker extends Worker {
 
     }
 
+
     private static void showNotification(Context context, Product product) {
         String channelId = context.getResources().getString(R.string.channel_id);
 
@@ -75,14 +77,6 @@ public class NewProductFetchWorker extends Worker {
                 .setDestination(R.id.productDetailFragment)
                 .setArguments(bundle)
                 .createPendingIntent();
-
-
-     /*   PendingIntent pendingIntent = PendingIntent.getActivity(
-                context,
-                REQUEST_CODE_NOTIFICATION,
-                MainActivity.newIntent(context),
-                0);
-*/
 
         Notification notification = null;
         try {
@@ -117,6 +111,7 @@ public class NewProductFetchWorker extends Worker {
                         .build();
 
         Log.d(TAG, "enqueue work");
+
         WorkManager
                 .getInstance(context)
                 .enqueueUniquePeriodicWork(
